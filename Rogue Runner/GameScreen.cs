@@ -17,7 +17,7 @@ namespace Rogue_Runner
         //Global Variables
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.White);
-        SolidBrush obsBrush = new SolidBrush(Color.White);
+        SolidBrush obsBrush = new SolidBrush(Color.Black);
 
         //Object
         Player player = new Player(0, 0, 0, 0, 0, 0, 0);
@@ -31,7 +31,8 @@ namespace Rogue_Runner
         {
 
             int width, height, obstacleCount, enemyCount;
-            string type;
+            width = height = obstacleCount = 0;
+            string type = "";
             List<Rectangle> obstacles = new List<Rectangle>();
             int size = randgen.Next(1, 4);
 
