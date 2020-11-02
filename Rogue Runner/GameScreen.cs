@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Http.Headers;
 
 namespace Rogue_Runner
 {
@@ -15,19 +16,26 @@ namespace Rogue_Runner
     {
         //Global Variables
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
+        SolidBrush roomBrush = new SolidBrush(Color.White);
+        SolidBrush obsBrush = new SolidBrush(Color.Black);
+
         //Object
         Player player = new Player(0, 0, 0, 0, 0, 0, 0);
         
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
+
+       
+
         private void generateFloor()
         {
 
             int width, height, obstacleCount, enemyCount;
-            int size = randgen.Next(1, 4);
-            string type;
+            width = height = obstacleCount = 0;
+            string type = "";
             List<Rectangle> obstacles = new List<Rectangle>();
-           
+            int size = randgen.Next(1, 4);
+
             switch (size)
             {
                 case 1:
@@ -157,22 +165,24 @@ namespace Rogue_Runner
                         Rectangle newRec12 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec12);
                         break;
+
                 }
             }
 
             Room newRoom = new Room(width, height, type, obstacles);
             rooms.Add(newRoom);
+
+            Refresh();
         }
 
         public GameScreen()
         {
             //Initialize
             InitializeComponent();
-           
+            generateFloor();
+
             //Set starting values
             aDown = dDown = wDown = sDown = escDown = spaDown = false;
-
-
         } 
 
         private void keyDown(object sender, PreviewKeyDownEventArgs e)
@@ -250,9 +260,15 @@ namespace Rogue_Runner
             {
                 player.attack();
             }
-
-
-
+        }
+        private void GameScreen_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.FillRectangle(roomBrush, this.Width / 2 - rooms[0].width / 2, this.Height / 2 - rooms[0].height / 2, rooms[0].width, rooms[0].height);
+            
+            foreach(Rectangle r in rooms[0].obstacles)
+            {
+                e.Graphics.FillRectangle(obsBrush, r.X, r.Y, r.Width, r.Height);
+            }
         }
     }
 }
