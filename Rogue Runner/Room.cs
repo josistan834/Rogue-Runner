@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Rogue_Runner
 {
-    class Room
+    public class Room
     {
-        int width, height;
-        string type;
-        List<Rectangle> obstacles = new List<Rectangle>();
+        public int width, height;
+        public string type;
+        public List<Rectangle> obstacles = new List<Rectangle>();
         //List <> enemy = new List <>();
 
         public Room(int _width, int _height, string _type, List<Rectangle> _obstacles)
