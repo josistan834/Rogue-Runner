@@ -16,7 +16,7 @@ namespace Rogue_Runner
     {
         //Global Variables
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
-        SolidBrush roomBrush = new SolidBrush(Color.White);
+        SolidBrush roomBrush = new SolidBrush(Color.LightBlue);
         SolidBrush obsBrush = new SolidBrush(Color.Black);
         SolidBrush swordBrush = new SolidBrush(Color.Green);
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
@@ -33,13 +33,24 @@ namespace Rogue_Runner
 
 
         //Object
-        public static Player player = new Player(300, 300, 20, 20, 4, 500, 100, "Up"); 
+        public static Player player = new Player(300, 300, 40, 40, 4, 500, 100, "Up"); 
         
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
         List<Runner> run = new List<Runner>();
+        Image heroUp = Properties.Resources.heroUp;
+        Image heroDown = Properties.Resources.heroDown;
+        Image heroLeft = Properties.Resources.heroLeft;
+        Image heroRight = Properties.Resources.heroRight;
+        Image heroHitUp = Properties.Resources.heroHitUp;
+        Image heroHitDown = Properties.Resources.heroHitDown;
+        Image heroHitLeft = Properties.Resources.heroLeftHit;
+        Image heroHitRight = Properties.Resources.heroRightHit;
+        Image hitUp = Properties.Resources.hitEffectUp;
+        Image hitDown = Properties.Resources.hitEffectDown;
+        Image hitLeft = Properties.Resources.hitEffectLeft;
+        Image hitRight = Properties.Resources.hitEffect;
 
-       
 
         private void generateFloor()
         {
@@ -304,26 +315,57 @@ namespace Rogue_Runner
             
             foreach(Runner r in run)
             {
+                bool move = true;
                 Rectangle runRec = new Rectangle(r.x, r.y, r.w, r.h);
                 Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
+                foreach (Rectangle c in rooms[levelIndex].obstacles)
+                {
+                    if (c.IntersectsWith(runRec))
+                    {
+                        move = false;
+                    }
+                }
                 if (knockCounter == 0 && !runRec.IntersectsWith(playerRec))
                 {
-                    if (r.x - player.x < 200 && r.x - player.x > 0)
+                    if (move)
                     {
-                        r.move("Left");
+                        if (r.x - player.x < 200 && r.x - player.x > 20)
+                        {
+                            r.move("Left");
+                        }
+                        if (player.x - r.x < 200 && player.x - r.x > 20)
+                        {
+                            r.move("Right");
+                        }
+                        if (r.y - player.y < 200 && r.y - player.y > 20)
+                        {
+                            r.move("Up");
+                        }
+                        if (player.y - r.y < 200 && player.y - r.y > 20)
+                        {
+                            r.move("Down");
+                        }
                     }
-                    if (player.x - r.x < 200 && player.x - r.x > 0)
+                    else
                     {
-                        r.move("Right");
+                        if (r.x - player.x < 200 && r.x - player.x > 20)
+                        {
+                            r.move("Down");
+                        }
+                        if (player.x - r.x < 200 && player.x - r.x > 20)
+                        {
+                            r.move("Up");
+                        }
+                        if (r.y - player.y < 200 && r.y - player.y > 20)
+                        {
+                            r.move("Right");
+                        }
+                        if (player.y - r.y < 200 && player.y - r.y > 20)
+                        {
+                            r.move("Left");
+                        }
                     }
-                    if (r.y - player.y < 200 && r.y - player.y > 0)
-                    {
-                        r.move("Up");
-                    }
-                    if (player.y - r.y < 200 && player.y - r.y > 0)
-                    {
-                        r.move("Down");
-                    }
+                    
                 }
                
                
@@ -443,9 +485,62 @@ namespace Rogue_Runner
             {
                 e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
             }
-            e.Graphics.FillRectangle(obsBrush, player.x, player.y, player.w, player.h);
+            if(swordCounter >= 30)
+            {
+                if (player.direc == "Up")
+                {
+                    e.Graphics.DrawImage(heroUp, player.x, player.y, player.w, player.h);
+                }
+                else if (player.direc == "Down")
+                {
+                    e.Graphics.DrawImage(heroDown, player.x, player.y, player.w, player.h);
+                }
+                else if (player.direc == "Left")
+                {
+                    e.Graphics.DrawImage(heroLeft, player.x, player.y, player.w, player.h);
+                }
+                else if (player.direc == "Right")
+                {
+                    e.Graphics.DrawImage(heroRight, player.x, player.y, player.w, player.h);
+                }
+            }
+            else
+            {
+                if (player.direc == "Up")
+                {
+                    e.Graphics.DrawImage(heroHitUp, player.x, player.y, player.w, player.h);
+                }
+                else if (player.direc == "Down")
+                {
+                    e.Graphics.DrawImage(heroHitDown, player.x, player.y, player.w, player.h);
+                }
+                else if (player.direc == "Left")
+                {
+                    e.Graphics.DrawImage(heroHitLeft, player.x, player.y, player.w, player.h);
+                }
+                else if (player.direc == "Right")
+                {
+                    e.Graphics.DrawImage(heroHitRight, player.x, player.y, player.w, player.h);
+                }
+            }
 
-            e.Graphics.FillRectangle(swordBrush, player.sword);
+            if (player.direc == "Up")
+            {
+                e.Graphics.DrawImage(hitUp, player.sword);
+            }
+            else if (player.direc == "Down")
+            {
+                e.Graphics.DrawImage(hitDown, player.sword);
+            }
+            else if (player.direc == "Left")
+            {
+                e.Graphics.DrawImage(hitLeft, player.sword);
+            }
+            else if (player.direc == "Right")
+            {
+                e.Graphics.DrawImage(hitRight, player.sword);
+            }
+
 
             e.Graphics.FillRectangle(enemyBrush, 100, 0, player.health , 20);
         }
