@@ -141,5 +141,26 @@
   <ItemGroup>
     <None Include="Resources\heroRightHit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\summonerAttack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\summoner.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\runnerFront.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\runnerUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\runnerRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\runnerLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\soulEnemy.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
