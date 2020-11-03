@@ -29,7 +29,7 @@ namespace Rogue_Runner
         int iframes = 30;
 
         //Object
-        public static Player player = new Player(300, 300, 20, 20, 4, 500, 100, "Up");
+        public static Player player = new Player(300, 300, 20, 20, 4, 500, 100, "Up"); 
         
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
@@ -298,7 +298,9 @@ namespace Rogue_Runner
             
             foreach(Runner r in run)
             {
-                if (knockCounter == 0)
+                Rectangle runRec = new Rectangle(r.x, r.y, r.w, r.h);
+                Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
+                if (knockCounter == 0 && !runRec.IntersectsWith(playerRec))
                 {
                     if (r.x - player.x < 200 && r.x - player.x > 0)
                     {
@@ -318,14 +320,14 @@ namespace Rogue_Runner
                     }
                 }
                
-                Rectangle runRec = new Rectangle(r.x, r.y, r.w, r.h);
+               
                 if (runRec.IntersectsWith(player.sword))
                 { 
                     r.damaged(player.damage, knock);
                     knockCounter = 70;
                     
                 }
-                Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
+                
                 if (runRec.IntersectsWith(playerRec))
                 {
                     if(iframes <= 0)
