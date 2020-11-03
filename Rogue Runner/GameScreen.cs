@@ -22,7 +22,7 @@ namespace Rogue_Runner
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
         int levelIndex = 0;
         
-        public int swordCounter = 0;
+        public int swordCounter = 30sssa;
         bool attacked;
         public static int knock = 30;
         int knockCounter = 0;
