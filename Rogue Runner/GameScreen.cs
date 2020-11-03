@@ -22,7 +22,7 @@ namespace Rogue_Runner
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
         int levelIndex = 0;
         
-        public int swordCounter = 30sssa;
+        public int swordCounter = 30;
         bool attacked;
         public static int knock = 30;
         int knockCounter = 0;
@@ -34,7 +34,7 @@ namespace Rogue_Runner
 
         //Object
 
-        public static Player player = new Player(0, 0, 20, 20, 4, 500, 100, "Up");
+        public static Player player = new Player(0, 0, 40, 40, 4, 500, 100, "Up");
 
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
