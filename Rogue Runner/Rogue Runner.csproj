@@ -89,6 +89,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -103,6 +104,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hitEffect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hitEffectDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hitEffectLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hitEffectUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroHitDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroHitUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroLeftHit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heroRightHit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
