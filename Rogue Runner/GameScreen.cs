@@ -21,7 +21,7 @@ namespace Rogue_Runner
         int levelIndex = 0;
 
         //Object
-        Player player = new Player(0, 0, 0, 0, 0, 0, 0);
+        Player player = new Player(300, 300, 20, 20, 4, 0, 0);
         
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
@@ -228,7 +228,7 @@ namespace Rogue_Runner
                     sDown = false;
                     break;
                 case Keys.Space:
-                    spaDown = true;
+                    spaDown = false;
                     break;
                 case Keys.Escape:
                     escDown = false;
@@ -241,19 +241,19 @@ namespace Rogue_Runner
             {
                 player.move("Left");
             }
-            else if (dDown)
+            if (dDown)
             {
                 player.move("Right");
             }
-            else if (wDown)
+            if (wDown)
             {
                 player.move("Up");
             }
-            else if (sDown)
+            if (sDown)
             {
                 player.move("Down");
             }
-            else if (escDown)
+            if (escDown)
             {
 
             }
@@ -261,6 +261,7 @@ namespace Rogue_Runner
             {
                 player.attack();
             }
+            Refresh();
         }
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
@@ -270,6 +271,7 @@ namespace Rogue_Runner
             {
                 e.Graphics.FillRectangle(obsBrush, r.X, r.Y, r.Width, r.Height);
             }
+            e.Graphics.FillRectangle(obsBrush, player.x, player.y, player.w, player.h);
         }
     }
 }

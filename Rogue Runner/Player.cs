@@ -8,7 +8,7 @@ namespace Rogue_Runner
 {
     public class Player
     {
-        int x, y, w, h, speed, health, damage;
+        public int x, y, w, h, speed, health, damage;
         public Player(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage)
         {
             x = _x;
