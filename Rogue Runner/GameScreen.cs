@@ -18,13 +18,22 @@ namespace Rogue_Runner
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.White);
         SolidBrush obsBrush = new SolidBrush(Color.Black);
+        SolidBrush swordBrush = new SolidBrush(Color.Green);
+        SolidBrush enemyBrush = new SolidBrush(Color.Red);
         int levelIndex = 0;
+        public int swordCounter = 0;
+        bool attacked;
+        public static int knock = 30;
+        int knockCounter = 0;
+        int cooldown = 0;
+        int iframes = 30;
 
         //Object
-        Player player = new Player(300, 300, 20, 20, 4, 0, 0);
+        public static Player player = new Player(300, 300, 20, 20, 4, 500, 100, "Up");
         
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
+        List<Runner> run = new List<Runner>();
 
        
 
@@ -170,6 +179,8 @@ namespace Rogue_Runner
                 }
             }
 
+            Runner fast = new Runner(500, 500, 30, 30, 6, 500, 50);
+            run.Add(fast);
             Room newRoom = new Room(width, height, type, obstacles);
             rooms.Add(newRoom);
 
@@ -183,7 +194,7 @@ namespace Rogue_Runner
             generateFloor();
 
             //Set starting values
-            aDown = dDown = wDown = sDown = escDown = spaDown = false;
+            aDown = dDown = wDown = sDown = escDown = spaDown = attacked = false;
         } 
 
         private void keyDown(object sender, PreviewKeyDownEventArgs e)
@@ -259,7 +270,89 @@ namespace Rogue_Runner
             }
             if (spaDown)
             {
+                if (cooldown <= 0)
+                {
+                    cooldown = 70;
+                    swordCounter = 0;
+                    player.attack();
+                    attacked = true;
+                }
+                
+                
+            }
+            if (swordCounter > 30)
+            {
+                player.deleteSword();
+                attacked = false;
+                swordCounter--;
+            }
+            if (attacked == true)
+            {
                 player.attack();
+                swordCounter++;
+            }
+            if (cooldown > 0)
+            {
+                cooldown--;
+            }
+            
+            foreach(Runner r in run)
+            {
+                if (knockCounter == 0)
+                {
+                    if (r.x - player.x < 200 && r.x - player.x > 0)
+                    {
+                        r.move("Left");
+                    }
+                    if (player.x - r.x < 200 && player.x - r.x > 0)
+                    {
+                        r.move("Right");
+                    }
+                    if (r.y - player.y < 200 && r.y - player.y > 0)
+                    {
+                        r.move("Up");
+                    }
+                    if (player.y - r.y < 200 && player.y - r.y > 0)
+                    {
+                        r.move("Down");
+                    }
+                }
+               
+                Rectangle runRec = new Rectangle(r.x, r.y, r.w, r.h);
+                if (runRec.IntersectsWith(player.sword))
+                { 
+                    r.damaged(player.damage, knock);
+                    knockCounter = 70;
+                    
+                }
+                Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
+                if (runRec.IntersectsWith(playerRec))
+                {
+                    if(iframes <= 0)
+                    {
+                        player.damaged(r.damage);
+                        r.damaged(0, knock);
+                        knockCounter = 30;
+                    }  
+                    iframes = 30;
+                }
+                if (r.health <= 0)
+                {
+                    run.Remove(r);
+                    break;
+                }
+            }
+            if (knockCounter > 0)
+            {
+                knockCounter--;
+            }
+            if (iframes > 0)
+            {
+                iframes--;
+            }
+            if (player.health <= 0)
+            {
+                Application.Exit();
             }
             Refresh();
         }
@@ -271,7 +364,16 @@ namespace Rogue_Runner
             {
                 e.Graphics.FillRectangle(obsBrush, r.X, r.Y, r.Width, r.Height);
             }
+
+            foreach(Runner r in run)
+            {
+                e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+            }
             e.Graphics.FillRectangle(obsBrush, player.x, player.y, player.w, player.h);
+
+            e.Graphics.FillRectangle(swordBrush, player.sword);
+
+            e.Graphics.FillRectangle(enemyBrush, 100, 0, player.health , 20);
         }
     }
 }
