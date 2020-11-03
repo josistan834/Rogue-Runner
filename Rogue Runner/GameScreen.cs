@@ -33,8 +33,9 @@ namespace Rogue_Runner
 
 
         //Object
-        public static Player player = new Player(300, 300, 40, 40, 4, 500, 100, "Up"); 
-        
+
+        public static Player player = new Player(0, 0, 20, 20, 4, 500, 100, "Up");
+
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
         List<Runner> run = new List<Runner>();
@@ -264,7 +265,22 @@ namespace Rogue_Runner
         }
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-           
+            if (player.x <= this.Width / 2 - rooms[levelIndex].width / 2)
+            {
+                aDown = false;
+            }
+            if (player.x >= this.Width / 2 + rooms[levelIndex].width / 2 - player.w)
+            {
+                dDown = false;
+            }
+            if (player.y <= this.Height / 2 - rooms[levelIndex].height / 2)
+            {
+                wDown = false;
+            }
+            if (player.y >= this.Height / 2 + rooms[levelIndex].height / 2 - player.w)
+            {
+                sDown = false;
+            }
             if (aDown)
             {
                 player.move("Left");
@@ -405,23 +421,8 @@ namespace Rogue_Runner
                 Application.Exit();
             }
 
-            #region palyer collision
-            if (player.x <= this.Width / 2 - rooms[levelIndex].width / 2)
-            {
-                aDown = false;
-            }
-            if (player.x >= this.Width / 2 + rooms[levelIndex].width / 2 - player.w)
-            {
-                dDown = false;
-            }
-            if (player.y <= this.Height / 2 - rooms[levelIndex].height / 2)
-            {
-                wDown = false;
-            }
-            if (player.y >= this.Height / 2 + rooms[levelIndex].height / 2 - player.w)
-            {
-                sDown = false;
-            }
+            #region player collision
+           
 
             foreach (Rectangle r in rooms[levelIndex].obstacles)
             {
