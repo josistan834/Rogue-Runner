@@ -19,10 +19,12 @@ namespace Rogue_Runner
         SolidBrush roomBrush = new SolidBrush(Color.White);
         SolidBrush obsBrush = new SolidBrush(Color.Black);
         int levelIndex = 0;
+        int prevX, prevY;
+
 
         //Object
-        Player player = new Player(300, 300, 20, 20, 4, 0, 0);
-        
+        Player player = new Player(0, 0, 20, 20, 4, 0, 0);
+
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
 
@@ -181,7 +183,8 @@ namespace Rogue_Runner
             //Initialize
             InitializeComponent();
             generateFloor();
-
+            player.x = this.Width / 2;
+            player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values
             aDown = dDown = wDown = sDown = escDown = spaDown = false;
         } 
@@ -237,6 +240,7 @@ namespace Rogue_Runner
         }
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+           
             if (aDown)
             {
                 player.move("Left");
@@ -261,6 +265,72 @@ namespace Rogue_Runner
             {
                 player.attack();
             }
+
+            #region palyer collision
+            if (player.x <= this.Width / 2 - rooms[levelIndex].width / 2)
+            {
+                aDown = false;
+            }
+            if (player.x >= this.Width / 2 + rooms[levelIndex].width / 2 - player.w)
+            {
+                dDown = false;
+            }
+            if (player.y <= this.Height / 2 - rooms[levelIndex].height / 2)
+            {
+                wDown = false;
+            }
+            if (player.y >= this.Height / 2 + rooms[levelIndex].height / 2 - player.w)
+            {
+                sDown = false;
+            }
+
+            foreach (Rectangle r in rooms[levelIndex].obstacles)
+            {
+                Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
+                if (playerRec.IntersectsWith(r))
+                {
+                    player.x = prevX;
+                    player.y = prevY;
+                    if (aDown == true)
+                    {
+                        aDown = false;
+                        dDown = false;
+                        wDown = false;
+                        sDown = false;
+                        //player.x += player.speed;
+                    }
+                    if (dDown == true)
+                    {
+                        aDown = false;
+                        dDown = false;
+                        wDown = false;
+                        sDown = false;
+                        //player.x -= player.speed;
+                    }
+                    if (wDown == true)
+                    {
+                        aDown = false;
+                        dDown = false;
+                        wDown = false;
+                        sDown = false;
+                        //player.y += player.speed;
+                    }
+                    if (sDown == true)
+                    {
+                        aDown = false;
+                        dDown = false;
+                        wDown = false;
+                        sDown = false;
+                       //player.y -= player.speed;
+                    }
+                }
+            }
+            #endregion
+
+
+            prevX = player.x;
+            prevY = player.y;
+
             Refresh();
         }
         private void GameScreen_Paint(object sender, PaintEventArgs e)
