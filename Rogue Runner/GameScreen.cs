@@ -18,6 +18,7 @@ namespace Rogue_Runner
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.White);
         SolidBrush obsBrush = new SolidBrush(Color.Black);
+        int levelIndex = 0;
 
         //Object
         Player player = new Player(0, 0, 0, 0, 0, 0, 0);
@@ -73,8 +74,8 @@ namespace Rogue_Runner
                         //horizontal rectancle
                         rWidth = 100;
                         rHeight = 50;
-                        rX = randgen.Next(75, width - 175);
-                        rY = randgen.Next(75, height - 125);
+                        rX = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 175);
+                        rY = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec);
                         break;
@@ -82,8 +83,8 @@ namespace Rogue_Runner
                         //vertical rectangle
                         rWidth = 50;
                         rHeight = 100;
-                        rY = randgen.Next(75, height - 175);
-                        rX = randgen.Next(75, width - 125);
+                        rY = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 175);
+                        rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec2 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec2);
                         break;
@@ -91,8 +92,8 @@ namespace Rogue_Runner
                         //L shape: |_
                         rWidth = 40;
                         rHeight = 80;
-                        rY = randgen.Next(75, height - 155);
-                        rX = randgen.Next(75, width - 115);
+                        rY = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 155);
+                        rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec3 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec3);
 
@@ -106,8 +107,8 @@ namespace Rogue_Runner
                         //L shape: _|
                         rWidth = 40;
                         rHeight = 80;
-                        rY = randgen.Next(75, height - 155);
-                        rX = randgen.Next(75, width - 115);
+                        rY = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 155);
+                        rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec5 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec5);
 
@@ -122,8 +123,8 @@ namespace Rogue_Runner
                         //L shape: upside down
                         rWidth = 40;
                         rHeight = 80;
-                        rY = randgen.Next(75, height - 155);
-                        rX = randgen.Next(75, width - 115);
+                        rY = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 155);
+                        rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec7 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec7);
 
@@ -137,8 +138,8 @@ namespace Rogue_Runner
                         //L shape: upside down facing left
                         rWidth = 40;
                         rHeight = 80;
-                        rY = randgen.Next(75, height - 155);
-                        rX = randgen.Next(75, width - 115);
+                        rY = randgen.Next(this.Height/2 - height/2 + 75, this.Height / 2 + height / 2 - 155);
+                        rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec9 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec9);
 
@@ -151,17 +152,17 @@ namespace Rogue_Runner
                         break;
                     case 7:
                         //+ shape
-                        rWidth = 30;
-                        rHeight = 60;
-                        rY = randgen.Next(75, height - 155);
-                        rX = randgen.Next(75, width - 115);
+                        rWidth = 40;
+                        rHeight = 100;
+                        rY = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 155);
+                        rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec11 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec11);
 
-                        rWidth = 60;
-                        rHeight = 30;
-                        rX -= 15;
-                        rY += 15;
+                        rWidth = 100;
+                        rHeight = 40;
+                        rX -= 30;
+                        rY += 30;
                         Rectangle newRec12 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec12);
                         break;
@@ -263,7 +264,7 @@ namespace Rogue_Runner
         }
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(roomBrush, this.Width / 2 - rooms[0].width / 2, this.Height / 2 - rooms[0].height / 2, rooms[0].width, rooms[0].height);
+            e.Graphics.FillRectangle(roomBrush, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
             
             foreach(Rectangle r in rooms[0].obstacles)
             {
