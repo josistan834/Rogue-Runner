@@ -287,6 +287,7 @@ namespace Rogue_Runner
             {
                 sDown = false;
             }
+
             if (aDown)
             {
                 player.move("Left");
