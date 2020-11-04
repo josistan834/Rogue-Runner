@@ -1,54 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Rogue_Runner
 {
-    public class Soul
+    public class Projectile
     {
-        public int x, y, w, h, speed, health, damage, preY, preX, iframes;
-        public bool up, right;
-        
-        public Soul(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage)
+        public int speed, x, y, w, h, damage;
+        public string dir;
+        public Projectile(int _x, int _y, int _w, int _h, int _speed, int _damage, string _dir)
         {
             x = _x;
             y = _y;
             w = _w;
             h = _h;
             speed = _speed;
-            health = _health;
             damage = _damage;
+            dir = _dir;
         }
         public void move()
         {
-            if (right == false)
+            if (dir == "Left")
             {
                 x -= speed;
             }
-            else if (right == true)
+            else if (dir == "Right")
             {
                 x += speed;
             }
-            if (up == true)
+            else if (dir == "Up")
             {
                 y -= speed;
             }
-            else if (up == false)
+            else if (dir == "Down")
             {
                 y += speed;
             }
         }
-        public void damaged(int damage)
-        {
-            if (iframes <= 0)
-            {
-                health -= damage;
-
-            }
-
-        }
     }
-
 }
