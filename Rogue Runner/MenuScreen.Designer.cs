@@ -41,7 +41,7 @@
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playButton.Font = new System.Drawing.Font("Century Gothic", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playButton.ForeColor = System.Drawing.Color.White;
-            this.playButton.Location = new System.Drawing.Point(19, 379);
+            this.playButton.Location = new System.Drawing.Point(111, 326);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(290, 72);
             this.playButton.TabIndex = 1;
@@ -57,7 +57,7 @@
             this.controlsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.controlsButton.Font = new System.Drawing.Font("Century Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.controlsButton.ForeColor = System.Drawing.Color.Transparent;
-            this.controlsButton.Location = new System.Drawing.Point(19, 457);
+            this.controlsButton.Location = new System.Drawing.Point(111, 404);
             this.controlsButton.Name = "controlsButton";
             this.controlsButton.Size = new System.Drawing.Size(290, 72);
             this.controlsButton.TabIndex = 2;
@@ -73,7 +73,7 @@
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Century Gothic", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitButton.ForeColor = System.Drawing.Color.White;
-            this.exitButton.Location = new System.Drawing.Point(19, 613);
+            this.exitButton.Location = new System.Drawing.Point(111, 560);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(290, 72);
             this.exitButton.TabIndex = 4;
@@ -89,7 +89,7 @@
             this.leaderboardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.leaderboardButton.Font = new System.Drawing.Font("Century Gothic", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.leaderboardButton.ForeColor = System.Drawing.Color.White;
-            this.leaderboardButton.Location = new System.Drawing.Point(19, 535);
+            this.leaderboardButton.Location = new System.Drawing.Point(111, 482);
             this.leaderboardButton.Name = "leaderboardButton";
             this.leaderboardButton.Size = new System.Drawing.Size(290, 72);
             this.leaderboardButton.TabIndex = 3;
@@ -103,8 +103,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
-            this.BackgroundImage = global::Rogue_Runner.Properties.Resources.big_room;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.BackgroundImage = global::Rogue_Runner.Properties.Resources.titleScreen;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Controls.Add(this.leaderboardButton);
             this.Controls.Add(this.exitButton);
             this.Controls.Add(this.controlsButton);
