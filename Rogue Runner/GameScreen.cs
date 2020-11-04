@@ -623,7 +623,7 @@ namespace Rogue_Runner
             {
                 if (counter % 30 == 0)
                 {
-                    if(Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
+                    if (Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
                     {
                         if (r.x < player.x)
                         {
@@ -645,7 +645,7 @@ namespace Rogue_Runner
                             r.direc = "Up";
                         }
                     }
-                   
+
                     r.attack();
                 }
                 foreach (Projectile b in Ranger.bullets)
@@ -666,8 +666,15 @@ namespace Rogue_Runner
                             iframes = 30;
                         }
                     }
-                }
+                    foreach (Rectangle c in rooms[levelIndex].obstacles)
+                    {
+                        if (pew.IntersectsWith(c))
+                        {
+                            Ranger.bullets.Remove(b);
+                        }
 
+                    }
+                }
             }
             prevX = player.x;
             prevY = player.y;
