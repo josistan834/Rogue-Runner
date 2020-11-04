@@ -105,8 +105,8 @@ namespace Rogue_Runner
                         //horizontal rectancle
                         rWidth = 100;
                         rHeight = 50;
-                        rX = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 175);
-                        rY = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
+                        rY = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 115);
+                        rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 175);
                         Rectangle newRec = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec);
                         break;
@@ -128,9 +128,10 @@ namespace Rogue_Runner
                         Rectangle newRec3 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec3);
 
-                        rWidth = 80;
+                        rWidth = 40;
                         rHeight = 40;
                         rY += 40;
+                        rX -= 40;
                         Rectangle newRec4 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec4);
                         break;
@@ -143,10 +144,10 @@ namespace Rogue_Runner
                         Rectangle newRec5 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec5);
 
-                        rWidth = 80;
+                        rWidth = 40;
                         rHeight = 40;
                         rY += 40;
-                        rX += 40;
+                        rX -= 40;
                         Rectangle newRec6 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec6);
                         break;
@@ -159,8 +160,9 @@ namespace Rogue_Runner
                         Rectangle newRec7 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec7);
 
-                        rWidth = 80;
+                        rWidth = 40;
                         rHeight = 40;
+                        rX += 40;
                         Rectangle newRec8 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec8);
 
@@ -174,7 +176,7 @@ namespace Rogue_Runner
                         Rectangle newRec9 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec9);
 
-                        rWidth = 80;
+                        rWidth = 40;
                         rHeight = 40;
                         rX -= 40;
                         Rectangle newRec10 = new Rectangle(rX, rY, rWidth, rHeight);
@@ -190,12 +192,18 @@ namespace Rogue_Runner
                         Rectangle newRec11 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec11);
 
-                        rWidth = 100;
+                        rWidth = 30;
                         rHeight = 40;
                         rX -= 30;
                         rY += 30;
                         Rectangle newRec12 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec12);
+                        
+                        rWidth = 30;
+                        rHeight = 40;
+                        rX += 70;
+                        Rectangle newRec13 = new Rectangle(rX, rY, rWidth, rHeight);
+                        obstacles.Add(newRec13);
                         break;
 
                 }
@@ -203,7 +211,7 @@ namespace Rogue_Runner
 
             Runner fast = new Runner(500, 500, 30, 30, 6, 200, 50, 30);
             run.Add(fast);
-            Soul spook = new Soul(500, 500, 30, 30, 2, 100, 10);
+            Soul spook = new Soul(500, 400, 30, 30, 4, 100, 10);
             souls.Add(spook);
 
             Room newRoom = new Room(width, height, type, obstacles, image);
@@ -274,6 +282,8 @@ namespace Rogue_Runner
         }
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+          
+
             if (player.x <= this.Width / 2 - rooms[levelIndex].width / 2)
             {
                 aDown = false;
@@ -434,10 +444,7 @@ namespace Rogue_Runner
 
                     }
                 }
-                else
-                {
-
-                }
+               
                 if (runRec.IntersectsWith(player.sword))
                 {
                     
@@ -483,28 +490,38 @@ namespace Rogue_Runner
             {
                 Application.Exit();
             }
+
             foreach (Soul s in souls)
             {
+                s.move();
+            }
 
+            foreach (Soul s in souls)
+            {
                 Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
                 foreach (Rectangle c in rooms[levelIndex].obstacles)
-                {
+                { //AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
                     if (spook.IntersectsWith(c))
                     {
-                        s.x = s.preX;
-                        s.y = s.preY;
-                        if (s.x <= c.X + c.Width && s.x >= c.X)
+                        if (s.x <= c.X + c.Width && s.x >= c.X - s.w)
                         {
                             s.up = !s.up;
-                            
+
+                            s.x = s.preX;
+                            s.y = s.preY;
+                            break;
                         }
-                        else if (s.y >= c.Y - s.w && s.y <= c.Y + c.Height)
+                        else if (s.y >= c.Y - s.h && s.y <= c.Y + c.Height)
                         {
                             s.right = !s.right;
 
+                            s.x = s.preX;
+                            s.y = s.preY;
+                            break;
                         }
                     }
-                }
+                } 
+
                 if (s.x <= this.Width / 2 - rooms[levelIndex].width / 2)
                 {
                     s.right = !s.right;
@@ -522,11 +539,11 @@ namespace Rogue_Runner
                     s.up = !s.up;
                 }
 
-                s.move();
-
             }
+            
+
             #region player collision
-           
+
 
             foreach (Rectangle r in rooms[levelIndex].obstacles)
             {
@@ -567,12 +584,13 @@ namespace Rogue_Runner
             }
             #endregion
 
-           
+
             foreach (Soul s in souls)
             {
                 s.preX = s.x;
                 s.preY = s.y;
             }
+
             prevX = player.x;
             prevY = player.y;
 
