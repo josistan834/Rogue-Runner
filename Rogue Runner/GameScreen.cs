@@ -22,23 +22,23 @@ namespace Rogue_Runner
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
         int levelIndex = 0;
         
-        public int swordCounter = 30sssa;
+        public int swordCounter = 30;
         bool attacked;
-        public static int knock = 30;
         int knockCounter = 0;
         int cooldown = 0;
         int iframes = 30;
-
+        int runStun = 0;
         int prevX, prevY;
 
 
         //Object
 
-        public static Player player = new Player(0, 0, 20, 20, 4, 500, 100, "Up");
+        public static Player player = new Player(0, 0, 40, 40, 4, 500, 100, "Up");
 
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
         List<Runner> run = new List<Runner>();
+        List<Soul> souls = new List<Soul>();
         Image heroUp = Properties.Resources.heroUp;
         Image heroDown = Properties.Resources.heroDown;
         Image heroLeft = Properties.Resources.heroLeft;
@@ -195,8 +195,10 @@ namespace Rogue_Runner
                 }
             }
 
-            Runner fast = new Runner(500, 500, 30, 30, 6, 500, 50);
+            Runner fast = new Runner(500, 500, 30, 30, 6, 200, 50, 30);
             run.Add(fast);
+            Soul spook = new Soul(500, 500, 30, 30, 2, 100, 10);
+            souls.Add(spook);
             Room newRoom = new Room(width, height, type, obstacles);
             rooms.Add(newRoom);
 
@@ -328,68 +330,116 @@ namespace Rogue_Runner
             {
                 cooldown--;
             }
-            
-            foreach(Runner r in run)
+
+            foreach (Runner r in run)
             {
-                bool move = true;
+                //r.movement = true;
                 Rectangle runRec = new Rectangle(r.x, r.y, r.w, r.h);
                 Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
                 foreach (Rectangle c in rooms[levelIndex].obstacles)
                 {
                     if (c.IntersectsWith(runRec))
                     {
-                        move = false;
+                        r.movement = false;
+                        rooms[levelIndex].obstacles.Remove(c);
+                        runStun = 60;
+                        break;
+
                     }
                 }
-                if (knockCounter == 0 && !runRec.IntersectsWith(playerRec))
+                if (runStun > 0)
                 {
-                    if (move)
-                    {
-                        if (r.x - player.x < 200 && r.x - player.x > 20)
-                        {
-                            r.move("Left");
-                        }
-                        if (player.x - r.x < 200 && player.x - r.x > 20)
-                        {
-                            r.move("Right");
-                        }
-                        if (r.y - player.y < 200 && r.y - player.y > 20)
-                        {
-                            r.move("Up");
-                        }
-                        if (player.y - r.y < 200 && player.y - r.y > 20)
-                        {
-                            r.move("Down");
-                        }
-                    }
-                    else
-                    {
-                        if (r.x - player.x < 200 && r.x - player.x > 20)
-                        {
-                            r.move("Down");
-                        }
-                        if (player.x - r.x < 200 && player.x - r.x > 20)
-                        {
-                            r.move("Up");
-                        }
-                        if (r.y - player.y < 200 && r.y - player.y > 20)
-                        {
-                            r.move("Right");
-                        }
-                        if (player.y - r.y < 200 && player.y - r.y > 20)
-                        {
-                            r.move("Left");
-                        }
-                    }
-                    
+                    runStun--;
                 }
-               
-               
+                else if (runStun <= 0)
+                {
+                    r.movement = true;
+                }
+                if (r.movement == true)
+                {
+                    if (knockCounter == 0 && !runRec.IntersectsWith(playerRec))
+                    {
+
+                        if (r.x - player.x < 200 && r.x - player.x > 20)
+                        {
+                            r.move("Left");
+                        }
+                        if (player.x - r.x < 200 && player.x - r.x > 20)
+                        {
+                            r.move("Right");
+                        }
+                        if (r.y - player.y < 200 && r.y - player.y > 20)
+                        {
+                            r.move("Up");
+                        }
+                        if (player.y - r.y < 200 && player.y - r.y > 20)
+                        {
+                            r.move("Down");
+                        }
+                    }
+                    else if (knockCounter != 0 || runRec.IntersectsWith(playerRec))
+                    {
+                        if (r.x <= this.Width / 2 - rooms[levelIndex].width / 2)
+                        {
+                        
+                        }
+                        else if (r.x >= this.Width / 2 + rooms[levelIndex].width / 2 - r.w)
+                        {
+
+                        }
+                        else if (r.y <= this.Height / 2 - rooms[levelIndex].height / 2)
+                        {
+
+                        }
+                        else if (r.y >= this.Height / 2 + rooms[levelIndex].height / 2 - r.w)
+                        {
+
+                        }
+                        else
+                        {
+                            r.move(player.direc);
+                        }
+                        
+                    }
+                    else if (knockCounter != 0 && !runRec.IntersectsWith(playerRec))
+                    {
+                        if (r.x <= this.Width / 2 - rooms[levelIndex].width / 2)
+                        {
+
+                        }
+                        else if (r.x >= this.Width / 2 + rooms[levelIndex].width / 2 - r.w)
+                        {
+
+                        }
+                        else if (r.y <= this.Height / 2 - rooms[levelIndex].height / 2)
+                        {
+
+                        }
+                        else if (r.y >= this.Height / 2 + rooms[levelIndex].height / 2 - r.w)
+                        {
+
+                        }
+                        else
+                        {
+                            r.move(player.direc);
+                        }
+
+                    }
+                }
+                else
+                {
+
+                }
                 if (runRec.IntersectsWith(player.sword))
-                { 
-                    r.damaged(player.damage, knock);
-                    knockCounter = 70;
+                {
                     
+                    r.damaged(player.damage);
+                    knockCounter = 30;
+                    if (r.iframes <= 0)
+                    {
+                        r.iframes = 30;
+                    }
+
                 }
                 
                 if (runRec.IntersectsWith(playerRec))
@@ -397,16 +447,21 @@ namespace Rogue_Runner
                     if(iframes <= 0)
                     {
                         player.damaged(r.damage);
-                        r.damaged(0, knock);
-                        knockCounter = 30;
+                        knockCounter = 10;
+                        iframes = 30;
                     }  
-                    iframes = 30;
+                    
                 }
                 if (r.health <= 0)
                 {
                     run.Remove(r);
                     break;
                 }
+                if (r.iframes > 0)
+                {
+                    r.iframes--;
+                }
+                
             }
             if (knockCounter > 0)
             {
@@ -420,7 +475,48 @@ namespace Rogue_Runner
             {
                 Application.Exit();
             }
+            foreach (Soul s in souls)
+            {
 
+                Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
+                foreach (Rectangle c in rooms[levelIndex].obstacles)
+                {
+                    if (spook.IntersectsWith(c))
+                    {
+                        s.x = s.preX;
+                        s.y = s.preY;
+                        if (s.x <= c.X + c.Width && s.x >= c.X)
+                        {
+                            s.up = !s.up;
+                            
+                        }
+                        else if (s.y >= c.Y - s.w && s.y <= c.Y + c.Height)
+                        {
+                            s.right = !s.right;
+
+                        }
+                    }
+                }
+                if (s.x <= this.Width / 2 - rooms[levelIndex].width / 2)
+                {
+                    s.right = !s.right;
+                }
+                else if (s.x >= this.Width / 2 + rooms[levelIndex].width / 2 - s.w)
+                {
+                    s.right = !s.right;
+                }
+                else if (s.y <= this.Height / 2 - rooms[levelIndex].height / 2)
+                {
+                    s.up = !s.up;
+                }
+                else if (s.y >= this.Height / 2 + rooms[levelIndex].height / 2 - s.w)
+                {
+                    s.up = !s.up;
+                }
+
+                s.move();
+
+            }
             #region player collision
            
 
@@ -467,7 +563,12 @@ namespace Rogue_Runner
             }
             #endregion
 
-
+           
+            foreach (Soul s in souls)
+            {
+                s.preX = s.x;
+                s.preY = s.y;
+            }
             prevX = player.x;
             prevY = player.y;
 
@@ -486,7 +587,11 @@ namespace Rogue_Runner
             {
                 e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
             }
-            if(swordCounter >= 30)
+            foreach (Soul r in souls)
+            {
+                e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+            }
+            if (swordCounter >= 30)
             {
                 if (player.direc == "Up")
                 {

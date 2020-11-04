@@ -8,9 +8,10 @@ namespace Rogue_Runner
 {
     public class Runner
     {
-        public int x, y, w, h, speed, health, damage;
+        public int x, y, w, h, speed, health, damage, iframes;
+        public bool movement;
 
-        public Runner(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage)
+        public Runner(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage, int _iframes)
         {
             x = _x;
             y = _y;
@@ -19,6 +20,7 @@ namespace Rogue_Runner
             speed = _speed;
             health = _health;
             damage = _damage;
+            iframes = _iframes;
         }
 
         public void move(string dir)
@@ -40,32 +42,19 @@ namespace Rogue_Runner
                 y += speed;
             }
         }
-        public void attack()
-        {
-
-        }
         public void block()
         {
 
         }
-        public void damaged(int damage, int knock)
+        public void damaged(int damage)
         {
-            if (knock == 30)
+            
+            if (iframes <= 0)
             {
                 health -= damage;
-                GameScreen.knock--;
-            }
-            else if (knock > 0)
-            {
-                move(GameScreen.player.direc);
-                GameScreen.knock--;
 
             }
-            else
-            {
-                GameScreen.knock = 30;
-            }
-            
+
         }
     }
 }
