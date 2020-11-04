@@ -12,14 +12,16 @@ namespace Rogue_Runner
         public int width, height;
         public string type;
         public List<Rectangle> obstacles = new List<Rectangle>();
+        public Image image;
         //List <> enemy = new List <>();
 
-        public Room(int _width, int _height, string _type, List<Rectangle> _obstacles)
+        public Room(int _width, int _height, string _type, List<Rectangle> _obstacles, Image _image)
         {
             width = _width;
             height = _height;
             type = _type;
             obstacles = _obstacles;
+            image = _image;
         }
 
 

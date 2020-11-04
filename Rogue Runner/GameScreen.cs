@@ -17,7 +17,7 @@ namespace Rogue_Runner
         //Global Variables
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.LightBlue);
-        SolidBrush obsBrush = new SolidBrush(Color.Black);
+        SolidBrush obsBrush = new SolidBrush(Color.White);
         SolidBrush swordBrush = new SolidBrush(Color.Green);
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
         int levelIndex = 0;
@@ -39,6 +39,8 @@ namespace Rogue_Runner
         List<Room> rooms = new List<Room>();
         List<Runner> run = new List<Runner>();
         List<Soul> souls = new List<Soul>();
+
+        #region images
         Image heroUp = Properties.Resources.heroUp;
         Image heroDown = Properties.Resources.heroDown;
         Image heroLeft = Properties.Resources.heroLeft;
@@ -51,7 +53,7 @@ namespace Rogue_Runner
         Image hitDown = Properties.Resources.hitEffectDown;
         Image hitLeft = Properties.Resources.hitEffectLeft;
         Image hitRight = Properties.Resources.hitEffect;
-
+        #endregion
 
         private void generateFloor()
         {
@@ -60,12 +62,14 @@ namespace Rogue_Runner
             width = height = obstacleCount = 0;
             string type = "";
             List<Rectangle> obstacles = new List<Rectangle>();
+            Image image = Properties.Resources.big_room;
             int size = randgen.Next(1, 4);
 
             switch (size)
             {
                 case 1:
                     type = "small";
+                    image = Properties.Resources.small_room;
                     width = 550;
                     height = 450;
                     obstacleCount = randgen.Next(0, 3);
@@ -73,6 +77,7 @@ namespace Rogue_Runner
                     break;
                 case 2:
                     type = "medium";
+                    image = Properties.Resources.med_room;
                     width = 700;
                     height = 525;
                     obstacleCount = randgen.Next(1, 4);
@@ -80,6 +85,7 @@ namespace Rogue_Runner
                     break;
                 case 3:
                     type = "large";
+                    image = Properties.Resources.big_room;
                     width = 850;
                     height = 650;
                     obstacleCount = randgen.Next(2, 6);
@@ -91,7 +97,7 @@ namespace Rogue_Runner
             {
                 int obsType = randgen.Next(1, 8);
                 int rWidth, rHeight, rX, rY;
-
+                
 
                 switch (obsType)
                 {
@@ -199,7 +205,8 @@ namespace Rogue_Runner
             run.Add(fast);
             Soul spook = new Soul(500, 500, 30, 30, 2, 100, 10);
             souls.Add(spook);
-            Room newRoom = new Room(width, height, type, obstacles);
+
+            Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
 
             Refresh();
@@ -283,6 +290,7 @@ namespace Rogue_Runner
             {
                 sDown = false;
             }
+
             if (aDown)
             {
                 player.move("Left");
@@ -533,7 +541,6 @@ namespace Rogue_Runner
                         dDown = false;
                         wDown = false;
                         sDown = false;
-                        //player.x += player.speed;
                     }
                     if (dDown == true)
                     {
@@ -541,7 +548,6 @@ namespace Rogue_Runner
                         dDown = false;
                         wDown = false;
                         sDown = false;
-                        //player.x -= player.speed;
                     }
                     if (wDown == true)
                     {
@@ -549,7 +555,6 @@ namespace Rogue_Runner
                         dDown = false;
                         wDown = false;
                         sDown = false;
-                        //player.y += player.speed;
                     }
                     if (sDown == true)
                     {
@@ -557,7 +562,6 @@ namespace Rogue_Runner
                         dDown = false;
                         wDown = false;
                         sDown = false;
-                       //player.y -= player.speed;
                     }
                 }
             }
@@ -576,7 +580,7 @@ namespace Rogue_Runner
         }
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(roomBrush, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
+            e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
             
             foreach(Rectangle r in rooms[0].obstacles)
             {

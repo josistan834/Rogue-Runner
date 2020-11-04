@@ -22,11 +22,11 @@ namespace Rogue_Runner
             Form form1 = this.FindForm();
             form1.Controls.Remove(this);
 
-            GameScreen gs = new GameScreen();
-            form1.Controls.Add(gs);
+            MenuScreen ms = new MenuScreen();
+            form1.Controls.Add(ms);
 
-            gs.Focus();
-            gs.Location = new Point(this.Width / 2 - gs.Width / 2, this.Height / 2 - gs.Height / 2);
+            ms.Focus();
+            ms.Location = new Point(this.Width / 2 - ms.Width / 2, this.Height / 2 - ms.Height / 2);
         }
     }
 }
