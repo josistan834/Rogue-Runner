@@ -10,6 +10,7 @@ namespace Rogue_Runner
     {
         public int x, y, w, h, speed, health, damage, preY, preX, iframes;
         public bool up, right;
+        
         public Soul(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage)
         {
             x = _x;
@@ -22,19 +23,19 @@ namespace Rogue_Runner
         }
         public void move()
         {
-            if (!right)
+            if (right == false)
             {
                 x -= speed;
             }
-            else if (right)
+            else if (right == true)
             {
                 x += speed;
             }
-            if (up)
+            if (up == true)
             {
                 y -= speed;
             }
-            else if (!up)
+            else if (up == false)
             {
                 y += speed;
             }
