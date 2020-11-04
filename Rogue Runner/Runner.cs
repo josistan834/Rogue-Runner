@@ -42,10 +42,6 @@ namespace Rogue_Runner
                 y += speed;
             }
         }
-        public void block()
-        {
-
-        }
         public void damaged(int damage)
         {
             

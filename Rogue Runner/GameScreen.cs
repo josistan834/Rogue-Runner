@@ -29,16 +29,18 @@ namespace Rogue_Runner
         int iframes = 30;
         int runStun = 0;
         int prevX, prevY;
+        int counter = 0;
 
 
         //Object
 
-        public static Player player = new Player(0, 0, 40, 40, 4, 500, 100, "Up");
+        public static Player player = new Player(0, 0, 40, 40, 4, 500, 50, "Up");
 
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
         List<Runner> run = new List<Runner>();
         List<Soul> souls = new List<Soul>();
+        List<Ranger> rangers = new List<Ranger>();
 
         #region images
         Image heroUp = Properties.Resources.heroUp;
@@ -203,9 +205,10 @@ namespace Rogue_Runner
 
             Runner fast = new Runner(500, 500, 30, 30, 6, 200, 50, 30);
             run.Add(fast);
-            Soul spook = new Soul(500, 500, 30, 30, 2, 100, 10);
-            souls.Add(spook);
-
+            Soul spooky = new Soul(500, 500, 30, 30, 2, 150, 10);
+            souls.Add(spooky);
+            Ranger gun = new Ranger(500, 500, 30, 30, 200, 30, "Left");
+            rangers.Add(gun);
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
 
@@ -523,6 +526,49 @@ namespace Rogue_Runner
                 }
 
                 s.move();
+                Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+                if (spook.IntersectsWith(plr))
+                {
+                    if (iframes <= 0)
+                    {
+                        player.damaged(s.damage);
+                        iframes = 30;
+                    }
+                }
+                if (spook.IntersectsWith(player.sword))
+                {
+
+                    s.damaged(player.damage);
+                    if (player.direc == "Right")
+                    {
+                        s.right = true;
+                    }
+                    else if (player.direc == "Left")
+                    {
+                        s.right = false;
+                    }
+                    if (player.direc == "Up")
+                    {
+                        s.up = true;
+                    }
+                    else if (player.direc == "Down")
+                    {
+                        s.up = false;
+                    }
+                    if (s.iframes <= 0)
+                    {
+                        s.iframes = 30;
+                    }
+                }
+                if (s.health <= 0)
+                {
+                    souls.Remove(s);
+                    break;
+                }
+                if (s.iframes > 0)
+                {
+                    s.iframes--;
+                }
 
             }
             #region player collision
@@ -573,9 +619,60 @@ namespace Rogue_Runner
                 s.preX = s.x;
                 s.preY = s.y;
             }
+            foreach (Ranger r in rangers)
+            {
+                if (counter % 30 == 0)
+                {
+                    if(Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
+                    {
+                        if (r.x < player.x)
+                        {
+                            r.direc = "Right";
+                        }
+                        if (r.x > player.x)
+                        {
+                            r.direc = "Left";
+                        }
+                    }
+                    else
+                    {
+                        if (r.y < player.y)
+                        {
+                            r.direc = "Down";
+                        }
+                        if (r.y > player.y)
+                        {
+                            r.direc = "Up";
+                        }
+                    }
+                   
+                    r.attack();
+                }
+                foreach (Projectile b in Ranger.bullets)
+                {
+                    b.move();
+                    Rectangle pew = new Rectangle(b.x, b.y, b.w, b.h);
+                    Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+                    if (b.x < 0 || b.x > this.Width || b.y < 0 || b.y > this.Height)
+                    {
+                        Ranger.bullets.Remove(b);
+                        break;
+                    }
+                    if (pew.IntersectsWith(plr))
+                    {
+                        if (iframes <= 0)
+                        {
+                            player.damaged(b.damage);
+                            iframes = 30;
+                        }
+                    }
+                }
+
+            }
             prevX = player.x;
             prevY = player.y;
 
+            counter++;
             Refresh();
         }
         private void GameScreen_Paint(object sender, PaintEventArgs e)
@@ -590,6 +687,14 @@ namespace Rogue_Runner
             foreach(Runner r in run)
             {
                 e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+            }
+            foreach (Ranger r in rangers)
+            {
+                e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+            }
+            foreach (Projectile b in Ranger.bullets)
+            {
+                e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
             }
             foreach (Soul r in souls)
             {
