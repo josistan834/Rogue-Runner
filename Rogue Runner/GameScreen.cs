@@ -671,6 +671,7 @@ namespace Rogue_Runner
                         if (pew.IntersectsWith(c))
                         {
                             Ranger.bullets.Remove(b);
+                            break;
                         }
 
                     }
