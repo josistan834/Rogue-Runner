@@ -233,6 +233,16 @@ namespace Rogue_Runner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap obstacleSprite {
+            get {
+                object obj = ResourceManager.GetObject("obstacleSprite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rangePower {
             get {
                 object obj = ResourceManager.GetObject("rangePower", resourceCulture);

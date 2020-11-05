@@ -892,7 +892,7 @@ namespace Rogue_Runner
             
             foreach(Rectangle r in rooms[0].obstacles)
             {
-                e.Graphics.FillRectangle(obsBrush, r.X, r.Y, r.Width, r.Height);
+                e.Graphics.DrawImage(Resources.obstacleSprite, r.X, r.Y, r.Width, r.Height);
             }
 
             foreach(Runner r in run)
