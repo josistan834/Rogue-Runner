@@ -73,6 +73,16 @@ namespace Rogue_Runner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap heart_overlay {
+            get {
+                object obj = ResourceManager.GetObject("heart_overlay", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap heroDown {
             get {
                 object obj = ResourceManager.GetObject("heroDown", resourceCulture);

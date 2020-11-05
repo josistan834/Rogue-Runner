@@ -177,5 +177,8 @@
   <ItemGroup>
     <None Include="Resources\titleScreen.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\heart overlay.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

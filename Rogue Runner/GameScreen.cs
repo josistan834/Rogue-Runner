@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http.Headers;
+using Rogue_Runner.Properties;
 
 namespace Rogue_Runner
 {
@@ -839,6 +840,7 @@ namespace Rogue_Runner
 
 
             e.Graphics.FillRectangle(enemyBrush, 150, this.Height - 22, player.health , 20);
+            e.Graphics.DrawImage(Resources.heart_overlay, 150, this.Height - 22, 750, 20);
         }
     }
 }
