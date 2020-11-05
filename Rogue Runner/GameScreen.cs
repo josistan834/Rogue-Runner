@@ -646,7 +646,7 @@ namespace Rogue_Runner
             foreach (Ranger r in rangers)
             {
                 Random location = new Random();
-                if (counter % 30 == 0)
+                if (counter % 45 == 0)
                 {
                     if(Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
                     {
