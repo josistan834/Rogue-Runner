@@ -211,14 +211,14 @@ namespace Rogue_Runner
                 }
             }
 
-            Runner fast = new Runner(500, 500, 30, 30, 6, 200, 50, 30);
-            run.Add(fast);
+            Runner fast = new Runner(500, 500, 30, 30, 5, 200, 50, 30);
+            //run.Add(fast);
 
             Ranger gun = new Ranger(500, 500, 30, 30, 250, 30, "Left");
-            rangers.Add(gun);
+           // rangers.Add(gun);
 
-            Soul spooky = new Soul(500, 400, 30, 30, 4, 150, 10);
-            //souls.Add(spooky);
+            Soul spooky = new Soul(500, 400, 30, 30, 3, 150, 10);
+            souls.Add(spooky);
 
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
@@ -506,10 +506,10 @@ namespace Rogue_Runner
             {
                 Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
                 foreach (Rectangle c in rooms[levelIndex].obstacles)
-                { //AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+                { 
                     if (spook.IntersectsWith(c))
                     {
-                        if (s.x <= c.X + c.Width && s.x >= c.X - s.w)
+                        if (s.x <= c.X + (c.Width - 5) && s.x >= c.X - (s.w - 5))
                         {
                             s.up = !s.up;
 
@@ -531,21 +531,28 @@ namespace Rogue_Runner
                 if (s.x <= this.Width / 2 - rooms[levelIndex].width / 2)
                 {
                     s.right = !s.right;
+                    s.x = s.preX;
+                    s.y = s.preY;
                 }
                 else if (s.x >= this.Width / 2 + rooms[levelIndex].width / 2 - s.w)
                 {
                     s.right = !s.right;
+                    s.x = s.preX;
+                    s.y = s.preY;
                 }
                 else if (s.y <= this.Height / 2 - rooms[levelIndex].height / 2)
                 {
                     s.up = !s.up;
+                    s.x = s.preX;
+                    s.y = s.preY;
                 }
-                else if (s.y >= this.Height / 2 + rooms[levelIndex].height / 2 - s.w)
+                else if (s.y >= this.Height / 2 + rooms[levelIndex].height / 2 - s.h)
                 {
                     s.up = !s.up;
+                    s.x = s.preX;
+                    s.y = s.preY;
                 }
 
-                s.move();
                 Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
                 if (spook.IntersectsWith(plr))
                 {
@@ -831,7 +838,7 @@ namespace Rogue_Runner
             }
 
 
-            e.Graphics.FillRectangle(enemyBrush, 100, 0, player.health , 20);
+            e.Graphics.FillRectangle(enemyBrush, 150, this.Height - 22, player.health , 20);
         }
     }
 }

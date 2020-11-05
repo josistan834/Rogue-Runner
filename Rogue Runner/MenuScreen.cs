@@ -96,5 +96,10 @@ namespace Rogue_Runner
             controlsButton.BackColor = Color.Black;
             controlsButton.ForeColor = Color.White;
         }
+
+        private void MenuScreen_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

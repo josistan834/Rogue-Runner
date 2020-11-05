@@ -41,10 +41,10 @@
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playButton.ForeColor = System.Drawing.Color.White;
-            this.playButton.Location = new System.Drawing.Point(89, 261);
-            this.playButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.playButton.Location = new System.Drawing.Point(129, 326);
+            this.playButton.Margin = new System.Windows.Forms.Padding(2);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(232, 58);
+            this.playButton.Size = new System.Drawing.Size(290, 72);
             this.playButton.TabIndex = 1;
             this.playButton.Text = "Play";
             this.playButton.UseVisualStyleBackColor = false;
@@ -58,10 +58,10 @@
             this.controlsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.controlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.controlsButton.ForeColor = System.Drawing.Color.Transparent;
-            this.controlsButton.Location = new System.Drawing.Point(89, 323);
-            this.controlsButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.controlsButton.Location = new System.Drawing.Point(129, 404);
+            this.controlsButton.Margin = new System.Windows.Forms.Padding(2);
             this.controlsButton.Name = "controlsButton";
-            this.controlsButton.Size = new System.Drawing.Size(232, 58);
+            this.controlsButton.Size = new System.Drawing.Size(290, 72);
             this.controlsButton.TabIndex = 2;
             this.controlsButton.Text = "Controls";
             this.controlsButton.UseVisualStyleBackColor = false;
@@ -75,10 +75,10 @@
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 25.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitButton.ForeColor = System.Drawing.Color.White;
-            this.exitButton.Location = new System.Drawing.Point(89, 448);
-            this.exitButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.exitButton.Location = new System.Drawing.Point(129, 560);
+            this.exitButton.Margin = new System.Windows.Forms.Padding(2);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(232, 58);
+            this.exitButton.Size = new System.Drawing.Size(290, 72);
             this.exitButton.TabIndex = 4;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = false;
@@ -92,10 +92,10 @@
             this.leaderboardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.leaderboardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.leaderboardButton.ForeColor = System.Drawing.Color.White;
-            this.leaderboardButton.Location = new System.Drawing.Point(89, 386);
-            this.leaderboardButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.leaderboardButton.Location = new System.Drawing.Point(129, 482);
+            this.leaderboardButton.Margin = new System.Windows.Forms.Padding(2);
             this.leaderboardButton.Name = "leaderboardButton";
-            this.leaderboardButton.Size = new System.Drawing.Size(232, 58);
+            this.leaderboardButton.Size = new System.Drawing.Size(290, 72);
             this.leaderboardButton.TabIndex = 3;
             this.leaderboardButton.Text = "Leaderboard";
             this.leaderboardButton.UseVisualStyleBackColor = false;
@@ -104,7 +104,7 @@
             // 
             // MenuScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = global::Rogue_Runner.Properties.Resources.titleScreen;
@@ -114,9 +114,10 @@
             this.Controls.Add(this.controlsButton);
             this.Controls.Add(this.playButton);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MenuScreen";
             this.Size = new System.Drawing.Size(900, 700);
+            this.Load += new System.EventHandler(this.MenuScreen_Load);
             this.ResumeLayout(false);
 
         }
