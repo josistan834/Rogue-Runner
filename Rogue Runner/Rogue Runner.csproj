@@ -180,5 +180,17 @@
   <ItemGroup>
     <None Include="Resources\heart overlay.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rangePower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SpeedPower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ATKPower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HpPower.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

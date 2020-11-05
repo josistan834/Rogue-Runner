@@ -63,6 +63,16 @@ namespace Rogue_Runner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ATKPower {
+            get {
+                object obj = ResourceManager.GetObject("ATKPower", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap big_room {
             get {
                 object obj = ResourceManager.GetObject("big_room", resourceCulture);
@@ -203,9 +213,29 @@ namespace Rogue_Runner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap HpPower {
+            get {
+                object obj = ResourceManager.GetObject("HpPower", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap med_room {
             get {
                 object obj = ResourceManager.GetObject("med_room", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rangePower {
+            get {
+                object obj = ResourceManager.GetObject("rangePower", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -266,6 +296,16 @@ namespace Rogue_Runner.Properties {
         internal static System.Drawing.Bitmap soulEnemy {
             get {
                 object obj = ResourceManager.GetObject("soulEnemy", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SpeedPower {
+            get {
+                object obj = ResourceManager.GetObject("SpeedPower", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
