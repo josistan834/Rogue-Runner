@@ -214,11 +214,11 @@ namespace Rogue_Runner
             Runner fast = new Runner(500, 500, 30, 30, 6, 200, 50, 30);
             run.Add(fast);
 
-            Ranger gun = new Ranger(500, 500, 30, 30, 200, 30, "Left");
+            Ranger gun = new Ranger(500, 500, 30, 30, 250, 30, "Left");
             rangers.Add(gun);
 
             Soul spooky = new Soul(500, 400, 30, 30, 4, 150, 10);
-            souls.Add(spooky);
+            //souls.Add(spooky);
 
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
@@ -645,6 +645,7 @@ namespace Rogue_Runner
 
             foreach (Ranger r in rangers)
             {
+                Random location = new Random();
                 if (counter % 30 == 0)
                 {
                     if(Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
@@ -672,11 +673,44 @@ namespace Rogue_Runner
                    
                     r.attack();
                 }
+                if (r.iframes > 0)
+                {
+                    r.iframes--;
+                }
+                
+                Rectangle rng = new Rectangle(r.x, r.y, r.w, r.h);
+                Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+                if (rng.IntersectsWith(player.sword))
+                {
+                    r.x = location.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - r.w));
+                    r.y = location.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - r.w));
+                    if (r.iframes <= 0)
+                    {
+                        r.damaged(player.damage);
+                        r.iframes = 30;
+                    }
+                    break;
+                }
+                if (r.health <= 0)
+                {
+                    rangers.Remove(r);
+                    if (rangers.Count == 0)
+                    {
+                        foreach (Projectile b in Ranger.bullets)
+                        {
+                            Ranger.bullets.Clear();
+                            break;
+                        }
+                    }
+                    break;
+                }
+                
                 foreach (Projectile b in Ranger.bullets)
                 {
                     b.move();
                     Rectangle pew = new Rectangle(b.x, b.y, b.w, b.h);
-                    Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+                    
+                   
                     if (b.x < 0 || b.x > this.Width || b.y < 0 || b.y > this.Height)
                     {
                         Ranger.bullets.Remove(b);
@@ -690,14 +724,21 @@ namespace Rogue_Runner
                             iframes = 30;
                         }
                     }
+                    bool intersect = false;
                     foreach (Rectangle c in rooms[levelIndex].obstacles)
                     {
                         if (pew.IntersectsWith(c))
                         {
-                            Ranger.bullets.Remove(b);
-                            break;
+                            intersect = true;      
                         }
 
+                    }
+                    if (intersect)
+                    {
+                        Ranger.bullets.Remove(b);
+                        intersect = false;
+                        break;
+                        
                     }
                 }
             }

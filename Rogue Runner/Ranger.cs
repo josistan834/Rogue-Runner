@@ -29,5 +29,14 @@ namespace Rogue_Runner
             bullets.Add(bullet);
             
         }
+        public void damaged(int damage)
+        {
+            if (iframes <= 0)
+            {
+                health -= damage;
+
+            }
+
+        }
     }
 }
