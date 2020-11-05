@@ -75,6 +75,7 @@
     <Compile Include="Room.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="Soul.cs" />
+    <Compile Include="Summoner.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
