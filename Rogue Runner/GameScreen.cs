@@ -40,11 +40,7 @@ namespace Rogue_Runner
         public static Player player = new Player(0, 0, 40, 40, 4, 500, 50, "Up");
 
         Random randgen = new Random();
-        List<Room> rooms = new List<Room>();
-        List<Runner> run = new List<Runner>();
-        public static List<Soul> souls = new List<Soul>();
-        List<Ranger> rangers = new List<Ranger>();
-        List<Summoner> summoners = new List<Summoner>();
+        public List<Room> rooms = new List<Room>();
         #endregion
 
         #region images
@@ -242,24 +238,24 @@ namespace Rogue_Runner
                 if (enemyType == 1)
                 {
                     Runner fast = new Runner(enmX, enmY, 30, 30, 5, 200, 50, 30);
-                    run.Add(fast);
+                    newRoom.run.Add(fast);
 
                 }
                 else if (enemyType == 2)
                 {
                     Summoner summoner = new Summoner(enmX, enmY, 30, 30, 150, 30, 2);
-                    summoners.Add(summoner);
+                    newRoom.summoners.Add(summoner);
 
                 }
                 else if (enemyType == 3)
                 {
                     Soul spooky = new Soul(enmX, enmY, 30, 30, 4, 150, 10);
-                    souls.Add(spooky);
+                    newRoom.souls.Add(spooky);
                 }
                 else if (enemyType == 4)
                 {
                     Ranger gun = new Ranger(enmX, enmY, 30, 30, 250, 30, "Left");
-                    rangers.Add(gun);
+                    newRoom.rangers.Add(gun);
                 }
             }
 
@@ -370,7 +366,7 @@ namespace Rogue_Runner
         public void RU()
         {
 
-            foreach (Runner r in run)
+            foreach (Runner r in rooms[levelIndex].run)
             {
                 //r.movement = true;
                 Rectangle runRec = new Rectangle(r.x, r.y, r.w, r.h);
@@ -490,7 +486,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
-                    run.Remove(r);
+                    rooms[levelIndex].run.Remove(r);
                     break;
                 }
                 if (r.iframes > 0)
@@ -506,12 +502,12 @@ namespace Rogue_Runner
         }
         public void SO()
         {
-            foreach (Soul s in souls)
+            foreach (Soul s in rooms[levelIndex].souls)
             {
                 s.move();
             }
 
-            foreach (Soul s in souls)
+            foreach (Soul s in rooms[levelIndex].souls)
             {
 
                 Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
@@ -599,7 +595,7 @@ namespace Rogue_Runner
                 }
                 if (s.health <= 0)
                 {
-                    souls.Remove(s);
+                    rooms[levelIndex].souls.Remove(s);
                     break;
                 }
                 if (s.iframes > 0)
@@ -610,7 +606,7 @@ namespace Rogue_Runner
 
             }
 
-            foreach (Soul s in souls)
+            foreach (Soul s in rooms[levelIndex].souls)
             {
                 s.preX = s.x;
                 s.preY = s.y;
@@ -618,7 +614,7 @@ namespace Rogue_Runner
         }
         public void RA()
         {
-            foreach (Ranger r in rangers)
+            foreach (Ranger r in rooms[levelIndex].rangers)
             {
                 Random location = new Random();
                 if (counter % 45 == 0)
@@ -676,8 +672,8 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
-                    rangers.Remove(r);
-                    if (rangers.Count == 0)
+                    rooms[levelIndex].rangers.Remove(r);
+                    if (rooms[levelIndex].rangers.Count == 0)
                     {
                         foreach (Projectile b in Ranger.bullets)
                         {
@@ -733,13 +729,14 @@ namespace Rogue_Runner
         }
         public void SU()
         {
-            foreach (Summoner r in summoners)
+            foreach (Summoner r in rooms[levelIndex].summoners)
             {
 
 
                 if (counter % 360 == 0)
                 {
-                    r.attack();
+                    Soul soul = new Soul(r.x, r.y + 10, 20, 20, 3, 100, 10);
+                    rooms[levelIndex].souls.Add(soul);
                     r.attacking = true;
                 }
                 if (r.iframes > 0)
@@ -763,7 +760,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
-                    summoners.Remove(r);
+                    rooms[levelIndex].summoners.Remove(r);
                     break;
                 }
                 if (r.sumRun)
@@ -944,7 +941,7 @@ namespace Rogue_Runner
                 e.Graphics.DrawImage(Resources.obstacleSprite, r.X, r.Y, r.Width, r.Height);
             }
 
-            foreach (Runner r in run)
+            foreach (Runner r in rooms[levelIndex].run)
             {
                 if (r.direc == "Left")
                 {
@@ -963,11 +960,11 @@ namespace Rogue_Runner
                     e.Graphics.DrawImage(runDown, r.x, r.y, r.w, r.h);
                 }
             }
-            foreach (Ranger r in rangers)
+            foreach (Ranger r in rooms[levelIndex].rangers)
             {
                 e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
             }
-            foreach (Summoner r in summoners)
+            foreach (Summoner r in rooms[levelIndex].summoners)
             {
                 if (r.attacking && counter % 50 == 0)
                 {
@@ -987,7 +984,7 @@ namespace Rogue_Runner
             {
                 e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
             }
-            foreach (Soul r in souls)
+            foreach (Soul r in rooms[levelIndex].souls)
             {
                 e.Graphics.DrawImage(soulImage, r.x, r.y, r.w, r.h);
             }
@@ -1059,7 +1056,7 @@ namespace Rogue_Runner
 
         private void nextRoom()
         {
-            if (rooms[levelIndex].type != "boss" && souls.Count() == 0 && run.Count() == 0 && summoners.Count() == 0 && rangers.Count() == 0)
+            if (rooms[levelIndex].type != "boss" && rooms[levelIndex].souls.Count() == 0 && rooms[levelIndex].run.Count() == 0 && rooms[levelIndex].summoners.Count() == 0 && rooms[levelIndex].rangers.Count() == 0)
             {
                 exitDoorRec.X = this.Width / 2 - (rooms[levelIndex].width / 2 - 50);
                 exitDoorRec.Y = this.Height / 2 - (rooms[levelIndex].height / 2 + 10);
