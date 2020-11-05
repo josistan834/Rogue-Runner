@@ -193,5 +193,8 @@
   <ItemGroup>
     <None Include="Resources\HpPower.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\obstacleSprite.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
