@@ -18,10 +18,11 @@ namespace Rogue_Runner
         //Global Variables
         #region Variables
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
-        SolidBrush roomBrush = new SolidBrush(Color.LightBlue);
+        SolidBrush roomBrush = new SolidBrush(Color.Black);
         SolidBrush obsBrush = new SolidBrush(Color.White);
         SolidBrush swordBrush = new SolidBrush(Color.Green);
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
+        Rectangle exitDoorRec = new Rectangle(0, 0, 1, 1);
         int levelIndex = 0;
 
         public int swordCounter = 30;
@@ -221,6 +222,7 @@ namespace Rogue_Runner
 
                 }
             }
+
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
             for (int i = 0; i < enemyCount; i++)
@@ -265,11 +267,31 @@ namespace Rogue_Runner
             Refresh();
         }
 
+        private void assembleFloor()
+        {
+            for(int i = 0; i < 12; i++)
+            {
+                generateFloor();
+            }
+            for(int i = 0; i < 3; i++)
+            {
+                List<Rectangle> obstacles = new List<Rectangle>();
+
+                Room newPowerRoom = new Room(700, 525, "powerUp", obstacles, Resources.med_room);
+                rooms.Add(newPowerRoom);
+            }
+            rooms = rooms.OrderBy(a => Guid.NewGuid()).ToList();
+
+            List<Rectangle> bossObstacles = new List<Rectangle>();
+            Room bossRoom = new Room(850, 650, "boss", bossObstacles, Resources.big_room);
+            rooms.Add(bossRoom);
+
+        }
         public GameScreen()
         {
             //Initialize
             InitializeComponent();
-            generateFloor();
+            assembleFloor();
             player.x = this.Width / 2;
             player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values
@@ -339,7 +361,7 @@ namespace Rogue_Runner
             RA();
             SU();
             #endregion
-
+            nextRoom();
             counter++;
             Refresh();
         }
@@ -911,8 +933,13 @@ namespace Rogue_Runner
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
-
-            foreach (Rectangle r in rooms[0].obstacles)
+  
+            if (exitDoorRec.X != 0)
+            {
+                e.Graphics.FillRectangle(roomBrush, exitDoorRec);
+            }
+            
+            foreach (Rectangle r in rooms[levelIndex].obstacles)
             {
                 e.Graphics.DrawImage(Resources.obstacleSprite, r.X, r.Y, r.Width, r.Height);
             }
@@ -1027,6 +1054,34 @@ namespace Rogue_Runner
 
             e.Graphics.FillRectangle(enemyBrush, 150, this.Height - 22, player.health, 20);
             e.Graphics.DrawImage(Resources.heart_overlay, 150, this.Height - 22, 750, 20);
+           
+        }
+
+        private void nextRoom()
+        {
+            if (rooms[levelIndex].type != "boss" && souls.Count() == 0 && run.Count() == 0 && summoners.Count() == 0 && rangers.Count() == 0)
+            {
+                exitDoorRec.X = this.Width / 2 - (rooms[levelIndex].width / 2 - 50);
+                exitDoorRec.Y = this.Height / 2 - (rooms[levelIndex].height / 2 + 10);
+
+                exitDoorRec.Width = 125;
+                exitDoorRec.Height = 25;
+            }
+            else
+            {
+                exitDoorRec.X = 0;
+                exitDoorRec.Y = 0;
+
+                exitDoorRec.Width = 1;
+                exitDoorRec.Height = 1;
+            }
+            Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
+            if (playerRec.IntersectsWith(exitDoorRec))
+            {
+                levelIndex++;
+                player.x = this.Width / 2;
+                player.y = this.Height/2 + (rooms[levelIndex].height/2 - 50);
+            }
         }
     }
 }
