@@ -72,7 +72,7 @@ namespace Rogue_Runner
         {
 
             int width, height, obstacleCount, enemyCount;
-            width = height = obstacleCount = 0;
+            width = height = obstacleCount = enemyCount = 0;
             string type = "";
             List<Rectangle> obstacles = new List<Rectangle>();
             Image image = Properties.Resources.big_room;
@@ -86,7 +86,7 @@ namespace Rogue_Runner
                     width = 550;
                     height = 450;
                     obstacleCount = randgen.Next(0, 3);
-                    enemyCount = randgen.Next(1, 5);
+                    enemyCount = randgen.Next(1, 4);
                     break;
                 case 2:
                     type = "medium";
@@ -94,7 +94,7 @@ namespace Rogue_Runner
                     width = 700;
                     height = 525;
                     obstacleCount = randgen.Next(1, 4);
-                    enemyCount = randgen.Next(2, 6);
+                    enemyCount = randgen.Next(2, 5);
                     break;
                 case 3:
                     type = "large";
@@ -102,10 +102,10 @@ namespace Rogue_Runner
                     width = 850;
                     height = 650;
                     obstacleCount = randgen.Next(2, 6);
-                    enemyCount = randgen.Next(4, 8);
+                    enemyCount = randgen.Next(3, 7);
                     break;
             }
-
+            
             for (int i = 0; i < obstacleCount; i++)
             {
                 int obsType = randgen.Next(1, 8);
@@ -221,23 +221,45 @@ namespace Rogue_Runner
 
                 }
             }
-
-            Runner fast = new Runner(500, 500, 30, 30, 5, 200, 50, 30);
-            //run.Add(fast);
-
-            Ranger gun = new Ranger(500, 500, 30, 30, 250, 30, "Left");
-           // rangers.Add(gun);
-
-
-            Soul spooky = new Soul(500, 400, 30, 30, 4, 150, 10);
-            souls.Add(spooky);
-
-            Summoner summoner = new Summoner(400, 400, 30, 30, 150, 30, 2);
-            summoners.Add(summoner);
-
-
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
+            for (int i = 0; i < enemyCount; i++)
+            {
+                int enemyType = randgen.Next(1, 5);
+                int enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
+                int enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                Rectangle tempEnemy = new Rectangle(enmX, enmY, 30, 30);
+                foreach (Rectangle c in rooms[levelIndex].obstacles)
+                {
+                    if (c.IntersectsWith(tempEnemy))
+                    {
+                        enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
+                        enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                    }
+                }
+                if (enemyType == 1)
+                {
+                    Runner fast = new Runner(enmX, enmY, 30, 30, 5, 200, 50, 30);
+                    run.Add(fast);
+
+                }
+                else if (enemyType == 2)
+                {
+                    Summoner summoner = new Summoner(enmX, enmY, 30, 30, 150, 30, 2);
+                    summoners.Add(summoner);
+
+                }
+                else if (enemyType == 3)
+                {
+                    Soul spooky = new Soul(enmX, enmY, 30, 30, 4, 150, 10);
+                    souls.Add(spooky);
+                }
+                else if (enemyType == 4)
+                {
+                    Ranger gun = new Ranger(enmX, enmY, 30, 30, 250, 30, "Left");
+                    rangers.Add(gun);
+                }
+            }
 
 
             Refresh();
