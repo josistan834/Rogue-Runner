@@ -1,33 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Rogue_Runner
 {
-    public class Runner
+    public class Summoner
     {
-        public int x, y, w, h, speed, health, damage, iframes;
-        public bool movement;
-        public string direc;
 
-        public Runner(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage, int _iframes)
+        public int x, y, w, h, health, iframes, speed;
+        public bool sumRun, attacking;
+        public string sumdir;
+        public Image image = GameScreen.sumImage;
+
+        public Summoner(int _x, int _y, int _w, int _h, int _health, int _iframes, int _speed)
         {
             x = _x;
             y = _y;
             w = _w;
             h = _h;
-            speed = _speed;
             health = _health;
-            damage = _damage;
             iframes = _iframes;
-            direc = "Up";
+            speed = _speed;
+            sumRun = false;
+            sumdir = null;
         }
+        public void attack()
+        {
+            Soul soul = new Soul(x, y+10, 20, 20, 3, 100, 10);
+            GameScreen.souls.Add(soul);
+            
 
+        }
+        public void damaged(int damage)
+        {
+            if (iframes <= 0)
+            {
+                health -= damage;
+
+            }
+
+        }
         public void move(string dir)
         {
-            direc = dir;
             if (dir == "Left")
             {
                 x -= speed;
@@ -44,16 +61,6 @@ namespace Rogue_Runner
             {
                 y += speed;
             }
-        }
-        public void damaged(int damage)
-        {
-            
-            if (iframes <= 0)
-            {
-                health -= damage;
-
-            }
-
         }
     }
 }

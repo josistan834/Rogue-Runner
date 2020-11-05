@@ -15,6 +15,7 @@ namespace Rogue_Runner
     public partial class GameScreen : UserControl
     {
         //Global Variables
+        #region Variables
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.LightBlue);
         SolidBrush obsBrush = new SolidBrush(Color.White);
@@ -30,17 +31,19 @@ namespace Rogue_Runner
         int runStun = 0;
         int prevX, prevY;
         int counter = 0;
-
+        #endregion
 
         //Object
-
+        #region Objects
         public static Player player = new Player(0, 0, 40, 40, 4, 500, 50, "Up");
 
         Random randgen = new Random();
         List<Room> rooms = new List<Room>();
         List<Runner> run = new List<Runner>();
-        List<Soul> souls = new List<Soul>();
+        public static List<Soul> souls = new List<Soul>();
         List<Ranger> rangers = new List<Ranger>();
+        List<Summoner> summoners = new List<Summoner>();
+        #endregion
 
         #region images
         Image heroUp = Properties.Resources.heroUp;
@@ -55,6 +58,13 @@ namespace Rogue_Runner
         Image hitDown = Properties.Resources.hitEffectDown;
         Image hitLeft = Properties.Resources.hitEffectLeft;
         Image hitRight = Properties.Resources.hitEffect;
+        Image runUp = Properties.Resources.runnerUp;
+        Image runDown = Properties.Resources.runnerFront;
+        Image runLeft = Properties.Resources.runnerLeft;
+        Image runRight = Properties.Resources.runnerRight;
+        Image soulImage = Properties.Resources.soulEnemy;
+        public static Image sumImage = Properties.Resources.summoner;
+        Image sumAttack = Properties.Resources.summonerAttack;
         #endregion
 
         private void generateFloor()
@@ -218,10 +228,14 @@ namespace Rogue_Runner
             rangers.Add(gun);
 
             Soul spooky = new Soul(500, 400, 30, 30, 4, 150, 10);
-            //souls.Add(spooky);
+            souls.Add(spooky);
+
+            Summoner summoner = new Summoner(400, 400, 30, 30, 150, 30, 2);
+            summoners.Add(summoner);
 
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
+
 
             Refresh();
         }
@@ -235,8 +249,9 @@ namespace Rogue_Runner
             player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values
             aDown = dDown = wDown = sDown = escDown = spaDown = attacked = false;
-        } 
+        }
 
+        #region Input
         private void keyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch (e.KeyCode) 
@@ -286,74 +301,27 @@ namespace Rogue_Runner
                     break;
             }
         }
+        #endregion
+
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-          
 
-            if (player.x <= this.Width / 2 - rooms[levelIndex].width / 2)
-            {
-                aDown = false;
-            }
-            if (player.x >= this.Width / 2 + rooms[levelIndex].width / 2 - player.w)
-            {
-                dDown = false;
-            }
-            if (player.y <= this.Height / 2 - rooms[levelIndex].height / 2)
-            {
-                wDown = false;
-            }
-            if (player.y >= this.Height / 2 + rooms[levelIndex].height / 2 - player.w)
-            {
-                sDown = false;
-            }
+            HERO();
 
-            if (aDown)
-            {
-                player.move("Left");
-            }
-            if (dDown)
-            {
-                player.move("Right");
-            }
-            if (wDown)
-            {
-                player.move("Up");
-            }
-            if (sDown)
-            {
-                player.move("Down");
-            }
-            if (escDown)
-            {
+            #region enemies
+            RU();
+            SO();
+            RA();
+            SU();
+            #endregion
 
-            }
-            if (spaDown)
-            {
-                if (cooldown <= 0)
-                {
-                    cooldown = 70;
-                    swordCounter = 0;
-                    player.attack();
-                    attacked = true;
-                }
-                
-                
-            }
-            if (swordCounter > 30)
-            {
-                player.deleteSword();
-                attacked = false;
-                swordCounter--;
-            }
-            if (attacked == true)
-            {
-                player.attack();
-                swordCounter++;
-            }
-            if (cooldown > 0)
-            {
-                cooldown--;
-            }
+            counter++;
+            Refresh();
+        }
+
+        #region Custom Methods
+        public void RU()
+        {
 
             foreach (Runner r in run)
             {
@@ -405,7 +373,7 @@ namespace Rogue_Runner
                     {
                         if (r.x <= this.Width / 2 - rooms[levelIndex].width / 2)
                         {
-                        
+
                         }
                         else if (r.x >= this.Width / 2 + rooms[levelIndex].width / 2 - r.w)
                         {
@@ -423,7 +391,7 @@ namespace Rogue_Runner
                         {
                             r.move(player.direc);
                         }
-                        
+
                     }
                     else if (knockCounter != 0 && !runRec.IntersectsWith(playerRec))
                     {
@@ -450,10 +418,10 @@ namespace Rogue_Runner
 
                     }
                 }
-               
+
                 if (runRec.IntersectsWith(player.sword))
                 {
-                    
+
                     r.damaged(player.damage);
                     knockCounter = 30;
                     if (r.iframes <= 0)
@@ -462,16 +430,16 @@ namespace Rogue_Runner
                     }
 
                 }
-                
+
                 if (runRec.IntersectsWith(playerRec))
                 {
-                    if(iframes <= 0)
+                    if (iframes <= 0)
                     {
                         player.damaged(r.damage);
                         knockCounter = 10;
                         iframes = 30;
-                    }  
-                    
+                    }
+
                 }
                 if (r.health <= 0)
                 {
@@ -482,21 +450,15 @@ namespace Rogue_Runner
                 {
                     r.iframes--;
                 }
-                
+
             }
             if (knockCounter > 0)
             {
                 knockCounter--;
             }
-            if (iframes > 0)
-            {
-                iframes--;
-            }
-            if (player.health <= 0)
-            {
-                Application.Exit();
-            }
-
+        }
+        public void SO()
+        {
             foreach (Soul s in souls)
             {
                 s.move();
@@ -504,6 +466,7 @@ namespace Rogue_Runner
 
             foreach (Soul s in souls)
             {
+
                 Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
                 foreach (Rectangle c in rooms[levelIndex].obstacles)
                 { //AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
@@ -526,7 +489,7 @@ namespace Rogue_Runner
                             break;
                         }
                     }
-                } 
+                }
 
                 if (s.x <= this.Width / 2 - rooms[levelIndex].width / 2)
                 {
@@ -592,10 +555,279 @@ namespace Rogue_Runner
 
 
             }
-            
 
-            #region player collision
+            foreach (Soul s in souls)
+            {
+                s.preX = s.x;
+                s.preY = s.y;
+            }
+        }
+        public void RA()
+        {
+            foreach (Ranger r in rangers)
+            {
+                Random location = new Random();
+                if (counter % 45 == 0)
+                {
+                    if (Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
+                    {
+                        if (r.x < player.x)
+                        {
+                            r.direc = "Right";
+                        }
+                        if (r.x > player.x)
+                        {
+                            r.direc = "Left";
+                        }
+                    }
+                    else
+                    {
+                        if (r.y < player.y)
+                        {
+                            r.direc = "Down";
+                        }
+                        if (r.y > player.y)
+                        {
+                            r.direc = "Up";
+                        }
+                    }
 
+                    r.attack();
+                }
+                if (r.iframes > 0)
+                {
+                    r.iframes--;
+                }
+
+                Rectangle rng = new Rectangle(r.x, r.y, r.w, r.h);
+                Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+                if (rng.IntersectsWith(player.sword))
+                {
+                    r.x = location.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - r.w));
+                    r.y = location.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - r.w));
+                    foreach (Rectangle c in rooms[levelIndex].obstacles)
+                    {
+                        if (c.IntersectsWith(rng))
+                        {
+                            r.x = location.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - r.w));
+                            r.y = location.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - r.w));
+                        }
+                    }
+                    if (r.iframes <= 0)
+                    {
+                        r.damaged(player.damage);
+                        r.iframes = 30;
+                    }
+                    break;
+                }
+                if (r.health <= 0)
+                {
+                    rangers.Remove(r);
+                    if (rangers.Count == 0)
+                    {
+                        foreach (Projectile b in Ranger.bullets)
+                        {
+                            Ranger.bullets.Clear();
+                            break;
+                        }
+                    }
+                    break;
+                }
+
+                foreach (Projectile b in Ranger.bullets)
+                {
+                    b.move();
+                    Rectangle pew = new Rectangle(b.x, b.y, b.w, b.h);
+
+
+                    if (b.x < 0 || b.x > this.Width || b.y < 0 || b.y > this.Height)
+                    {
+                        Ranger.bullets.Remove(b);
+                        break;
+                    }
+                    if (pew.IntersectsWith(plr))
+                    {
+                        if (iframes <= 0)
+                        {
+                            player.damaged(b.damage);
+                            iframes = 30;
+                        }
+                    }
+                    bool intersect = false;
+                    foreach (Rectangle c in rooms[levelIndex].obstacles)
+                    {
+                        if (pew.IntersectsWith(c))
+                        {
+                            intersect = true;
+                        }
+
+                    }
+                    if (intersect)
+                    {
+                        Ranger.bullets.Remove(b);
+                        intersect = false;
+                        break;
+
+                    }
+                }
+            }
+        }
+        public void SU()
+        {
+            foreach (Summoner r in summoners)
+            {
+
+
+                if (counter % 360 == 0)
+                {
+                    r.attack();
+                    r.attacking = true;
+                }
+                if (r.iframes > 0)
+                {
+                    r.iframes--;
+                }
+
+                Rectangle sum = new Rectangle(r.x, r.y, r.w, r.h);
+                if (sum.IntersectsWith(player.sword))
+                {
+
+                    if (r.iframes <= 0)
+                    {
+                        r.damaged(player.damage);
+
+
+                        r.iframes = 30;
+                    }
+                    r.sumRun = true;
+                    break;
+                }
+                if (r.health <= 0)
+                {
+                    summoners.Remove(r);
+                    break;
+                }
+                if (r.sumRun)
+                {
+                    foreach (Rectangle c in rooms[levelIndex].obstacles)
+                    {
+                        if (sum.IntersectsWith(c))
+                        {
+                            r.sumRun = false;
+                        }
+                    }
+                    if (r.x <= this.Width / 2 - rooms[levelIndex].width / 2)
+                    {
+                        r.sumRun = false;
+                    }
+                    else if (r.x >= this.Width / 2 + rooms[levelIndex].width / 2 - r.w)
+                    {
+                        r.sumRun = false;
+                    }
+                    else if (r.y <= this.Height / 2 - rooms[levelIndex].height / 2 + 20)
+                    {
+                        r.sumRun = false;
+                    }
+                    else if (r.y >= this.Height / 2 + rooms[levelIndex].height / 2 - r.w)
+                    {
+                        r.sumRun = false;
+                    }
+                    else
+                    {
+                        if (r.sumdir == null)
+                        {
+                            r.sumdir = player.direc;
+                        }
+                        r.attacking = false;
+                        r.move(r.sumdir);
+
+
+                    }
+
+                }
+            }
+        }
+        public void HERO()
+        {
+            #region movement
+            if (player.x <= this.Width / 2 - rooms[levelIndex].width / 2)
+            {
+                aDown = false;
+            }
+            if (player.x >= this.Width / 2 + rooms[levelIndex].width / 2 - player.w)
+            {
+                dDown = false;
+            }
+            if (player.y <= this.Height / 2 - rooms[levelIndex].height / 2)
+            {
+                wDown = false;
+            }
+            if (player.y >= this.Height / 2 + rooms[levelIndex].height / 2 - player.w)
+            {
+                sDown = false;
+            }
+
+            if (aDown)
+            {
+                player.move("Left");
+            }
+            if (dDown)
+            {
+                player.move("Right");
+            }
+            if (wDown)
+            {
+                player.move("Up");
+            }
+            if (sDown)
+            {
+                player.move("Down");
+            }
+            #endregion
+
+            #region attack
+            if (escDown)
+            {
+
+            }
+            if (spaDown)
+            {
+                if (cooldown <= 0)
+                {
+                    cooldown = 70;
+                    swordCounter = 0;
+                    player.attack();
+                    attacked = true;
+                }
+
+
+            }
+            if (swordCounter > 30)
+            {
+                player.deleteSword();
+                attacked = false;
+                swordCounter--;
+            }
+            if (attacked == true)
+            {
+                player.attack();
+                swordCounter++;
+            }
+            if (cooldown > 0)
+            {
+                cooldown--;
+            }
+            #endregion
+
+            #region collisions
+            if (iframes > 0)
+            {
+                iframes--;
+            }
+            if (player.health <= 0)
+            {
+                Application.Exit();
+            }
 
             foreach (Rectangle r in rooms[levelIndex].obstacles)
             {
@@ -634,121 +866,11 @@ namespace Rogue_Runner
                     }
                 }
             }
-            #endregion
-
-
-            foreach (Soul s in souls)
-            {
-                s.preX = s.x;
-                s.preY = s.y;
-            }
-
-            foreach (Ranger r in rangers)
-            {
-                Random location = new Random();
-                if (counter % 45 == 0)
-                {
-                    if(Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
-                    {
-                        if (r.x < player.x)
-                        {
-                            r.direc = "Right";
-                        }
-                        if (r.x > player.x)
-                        {
-                            r.direc = "Left";
-                        }
-                    }
-                    else
-                    {
-                        if (r.y < player.y)
-                        {
-                            r.direc = "Down";
-                        }
-                        if (r.y > player.y)
-                        {
-                            r.direc = "Up";
-                        }
-                    }
-                   
-                    r.attack();
-                }
-                if (r.iframes > 0)
-                {
-                    r.iframes--;
-                }
-                
-                Rectangle rng = new Rectangle(r.x, r.y, r.w, r.h);
-                Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
-                if (rng.IntersectsWith(player.sword))
-                {
-                    r.x = location.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - r.w));
-                    r.y = location.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - r.w));
-                    if (r.iframes <= 0)
-                    {
-                        r.damaged(player.damage);
-                        r.iframes = 30;
-                    }
-                    break;
-                }
-                if (r.health <= 0)
-                {
-                    rangers.Remove(r);
-                    if (rangers.Count == 0)
-                    {
-                        foreach (Projectile b in Ranger.bullets)
-                        {
-                            Ranger.bullets.Clear();
-                            break;
-                        }
-                    }
-                    break;
-                }
-                
-                foreach (Projectile b in Ranger.bullets)
-                {
-                    b.move();
-                    Rectangle pew = new Rectangle(b.x, b.y, b.w, b.h);
-                    
-                   
-                    if (b.x < 0 || b.x > this.Width || b.y < 0 || b.y > this.Height)
-                    {
-                        Ranger.bullets.Remove(b);
-                        break;
-                    }
-                    if (pew.IntersectsWith(plr))
-                    {
-                        if (iframes <= 0)
-                        {
-                            player.damaged(b.damage);
-                            iframes = 30;
-                        }
-                    }
-                    bool intersect = false;
-                    foreach (Rectangle c in rooms[levelIndex].obstacles)
-                    {
-                        if (pew.IntersectsWith(c))
-                        {
-                            intersect = true;      
-                        }
-
-                    }
-                    if (intersect)
-                    {
-                        Ranger.bullets.Remove(b);
-                        intersect = false;
-                        break;
-                        
-                    }
-                }
-            }
-
             prevX = player.x;
             prevY = player.y;
-
-            counter++;
-            Refresh();
+            #endregion
         }
+        #endregion
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
@@ -760,11 +882,42 @@ namespace Rogue_Runner
 
             foreach(Runner r in run)
             {
-                e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+                if (r.direc == "Left")
+                {
+                    e.Graphics.DrawImage(runLeft, r.x, r.y, r.w, r.h);
+                }
+                else if (r.direc == "Right")
+                {
+                    e.Graphics.DrawImage(runRight, r.x, r.y, r.w, r.h);
+                }
+                else if (r.direc == "Up")
+                {
+                    e.Graphics.DrawImage(runUp, r.x, r.y, r.w, r.h);
+                }
+                else if (r.direc == "Down")
+                {
+                    e.Graphics.DrawImage(runDown, r.x, r.y, r.w, r.h);
+                }
             }
             foreach (Ranger r in rangers)
             {
                 e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+            }
+            foreach (Summoner r in summoners)
+            {
+                if (r.attacking && counter % 50 == 0)
+                {
+                    if (r.image == sumImage)
+                    {
+                        r.image = sumAttack;
+                    }
+                    else if (r.image == sumAttack)
+                    { 
+                        r.image = sumImage;
+                    }
+                }
+                e.Graphics.DrawImage(r.image, r.x, r.y, r.w, r.h);
+               
             }
             foreach (Projectile b in Ranger.bullets)
             {
@@ -772,7 +925,7 @@ namespace Rogue_Runner
             }
             foreach (Soul r in souls)
             {
-                e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+                e.Graphics.DrawImage(soulImage, r.x, r.y, r.w, r.h);
             }
             if (swordCounter >= 30)
             {
