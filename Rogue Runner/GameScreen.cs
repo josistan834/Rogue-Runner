@@ -12,7 +12,7 @@ using Rogue_Runner.Properties;
 
 namespace Rogue_Runner
 {
-    
+
     public partial class GameScreen : UserControl
     {
         //Global Variables
@@ -24,7 +24,7 @@ namespace Rogue_Runner
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
         Rectangle exitDoorRec = new Rectangle(0, 0, 1, 1);
         int levelIndex = 0;
-        
+
         public int swordCounter = 30;
         bool attacked;
         int knockCounter = 0;
@@ -73,7 +73,7 @@ namespace Rogue_Runner
         {
 
             int width, height, obstacleCount, enemyCount;
-            width = height = obstacleCount = 0;
+            width = height = obstacleCount = enemyCount = 0;
             string type = "";
             List<Rectangle> obstacles = new List<Rectangle>();
             Image image = Properties.Resources.big_room;
@@ -87,7 +87,7 @@ namespace Rogue_Runner
                     width = 550;
                     height = 450;
                     obstacleCount = randgen.Next(0, 3);
-                    enemyCount = randgen.Next(1, 5);
+                    enemyCount = randgen.Next(1, 4);
                     break;
                 case 2:
                     type = "medium";
@@ -95,7 +95,7 @@ namespace Rogue_Runner
                     width = 700;
                     height = 525;
                     obstacleCount = randgen.Next(1, 4);
-                    enemyCount = randgen.Next(2, 6);
+                    enemyCount = randgen.Next(2, 5);
                     break;
                 case 3:
                     type = "large";
@@ -103,7 +103,7 @@ namespace Rogue_Runner
                     width = 850;
                     height = 650;
                     obstacleCount = randgen.Next(2, 6);
-                    enemyCount = randgen.Next(4, 8);
+                    enemyCount = randgen.Next(3, 7);
                     break;
             }
 
@@ -111,7 +111,7 @@ namespace Rogue_Runner
             {
                 int obsType = randgen.Next(1, 8);
                 int rWidth, rHeight, rX, rY;
-                
+
 
                 switch (obsType)
                 {
@@ -185,7 +185,7 @@ namespace Rogue_Runner
                         //L shape: upside down facing left
                         rWidth = 40;
                         rHeight = 80;
-                        rY = randgen.Next(this.Height/2 - height/2 + 75, this.Height / 2 + height / 2 - 155);
+                        rY = randgen.Next(this.Height / 2 - height / 2 + 75, this.Height / 2 + height / 2 - 155);
                         rX = randgen.Next(this.Width / 2 - width / 2 + 75, this.Width / 2 + width / 2 - 115);
                         Rectangle newRec9 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec9);
@@ -212,7 +212,7 @@ namespace Rogue_Runner
                         rY += 30;
                         Rectangle newRec12 = new Rectangle(rX, rY, rWidth, rHeight);
                         obstacles.Add(newRec12);
-                        
+
                         rWidth = 30;
                         rHeight = 40;
                         rX += 70;
@@ -223,22 +223,45 @@ namespace Rogue_Runner
                 }
             }
 
-            Runner fast = new Runner(500, 500, 30, 30, 5, 200, 50, 30);
-            //run.Add(fast);
-
-            Ranger gun = new Ranger(500, 500, 30, 30, 250, 30, "Left");
-           // rangers.Add(gun);
-
-
-            Soul spooky = new Soul(500, 400, 30, 30, 4, 150, 10);
-            //souls.Add(spooky);
-
-            Summoner summoner = new Summoner(400, 400, 30, 30, 150, 30, 2);
-            //summoners.Add(summoner);
-
-
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
+            for (int i = 0; i < enemyCount; i++)
+            {
+                int enemyType = randgen.Next(1, 5);
+                int enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
+                int enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                Rectangle tempEnemy = new Rectangle(enmX, enmY, 30, 30);
+                foreach (Rectangle c in rooms[levelIndex].obstacles)
+                {
+                    if (c.IntersectsWith(tempEnemy))
+                    {
+                        enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
+                        enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                    }
+                }
+                if (enemyType == 1)
+                {
+                    Runner fast = new Runner(enmX, enmY, 30, 30, 5, 200, 50, 30);
+                    run.Add(fast);
+
+                }
+                else if (enemyType == 2)
+                {
+                    Summoner summoner = new Summoner(enmX, enmY, 30, 30, 150, 30, 2);
+                    summoners.Add(summoner);
+
+                }
+                else if (enemyType == 3)
+                {
+                    Soul spooky = new Soul(enmX, enmY, 30, 30, 4, 150, 10);
+                    souls.Add(spooky);
+                }
+                else if (enemyType == 4)
+                {
+                    Ranger gun = new Ranger(enmX, enmY, 30, 30, 250, 30, "Left");
+                    rangers.Add(gun);
+                }
+            }
 
 
             Refresh();
@@ -278,7 +301,7 @@ namespace Rogue_Runner
         #region Input
         private void keyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            switch (e.KeyCode) 
+            switch (e.KeyCode)
             {
                 case Keys.A:
                     aDown = true;
@@ -493,7 +516,7 @@ namespace Rogue_Runner
 
                 Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
                 foreach (Rectangle c in rooms[levelIndex].obstacles)
-                { 
+                {
                     if (spook.IntersectsWith(c))
                     {
                         if (s.x <= c.X + (c.Width - 5) && s.x >= c.X - (s.w - 5))
@@ -681,7 +704,7 @@ namespace Rogue_Runner
                         Ranger.bullets.Remove(b);
                         break;
                     }
-                        if (pew.IntersectsWith(plr))
+                    if (pew.IntersectsWith(plr))
                     {
                         if (iframes <= 0)
                         {
@@ -910,7 +933,7 @@ namespace Rogue_Runner
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
-            
+  
             if (exitDoorRec.X != 0)
             {
                 e.Graphics.FillRectangle(roomBrush, exitDoorRec);
@@ -921,7 +944,7 @@ namespace Rogue_Runner
                 e.Graphics.DrawImage(Resources.obstacleSprite, r.X, r.Y, r.Width, r.Height);
             }
 
-            foreach(Runner r in run)
+            foreach (Runner r in run)
             {
                 if (r.direc == "Left")
                 {
@@ -953,12 +976,12 @@ namespace Rogue_Runner
                         r.image = sumAttack;
                     }
                     else if (r.image == sumAttack)
-                    { 
+                    {
                         r.image = sumImage;
                     }
                 }
                 e.Graphics.DrawImage(r.image, r.x, r.y, r.w, r.h);
-               
+
             }
             foreach (Projectile b in Ranger.bullets)
             {
@@ -985,6 +1008,10 @@ namespace Rogue_Runner
                 else if (player.direc == "Right")
                 {
                     e.Graphics.DrawImage(heroRight, player.x, player.y, player.w, player.h);
+                }
+                else
+                {
+                    player.direc = "Up";
                 }
             }
             else
@@ -1025,7 +1052,7 @@ namespace Rogue_Runner
             }
 
 
-            e.Graphics.FillRectangle(enemyBrush, 150, this.Height - 22, player.health , 20);
+            e.Graphics.FillRectangle(enemyBrush, 150, this.Height - 22, player.health, 20);
             e.Graphics.DrawImage(Resources.heart_overlay, 150, this.Height - 22, 750, 20);
            
         }
