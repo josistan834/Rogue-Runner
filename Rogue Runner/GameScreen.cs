@@ -645,7 +645,12 @@ namespace Rogue_Runner
                         Ranger.bullets.Remove(b);
                         break;
                     }
-                    if (pew.IntersectsWith(plr))
+                    if (pew.IntersectsWith(player.sword))
+                    {
+                        Ranger.bullets.Remove(b);
+                        break;
+                    }
+                        if (pew.IntersectsWith(plr))
                     {
                         if (iframes <= 0)
                         {
