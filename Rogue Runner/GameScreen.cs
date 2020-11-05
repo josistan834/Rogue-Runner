@@ -243,11 +243,31 @@ namespace Rogue_Runner
             Refresh();
         }
 
+        private void assembleFloor()
+        {
+            for(int i = 0; i < 12; i++)
+            {
+                generateFloor();
+            }
+            for(int i = 0; i < 3; i++)
+            {
+                List<Rectangle> obstacles = new List<Rectangle>();
+
+                Room newPowerRoom = new Room(700, 525, "powerUp", obstacles, Resources.med_room);
+                rooms.Add(newPowerRoom);
+            }
+            rooms = rooms.OrderBy(a => Guid.NewGuid()).ToList();
+
+            List<Rectangle> bossObstacles = new List<Rectangle>();
+            Room bossRoom = new Room(850, 750, "boss", bossObstacles, Resources.big_room);
+            rooms.Add(bossRoom);
+
+        }
         public GameScreen()
         {
             //Initialize
             InitializeComponent();
-            generateFloor();
+            assembleFloor();
             player.x = this.Width / 2;
             player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values

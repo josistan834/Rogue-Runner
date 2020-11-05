@@ -196,5 +196,17 @@
   <ItemGroup>
     <None Include="Resources\obstacleSprite.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rangerDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rangerUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rangerRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rangerLeft.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
