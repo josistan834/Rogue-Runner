@@ -27,13 +27,7 @@ namespace Rogue_Runner
             sumRun = false;
             sumdir = null;
         }
-        public void attack()
-        {
-            Soul soul = new Soul(x, y+10, 20, 20, 3, 100, 10);
-            GameScreen.souls.Add(soul);
-            
-
-        }
+        
         public void damaged(int damage)
         {
             if (iframes <= 0)

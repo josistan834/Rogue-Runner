@@ -13,6 +13,10 @@ namespace Rogue_Runner
         public string type;
         public List<Rectangle> obstacles = new List<Rectangle>();
         public Image image;
+        public List<Runner> run = new List<Runner>();
+        public List<Soul> souls = new List<Soul>();
+        public List<Ranger> rangers = new List<Ranger>();
+        public List<Summoner> summoners = new List<Summoner>();
         //List <> enemy = new List <>();
 
         public Room(int _width, int _height, string _type, List<Rectangle> _obstacles, Image _image)
