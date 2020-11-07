@@ -954,7 +954,7 @@ namespace Rogue_Runner
                 {
                     Rectangle bossRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
                     Rectangle plrRec = new Rectangle(player.x, player.y, player.w, player.h);
-                    if (bossRec.IntersectsWith(plrRec))
+                    if (bossRec.IntersectsWith(plrRec) || bosses[0].tornadoRec.IntersectsWith(plrRec)|| bosses[0].tornadoRec2.IntersectsWith(plrRec))
                     {
                         if (iframes <= 0)
                         {
