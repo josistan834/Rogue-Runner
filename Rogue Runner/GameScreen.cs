@@ -815,8 +815,7 @@ namespace Rogue_Runner
 
             if (rooms[levelIndex].type == "boss" && bossType == 0)
             {
-                //bossType = randgen.Next(1, 4);
-                bossType = 1;
+                bossType = randgen.Next(1, 3);
             }
             if (bossType == 1)
             {
@@ -953,8 +952,92 @@ namespace Rogue_Runner
                 }
                 else
                 {
-                    bosses[0].attack = randgen.Next(1, 4);
-                    bosses[0].attack2();
+                    Rectangle bossRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
+                    Rectangle plrRec = new Rectangle(player.x, player.y, player.w, player.h);
+                    if (bossRec.IntersectsWith(plrRec))
+                    {
+                        if (iframes <= 0)
+                        {
+                            player.damaged(bosses[0].damage);
+                            iframes = 30;
+                        }
+                    }
+                    if (bossRec.IntersectsWith(player.sword))
+                    {
+                        bosses[0].damaged(player.damage);
+                        bosses[0].iframes = 30;
+                    }
+                    if (bosses[0].attack == 0)
+                    {
+                        bosses[0].attack = randgen.Next(1, 4);
+                    }
+                    if (bosses[0].iframes > 0)
+                    {
+                        bosses[0].iframes--;
+                    }
+                    if (bosses[0].attack == 1)
+                    {
+                        bosses[0].attack2("Fire");
+                        
+                        if (bosses[0].toNum > 4)
+                        {
+                            bosses[0].toNum = 0;
+                            bosses[0].attack = 0;
+                            bosses[0].fires.Clear();
+                        }
+                        foreach(Rectangle f in bosses[0].fires)
+                        {
+                            if (f.IntersectsWith(plrRec))
+                            {
+                                if (iframes <= 0)
+                                {
+                                    player.damaged(bosses[0].damage*2);
+                                    iframes = 30;
+                                }
+                            }
+                        }
+                    }
+                    if (bosses[0].attack == 2)
+                    {
+                        bosses[0].x = this.Width / 2 - 45;
+                        bosses[0].y = this.Height / 2;
+                        bosses[0].attack2("Flap");
+                        if (counter % 120 == 0 && bosses[0].toNum < 4)
+                        {
+                            bosses[0].toNum++;
+                            bosses[0].tX = 0;
+                            bosses[0].tX2 = 900;
+                        }
+                        else if (bosses[0].toNum >= 4)
+                        {
+                            bosses[0].toNum = 0;
+                            bosses[0].attack = 0;
+                            bosses[0].tornadoRec = new Rectangle(0, 0, 0, 0);
+                            bosses[0].tornadoRec2 = new Rectangle(0, 0, 0, 0);
+                        }
+                        
+
+                    }
+                    if (bosses[0].attack == 3)
+                    {
+                        if (bosses[0].toNum == 0)
+                        {
+                            bosses[0].x = player.x;
+                            bosses[0].y = player.y;
+                            bosses[0].toNum = 1;
+                        }
+                        if (counter%30 == 0 && bosses[0].toNum != 0)
+                        {
+                            bosses[0].attack2("Grab");
+                            bosses[0].iframes = 100;
+                        }
+                        if (bosses[0].toNum > 9)
+                        {
+                            bosses[0].toNum = 0;
+                            bosses[0].attack = 0;
+                        }
+                        
+                    }
                 }
             }
             else if (bossType == 3)
@@ -1009,6 +1092,12 @@ namespace Rogue_Runner
             {
                 Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
                 Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+                Rectangle bosRec = new Rectangle();
+                if (bosses.Count > 0)
+                {
+                     bosRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
+                }
+                
                 if (spook.IntersectsWith(plr))
                 {
                     if (iframes <= 0)
@@ -1018,6 +1107,12 @@ namespace Rogue_Runner
                         iframes = 30;
                         break;
                     }
+                }
+                if (spook.IntersectsWith(bosRec))
+                {
+                    bosses[0].damaged(s.damage);
+                    bballs.Remove(s);
+                    break;
                 }
                 if (spook.IntersectsWith(player.sword))
                 {
@@ -1231,6 +1326,12 @@ namespace Rogue_Runner
             {
                 e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
                 e.Graphics.FillRectangle(enemyBrush, 150, 22, b.health, 20);
+                foreach(Rectangle f in b.fires)
+                {
+                    e.Graphics.FillRectangle(swordBrush, f.X, f.Y, f.Width, f.Height);
+                }
+                e.Graphics.FillRectangle(swordBrush, b.tornadoRec);
+                e.Graphics.FillRectangle(swordBrush, b.tornadoRec2);
             }
             foreach (BiteBall b in bballs)
             {
