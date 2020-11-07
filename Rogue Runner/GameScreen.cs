@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http.Headers;
 using Rogue_Runner.Properties;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Rogue_Runner
 {
@@ -17,11 +18,14 @@ namespace Rogue_Runner
     {
         //Global Variables
         #region Variables
+        public TimeSpan playerTime = new TimeSpan();
+
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.Black);
         SolidBrush obsBrush = new SolidBrush(Color.White);
         SolidBrush swordBrush = new SolidBrush(Color.Green);
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
+        Font drawFont = new Font("Century Gothic", 13); 
         Rectangle exitDoorRec = new Rectangle(0, 0, 1, 1);
         int levelIndex = 0;
 
@@ -292,6 +296,7 @@ namespace Rogue_Runner
             player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values
             aDown = dDown = wDown = sDown = escDown = spaDown = attacked = false;
+            counter = 0;
         }
 
         #region Input
@@ -930,7 +935,12 @@ namespace Rogue_Runner
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
-  
+
+            TimeSpan addTime = new TimeSpan((counter * 15) * 10000);
+            playerTime = addTime;
+            
+            e.Graphics.DrawString(playerTime.ToString(@"mm\:ss\.ff"), drawFont, obsBrush, (this.Width / 4) * 3, 0);
+            
             if (exitDoorRec.X != 0)
             {
                 e.Graphics.FillRectangle(roomBrush, exitDoorRec);

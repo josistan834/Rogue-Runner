@@ -61,6 +61,12 @@
     <Compile Include="GameScreen.Designer.cs">
       <DependentUpon>GameScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Leaderboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Leaderboard.Designer.cs">
+      <DependentUpon>Leaderboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -74,6 +80,12 @@
     <Compile Include="Ranger.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="Runner.cs" />
+    <Compile Include="ScoreInputScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ScoreInputScreen.Designer.cs">
+      <DependentUpon>ScoreInputScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Soul.cs" />
     <Compile Include="Summoner.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -81,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Leaderboard.resx">
+      <DependentUpon>Leaderboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuScreen.resx">
       <DependentUpon>MenuScreen.cs</DependentUpon>
@@ -95,6 +110,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ScoreInputScreen.resx">
+      <DependentUpon>ScoreInputScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

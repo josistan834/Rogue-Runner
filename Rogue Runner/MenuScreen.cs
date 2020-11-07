@@ -41,7 +41,14 @@ namespace Rogue_Runner
 
         private void leaderboardButton_Click(object sender, EventArgs e)
         {
-           
+            Form form1 = this.FindForm();
+            form1.Controls.Remove(this);
+
+            Leaderboard lb = new Leaderboard();
+            form1.Controls.Add(lb);
+
+            lb.Focus();
+            lb.Location = new Point(form1.Width / 2 - lb.Width / 2, form1.Height / 2 - lb.Height / 2);
         }
 
         private void playButton_Enter(object sender, EventArgs e)
