@@ -228,15 +228,15 @@ namespace Rogue_Runner
             for (int i = 0; i < enemyCount; i++)
             {
                 int enemyType = randgen.Next(1, 5);
-                int enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
-                int enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                int enmX = randgen.Next((this.Width / 2 - newRoom.width / 2), (this.Width / 2 + newRoom.width / 2 - 30));
+                int enmY = randgen.Next((this.Height / 2 -newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                 Rectangle tempEnemy = new Rectangle(enmX, enmY, 30, 30);
-                foreach (Rectangle c in rooms[levelIndex].obstacles)
-                {
+                foreach (Rectangle c in newRoom.obstacles)
+                {  
                     if (c.IntersectsWith(tempEnemy))
                     {
-                        enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
-                        enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                        enmX = randgen.Next((this.Width / 2 - newRoom.width / 2), (this.Width / 2 + newRoom.width / 2 - 30));
+                        enmY = randgen.Next((this.Height / 2 - newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                     }
                 }
                 if (enemyType == 1)
