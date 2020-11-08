@@ -4,12 +4,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Rogue_Runner
 {
     public class Boss
     {
-        public int x, y, w, h, speed, health, damage, iframes, attack, bounces, tX, tY, tW, tH, tX2, tY2, tW2, tH2, toNum;
+        public int x, y, w, h, speed, health, damage, iframes, attack, bounces, tX, tY, tW, tH, tX2, tY2, tW2, tH2, toNum, timer;
         public bool right = true;
         public List<Rectangle> fires = new List<Rectangle>();
         Random randGen = new Random();
@@ -35,6 +36,7 @@ namespace Rogue_Runner
             tW2 = 30;
             tH2 = 90;
             toNum = 0;
+            timer = 0;
         }
 
         public void attack1(string skill)
@@ -135,24 +137,92 @@ namespace Rogue_Runner
             {
                 x = randGen.Next(0, 900);
                 y = randGen.Next(0, 700);
-                GameScreen.player.x = x;
-                GameScreen.player.y = y;
+                if (GameScreen.swordCounter == 30)
+                {
+                    GameScreen.player.x = x;
+                    GameScreen.player.y = y;
+                }
                 toNum++;
             }
         }
-        public void attack3()
+        public void attack3(string skill)
         {
-            if (attack == 1)
+            if (skill == "regenerate")
             {
+                Projectile arrow = new Projectile(30, 0, 30, 50, 3, 30, "Down");
+                Ranger.bullets.Add(arrow);
+                Projectile arrow1 = new Projectile(300, 0, 30, 50, 3, 30, "Down");
+                Ranger.bullets.Add(arrow1);
+                Projectile arrow2 = new Projectile(600, 0, 30, 50, 3, 30, "Down");
+                Ranger.bullets.Add(arrow2);
+                Projectile arrow3 = new Projectile(850, 0, 30, 50, 3, 30, "Down");
+                Ranger.bullets.Add(arrow3);
+                Projectile arrow4 = new Projectile(30, 30, 50, 30, 3, 30, "Right");
+                Ranger.bullets.Add(arrow4);
+                Projectile arrow5 = new Projectile(30, 200, 50, 30, 3, 30, "Right");
+                Ranger.bullets.Add(arrow5);
+                Projectile arrow6 = new Projectile(850, 400, 50, 30, 3, 30, "Left");
+                Ranger.bullets.Add(arrow6);
+                Projectile arrow7 = new Projectile(850, 650, 50, 30, 3, 30, "Left");
+                Ranger.bullets.Add(arrow7);
+                if (health < 500)
+                {
+                    health++;
+                }   
+            }
+            if (skill == "teleport")
+            {
+                if (timer == 0)
+                {
+                    fires.Clear();
+                    if (GameScreen.player.direc == "Up")
+                    {
+                        x = GameScreen.player.x;
+                        y = GameScreen.player.y + h;
+                    }
+                    else if (GameScreen.player.direc == "Down")
+                    {
+                        x = GameScreen.player.x;
+                        y = GameScreen.player.y - h;
+                    }
+                    else if (GameScreen.player.direc == "Left")
+                    {
+                        x = GameScreen.player.x + w;
+                        y = GameScreen.player.y;
+                    }
+                    else if (GameScreen.player.direc == "Right")
+                    {
+                        x = GameScreen.player.x - w;
+                        y = GameScreen.player.y;
+                    }
+                }
+                else if (timer == 20)
+                {
+                    Rectangle knife = new Rectangle(x-120/2, y+h/2, 120, 10);
+                    fires.Add(knife);
+                    
+                }
+                timer++;
 
             }
-            if (attack == 2)
+            if (skill == "shoot")
             {
-
-            }
-            if (attack == 3)
-            {
-
+                y = GameScreen.player.y;
+                string tempDir;
+                if (GameScreen.player.x < x)
+                {
+                    tempDir = "Left";
+                }
+                else
+                {
+                    tempDir = "Right";
+                }
+                Projectile arrow = new Projectile(x, y, 10, 10, 10, 30, tempDir);
+                Ranger.bullets.Add(arrow);
+                Projectile arrow1 = new Projectile(x, y + 20, 10, 10, 10, 30, tempDir);
+                Ranger.bullets.Add(arrow1);
+                Projectile arrow2 = new Projectile(x, y + 40, 10, 10, 10, 30, tempDir);
+                Ranger.bullets.Add(arrow2);
             }
         }
         public void damaged(int damage)

@@ -27,7 +27,7 @@ namespace Rogue_Runner
         Rectangle exitDoorRec = new Rectangle(0, 0, 1, 1);
         int levelIndex = 0;
 
-        public int swordCounter = 30;
+        public static int swordCounter = 30;
         bool attacked;
         int knockCounter = 0;
         int cooldown = 0;
@@ -691,46 +691,48 @@ namespace Rogue_Runner
                     break;
                 }
 
-                foreach (Projectile b in Ranger.bullets)
+                
+            }
+            foreach (Projectile b in Ranger.bullets)
+            {
+                b.move();
+                Rectangle pew = new Rectangle(b.x, b.y, b.w, b.h);
+                Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+
+                
+                if (b.x < 0 || b.x > this.Width || b.y < 0 || b.y > this.Height)
                 {
-                    b.move();
-                    Rectangle pew = new Rectangle(b.x, b.y, b.w, b.h);
+                    Ranger.bullets.Remove(b);
+                    break;
+                }
+                if (pew.IntersectsWith(player.sword))
+                {
+                    Ranger.bullets.Remove(b);
+                    break;
+                }
+                if (pew.IntersectsWith(plr))
+                {
+                    if (iframes <= 0)
+                    {
+                        player.damaged(b.damage);
+                        iframes = 30;
+                    }
+                }
+                bool intersect = false;
+                foreach (Rectangle c in rooms[levelIndex].obstacles)
+                {
+                    if (pew.IntersectsWith(c))
+                    {
+                        intersect = true;
+                    }
 
+                }
+                if (intersect)
+                {
+                    Ranger.bullets.Remove(b);
+                    intersect = false;
+                    break;
 
-                    if (b.x < 0 || b.x > this.Width || b.y < 0 || b.y > this.Height)
-                    {
-                        Ranger.bullets.Remove(b);
-                        break;
-                    }
-                    if (pew.IntersectsWith(player.sword))
-                    {
-                        Ranger.bullets.Remove(b);
-                        break;
-                    }
-                    if (pew.IntersectsWith(plr))
-                    {
-                        if (iframes <= 0)
-                        {
-                            player.damaged(b.damage);
-                            iframes = 30;
-                        }
-                    }
-                    bool intersect = false;
-                    foreach (Rectangle c in rooms[levelIndex].obstacles)
-                    {
-                        if (pew.IntersectsWith(c))
-                        {
-                            intersect = true;
-                        }
-
-                    }
-                    if (intersect)
-                    {
-                        Ranger.bullets.Remove(b);
-                        intersect = false;
-                        break;
-
-                    }
                 }
             }
         }
@@ -821,7 +823,7 @@ namespace Rogue_Runner
             {
                 if (bosses.Count < 1)
                 {
-                    Boss boss = new Boss(0, rooms[levelIndex].height / 9, 60, rooms[levelIndex].height - rooms[levelIndex].height/6, 5, 500, 20, 30);
+                    Boss boss = new Boss(0, rooms[levelIndex].height / 9, 60, rooms[levelIndex].height - rooms[levelIndex].height / 6, 5, 500, 20, 30);
                     bosses.Add(boss);
                 }
                 else
@@ -830,7 +832,7 @@ namespace Rogue_Runner
                     Rectangle plrRec = new Rectangle(player.x, player.y, player.w, player.h);
                     if (bossRec.IntersectsWith(plrRec))
                     {
-                        if(iframes <= 0)
+                        if (iframes <= 0)
                         {
                             player.damaged(bosses[0].damage);
                             iframes = 30;
@@ -841,7 +843,7 @@ namespace Rogue_Runner
                         bosses[0].damaged(player.damage);
                         bosses[0].iframes = 30;
                     }
-                    
+
                     if (bosses[0].attack == 0)
                     {
                         bosses[0].attack = randgen.Next(1, 4);
@@ -850,16 +852,16 @@ namespace Rogue_Runner
                     {
                         bosses[0].iframes--;
                     }
-                    
+
                     if (bosses[0].attack == 1)
                     {
                         if (bosses[0].x <= this.Width / 2 + rooms[levelIndex].width / 2 - bosses[0].w && bosses[0].right)
                         {
                             bosses[0].attack1("goRight");
-                            
+
                         }
                         else if (bosses[0].x >= this.Width / 2 - rooms[levelIndex].width / 2 && !bosses[0].right)
-                        {  
+                        {
                             bosses[0].attack1("goLeft");
                         }
                         else
@@ -878,17 +880,17 @@ namespace Rogue_Runner
                         if (counter % 60 == 0)
                         {
                             int CHANGED = 0;
-                            foreach(Tentacle t in tentacles)
+                            foreach (Tentacle t in tentacles)
                             {
                                 if (CHANGED == 0 && !t.active)
                                 {
                                     t.active = true;
                                     CHANGED++;
-                                    
+
                                 }
-                                
+
                             }
-                            int index = tentacles.FindIndex(t => t.active == false); 
+                            int index = tentacles.FindIndex(t => t.active == false);
                             if (index < 0)
                             {
                                 allChanged = true;
@@ -900,14 +902,14 @@ namespace Rogue_Runner
                         }
                         if (tentacles.Count > 7 && allChanged)
                         {
-                            
+
                             bosses[0].attack = 0;
                             tentacles.Clear();
                         }
-                        
-                        foreach(Tentacle t in tentacles)
+
+                        foreach (Tentacle t in tentacles)
                         {
-                            RectangleF tenti = new RectangleF(Math.Min(t.x, t.x2),Math.Min(t.y, t.y2), Math.Abs(t.x - t.x2), Math.Abs(t.y - t.y2));
+                            RectangleF tenti = new RectangleF(Math.Min(t.x, t.x2), Math.Min(t.y, t.y2), Math.Abs(t.x - t.x2), Math.Abs(t.y - t.y2));
                             if (tenti.IntersectsWith(plrRec))
                             {
                                 if (t.active)
@@ -917,20 +919,20 @@ namespace Rogue_Runner
                                         player.damaged(bosses[0].damage);
                                         iframes = 30;
                                     }
-                                    
+
                                 }
-                                
+
                             }
                         }
-                        
-                        
+
+
                     }
                     if (bosses[0].attack == 3)
                     {
                         bosses[0].attack1("bite");
                         if (counter % 60 == 0)
                         {
-                            BiteBall bb = new BiteBall(bosses[0].x + 100, bosses[0].y +100 + 10, 20, 20, 3, 100, 10);
+                            BiteBall bb = new BiteBall(bosses[0].x + 100, bosses[0].y + 100 + 10, 20, 20, 3, 100, 10);
                             bballs.Add(bb);
                             bosses[0].bounces++;
                         }
@@ -947,14 +949,14 @@ namespace Rogue_Runner
             {
                 if (bosses.Count < 1)
                 {
-                    Boss boss = new Boss(this.Width / 2 - 45, this.Height/2, 90, 90, 5, 500, 5, 30);
+                    Boss boss = new Boss(this.Width / 2 - 45, this.Height / 2, 90, 90, 5, 500, 5, 30);
                     bosses.Add(boss);
                 }
                 else
                 {
                     Rectangle bossRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
                     Rectangle plrRec = new Rectangle(player.x, player.y, player.w, player.h);
-                    if (bossRec.IntersectsWith(plrRec) || bosses[0].tornadoRec.IntersectsWith(plrRec)|| bosses[0].tornadoRec2.IntersectsWith(plrRec))
+                    if (bossRec.IntersectsWith(plrRec) || bosses[0].tornadoRec.IntersectsWith(plrRec) || bosses[0].tornadoRec2.IntersectsWith(plrRec))
                     {
                         if (iframes <= 0)
                         {
@@ -978,20 +980,20 @@ namespace Rogue_Runner
                     if (bosses[0].attack == 1)
                     {
                         bosses[0].attack2("Fire");
-                        
+
                         if (bosses[0].toNum > 4)
                         {
                             bosses[0].toNum = 0;
                             bosses[0].attack = 0;
                             bosses[0].fires.Clear();
                         }
-                        foreach(Rectangle f in bosses[0].fires)
+                        foreach (Rectangle f in bosses[0].fires)
                         {
                             if (f.IntersectsWith(plrRec))
                             {
                                 if (iframes <= 0)
                                 {
-                                    player.damaged(bosses[0].damage*2);
+                                    player.damaged(bosses[0].damage * 2);
                                     iframes = 30;
                                 }
                             }
@@ -1015,7 +1017,7 @@ namespace Rogue_Runner
                             bosses[0].tornadoRec = new Rectangle(0, 0, 0, 0);
                             bosses[0].tornadoRec2 = new Rectangle(0, 0, 0, 0);
                         }
-                        
+
 
                     }
                     if (bosses[0].attack == 3)
@@ -1026,7 +1028,7 @@ namespace Rogue_Runner
                             bosses[0].y = player.y;
                             bosses[0].toNum = 1;
                         }
-                        if (counter%30 == 0 && bosses[0].toNum != 0)
+                        if (counter % 30 == 0 && bosses[0].toNum != 0)
                         {
                             bosses[0].attack2("Grab");
                             bosses[0].iframes = 100;
@@ -1036,7 +1038,7 @@ namespace Rogue_Runner
                             bosses[0].toNum = 0;
                             bosses[0].attack = 0;
                         }
-                        
+
                     }
                 }
             }
@@ -1049,8 +1051,92 @@ namespace Rogue_Runner
                 }
                 else
                 {
-                    bosses[0].attack = randgen.Next(1, 4);
-                    bosses[0].attack3();
+                    Rectangle bossRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
+                    Rectangle plrRec = new Rectangle(player.x, player.y, player.w, player.h);
+                    if (bossRec.IntersectsWith(plrRec) || bosses[0].tornadoRec.IntersectsWith(plrRec) || bosses[0].tornadoRec2.IntersectsWith(plrRec))
+                    {
+                        if (iframes <= 0)
+                        {
+                            player.damaged(bosses[0].damage);
+                            iframes = 30;
+                        }
+                    }
+                    if (bossRec.IntersectsWith(player.sword))
+                    {
+                        bosses[0].damaged(player.damage);
+                        bosses[0].iframes = 30;
+                    }
+                    if (bosses[0].attack == 0)
+                    {
+                        bosses[0].attack = randgen.Next(1, 4);
+                    }
+                    if (bosses[0].iframes > 0)
+                    {
+                        bosses[0].iframes--;
+                    }
+                    if (bosses[0].attack == 1)
+                    {
+                        if (counter % 30 == 0)
+                        {
+                            bosses[0].attack3("regenerate");
+                        }
+                        if (bossRec.IntersectsWith(player.sword))
+                        {
+                            bosses[0].damaged(player.damage);
+                            bosses[0].iframes = 30;
+                            bosses[0].attack = 0;
+                            bosses[0].toNum = 0;
+                        }
+                    }
+                    if (bosses[0].attack == 2)
+                    {
+                        bosses[0].attack3("teleport");
+                        if (counter % 300 == 0)
+                        {
+                            bosses[0].timer = 0;
+                            bosses[0].toNum++;
+                        }
+                        
+                        if (bossRec.IntersectsWith(player.sword))
+                        {
+                            bosses[0].fires.Clear();
+                            bosses[0].damaged(player.damage);
+                            bosses[0].iframes = 30;
+                            bosses[0].x = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - bosses[0].w));
+                            bosses[0].y = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - bosses[0].h));
+                            
+                        }
+                        if (bosses[0].toNum == 5)
+                        {
+                            bosses[0].attack = 0;
+                            bosses[0].toNum = 0;
+                        }
+                        foreach (Rectangle f in bosses[0].fires)
+                        {
+                            if (f.IntersectsWith(plrRec))
+                            {
+                                if (iframes <= 0)
+                                {
+                                    player.damaged(bosses[0].damage * 3);
+                                    iframes = 30;
+                                }
+                            }
+                        }
+                    }
+                    if (bosses[0].attack == 3)
+                    {
+                        if (counter % 30 == 0 && bosses[0].toNum <= 20)
+                        {
+                            bosses[0].attack3("shoot");
+                            bosses[0].toNum++;
+                        }
+                        if (bosses[0].toNum > 20)
+                        {
+                            bosses[0].attack = 0;
+                            bosses[0].toNum = 0;
+                        }
+                            
+                    }
                 }
             }
             if (bosses[0].health <= 0)
@@ -1085,7 +1171,7 @@ namespace Rogue_Runner
                 {
                     r.move(r.direc);
                 }
-                
+
             }
 
             foreach (BiteBall s in bballs)
@@ -1095,9 +1181,9 @@ namespace Rogue_Runner
                 Rectangle bosRec = new Rectangle();
                 if (bosses.Count > 0)
                 {
-                     bosRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
+                    bosRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
                 }
-                
+
                 if (spook.IntersectsWith(plr))
                 {
                     if (iframes <= 0)
@@ -1119,7 +1205,7 @@ namespace Rogue_Runner
                     s.direc = player.direc;
                     s.damaged(player.damage);
                     s.reflected = true;
-                    
+
                     if (s.iframes <= 0)
                     {
                         s.iframes = 30;
@@ -1271,17 +1357,17 @@ namespace Rogue_Runner
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
-  
+
             if (exitDoorRec.X != 0)
             {
                 e.Graphics.FillRectangle(roomBrush, exitDoorRec);
             }
-            
+
             foreach (Rectangle r in rooms[levelIndex].obstacles)
             {
                 e.Graphics.DrawImage(Resources.obstacleSprite, r.X, r.Y, r.Width, r.Height);
             }
-            
+
             if (tentacles != null)
             {
                 foreach (Tentacle t in tentacles)
@@ -1294,11 +1380,11 @@ namespace Rogue_Runner
                     {
                         e.Graphics.DrawLine(inactiveTent, t.x, t.y, t.x2, t.y2);
                     }
-                    
+
                 }
             }
-            
-   
+
+
             foreach (Runner r in rooms[levelIndex].run)
             {
                 if (r.direc == "Left")
@@ -1326,7 +1412,7 @@ namespace Rogue_Runner
             {
                 e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
                 e.Graphics.FillRectangle(enemyBrush, 150, 22, b.health, 20);
-                foreach(Rectangle f in b.fires)
+                foreach (Rectangle f in b.fires)
                 {
                     e.Graphics.FillRectangle(swordBrush, f.X, f.Y, f.Width, f.Height);
                 }
@@ -1423,9 +1509,9 @@ namespace Rogue_Runner
 
 
             e.Graphics.FillRectangle(enemyBrush, 150, this.Height - 22, player.health, 20);
-            
+
             e.Graphics.DrawImage(Resources.heart_overlay, 150, this.Height - 22, 750, 20);
-           
+
         }
 
         private void nextRoom()
@@ -1451,7 +1537,7 @@ namespace Rogue_Runner
             {
                 levelIndex++;
                 player.x = this.Width / 2;
-                player.y = this.Height/2 + (rooms[levelIndex].height/2 - 50);
+                player.y = this.Height / 2 + (rooms[levelIndex].height / 2 - 50);
             }
         }
     }
