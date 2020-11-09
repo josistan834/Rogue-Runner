@@ -31,7 +31,15 @@ namespace Rogue_Runner
 
         private void controlsButton_Click(object sender, EventArgs e)
         {
+            //TEMP CODE FOR TESTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Form form1 = this.FindForm();
+            form1.Controls.Remove(this);
 
+            ScoreInputScreen gs = new ScoreInputScreen();
+            form1.Controls.Add(gs);
+
+            gs.Focus();
+            gs.Location = new Point(form1.Width / 2 - gs.Width / 2, form1.Height / 2 - gs.Height / 2);
         }
 
         private void exitButton_Click(object sender, EventArgs e)

@@ -18,7 +18,8 @@ namespace Rogue_Runner
     {
         //Global Variables
         #region Variables
-        public TimeSpan playerTime = new TimeSpan();
+        public static TimeSpan playerTime = new TimeSpan();
+        public static int enemiesKilled = 0;
 
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.Black);
@@ -297,6 +298,7 @@ namespace Rogue_Runner
             //Set starting values
             aDown = dDown = wDown = sDown = escDown = spaDown = attacked = false;
             counter = 0;
+            enemiesKilled = 0;
         }
 
         #region Input
@@ -491,6 +493,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].run.Remove(r);
                     break;
                 }
@@ -600,6 +603,7 @@ namespace Rogue_Runner
                 }
                 if (s.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].souls.Remove(s);
                     break;
                 }
@@ -677,6 +681,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].rangers.Remove(r);
                     if (rooms[levelIndex].rangers.Count == 0)
                     {
@@ -765,6 +770,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].summoners.Remove(r);
                     break;
                 }

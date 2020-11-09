@@ -80,6 +80,7 @@
     <Compile Include="Ranger.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="Runner.cs" />
+    <Compile Include="Score.cs" />
     <Compile Include="ScoreInputScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
