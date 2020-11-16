@@ -817,7 +817,7 @@ namespace Rogue_Runner
 
             if (rooms[levelIndex].type == "boss" && bossType == 0)
             {
-                bossType = randgen.Next(1, 3);
+                bossType = randgen.Next(1, 4    );
             }
             if (bossType == 1)
             {
