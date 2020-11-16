@@ -9,7 +9,7 @@ namespace Rogue_Runner
 {
     public class Player
     {
-        public int x, y, w, h, speed, health, damage;
+        public int x, y, w, h, speed, health, damage, swordSize;
         public string direc;
         public Rectangle sword = new Rectangle();
         public Player(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage, string direc)
@@ -21,6 +21,7 @@ namespace Rogue_Runner
             speed = _speed;
             health = _health;
             damage = _damage;
+            swordSize = 30;
             
         }
         public void move(string dir)
@@ -51,19 +52,19 @@ namespace Rogue_Runner
 
             if (direc == "Left")
             {
-                sword = new Rectangle(x-w, y, 30, 30);
+                sword = new Rectangle(x-w, y, swordSize, swordSize);
             }
             else if (direc == "Right")
             {
-                sword = new Rectangle(x+w, y, 30, 30);
+                sword = new Rectangle(x+w, y, swordSize, swordSize);
             }
             else if (direc == "Up")
             {
-                sword = new Rectangle(x, y-h, 30, 30);
+                sword = new Rectangle(x, y-h, swordSize, swordSize);
             }
             else if (direc == "Down")
             {
-                sword = new Rectangle(x, y+h, 30, 30);
+                sword = new Rectangle(x, y+h, swordSize, swordSize);
             }
             
         }

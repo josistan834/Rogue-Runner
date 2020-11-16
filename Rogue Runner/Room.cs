@@ -17,6 +17,7 @@ namespace Rogue_Runner
         public List<Soul> souls = new List<Soul>();
         public List<Ranger> rangers = new List<Ranger>();
         public List<Summoner> summoners = new List<Summoner>();
+        public List<Powerups> powers = new List<Powerups>();
         //List <> enemy = new List <>();
 
         public Room(int _width, int _height, string _type, List<Rectangle> _obstacles, Image _image)

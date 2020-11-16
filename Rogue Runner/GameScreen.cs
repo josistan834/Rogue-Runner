@@ -25,7 +25,7 @@ namespace Rogue_Runner
         SolidBrush roomBrush = new SolidBrush(Color.Black);
         SolidBrush obsBrush = new SolidBrush(Color.White);
         SolidBrush swordBrush = new SolidBrush(Color.Green);
-        SolidBrush enemyBrush = new SolidBrush(Color.Red);
+        SolidBrush enemyBrush = new SolidBrush(Color.White);
 
         Pen activeTent = new Pen(Color.Orange);
         Pen inactiveTent = new Pen(Color.LightBlue);
@@ -33,7 +33,7 @@ namespace Rogue_Runner
         Font drawFont = new Font("Century Gothic", 13); 
 
         Rectangle exitDoorRec = new Rectangle(0, 0, 1, 1);
-        int levelIndex = 0;
+        public static int levelIndex = 0;
 
         public static int swordCounter = 30;
         bool attacked;
@@ -44,6 +44,8 @@ namespace Rogue_Runner
         int prevX, prevY;
         int counter = 0;
         int bossType = 0;
+
+        bool bossDead = false;
         #endregion
 
         //Object
@@ -53,9 +55,10 @@ namespace Rogue_Runner
         public static List<Tentacle> tentacles = new List<Tentacle>();
         public static List<BiteBall> bballs = new List<BiteBall>();
         Random randgen = new Random();
-        public List<Room> rooms = new List<Room>();
+        public static List<Room> rooms = new List<Room>();
         #endregion
 
+        //Images
         #region images
         Image heroUp = Properties.Resources.heroUp;
         Image heroDown = Properties.Resources.heroDown;
@@ -76,11 +79,21 @@ namespace Rogue_Runner
         Image soulImage = Properties.Resources.soulEnemy;
         public static Image sumImage = Properties.Resources.summoner;
         Image sumAttack = Properties.Resources.summonerAttack;
+        Image rangerUp = Properties.Resources.rangerUp;
+        Image rangerDown = Properties.Resources.rangerDown;
+        Image rangerLeft = Properties.Resources.rangerLeft;
+        Image rangerRight = Properties.Resources.rangerRight;
+        Image atkPower = Properties.Resources.ATKPower;
+        Image hpPower = Properties.Resources.HpPower;
+        Image speedPower = Properties.Resources.SpeedPower;
+        Image rangePower = Properties.Resources.rangePower;
         #endregion
 
+        //generate the levels and enemies
+        #region level creation
         private void generateFloor()
         {
-
+            //preset variables for rooms
             int width, height, obstacleCount, enemyCount;
             width = height = obstacleCount = enemyCount = 0;
             string type = "";
@@ -88,6 +101,7 @@ namespace Rogue_Runner
             Image image = Properties.Resources.big_room;
             int size = randgen.Next(1, 4);
 
+            //create roomes based on size
             switch (size)
             {
                 case 1:
@@ -96,7 +110,7 @@ namespace Rogue_Runner
                     width = 550;
                     height = 450;
                     obstacleCount = randgen.Next(0, 3);
-                    enemyCount = randgen.Next(1, 4);
+                    enemyCount = randgen.Next(1, 3);
                     break;
                 case 2:
                     type = "medium";
@@ -104,7 +118,7 @@ namespace Rogue_Runner
                     width = 700;
                     height = 525;
                     obstacleCount = randgen.Next(1, 4);
-                    enemyCount = randgen.Next(2, 5);
+                    enemyCount = randgen.Next(1, 4);
                     break;
                 case 3:
                     type = "large";
@@ -112,10 +126,11 @@ namespace Rogue_Runner
                     width = 850;
                     height = 650;
                     obstacleCount = randgen.Next(2, 6);
-                    enemyCount = randgen.Next(3, 7);
+                    enemyCount = randgen.Next(2, 5);
                     break;
             }
 
+            //add obstacles to rooms
             for (int i = 0; i < obstacleCount; i++)
             {
                 int obsType = randgen.Next(1, 8);
@@ -232,14 +247,19 @@ namespace Rogue_Runner
                 }
             }
 
+            //add created room to the list
             Room newRoom = new Room(width, height, type, obstacles, image);
             rooms.Add(newRoom);
+
+            //create enemies 
             for (int i = 0; i < enemyCount; i++)
             {
                 int enemyType = randgen.Next(1, 5);
                 int enmX = randgen.Next((this.Width / 2 - newRoom.width / 2), (this.Width / 2 + newRoom.width / 2 - 30));
                 int enmY = randgen.Next((this.Height / 2 -newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                 Rectangle tempEnemy = new Rectangle(enmX, enmY, 30, 30);
+
+                //do not allow enemies to spawn in an obstacle
                 foreach (Rectangle c in newRoom.obstacles)
                 {  
                     if (c.IntersectsWith(tempEnemy))
@@ -248,15 +268,17 @@ namespace Rogue_Runner
                         enmY = randgen.Next((this.Height / 2 - newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                     }
                 }
+                
+                //adding enemies to their respective lists
                 if (enemyType == 1)
                 {
-                    Runner fast = new Runner(enmX, enmY, 30, 30, 5, 200, 50, 30);
+                    Runner fast = new Runner(enmX, enmY, 30, 30, 5, 150, 25, 30);
                     newRoom.run.Add(fast);
 
                 }
                 else if (enemyType == 2)
                 {
-                    Summoner summoner = new Summoner(enmX, enmY, 30, 30, 150, 30, 2);
+                    Summoner summoner = new Summoner(enmX, enmY, 30, 30, 100    , 30, 2);
                     newRoom.summoners.Add(summoner);
 
                 }
@@ -272,30 +294,37 @@ namespace Rogue_Runner
                 }
             }
 
-
+            //refresh the gamescreen
             Refresh();
         }
 
         private void assembleFloor()
         {
-            //for(int i = 0; i < 12; i++)
-            //{
-            //    generateFloor();
-            //}
-            //for(int i = 0; i < 3; i++)
-            //{
-            //    List<Rectangle> obstacles = new List<Rectangle>();
+            for (int i = 0; i < 12; i++)
+            {
+                generateFloor();
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                List<Rectangle> obstacles = new List<Rectangle>();
 
-            //    Room newPowerRoom = new Room(700, 525, "powerUp", obstacles, Resources.med_room);
-            //    rooms.Add(newPowerRoom);
-            //}
-            //rooms = rooms.OrderBy(a => Guid.NewGuid()).ToList();
+                Room newPowerRoom = new Room(700, 525, "powerUp", obstacles, Resources.med_room);
+                Powerups newPowerUp = new Powerups(randgen.Next(1, 5), this.Width / 2, this.Height / 2, 50, 50);
+                newPowerRoom.powers.Add(newPowerUp);
+                rooms.Add(newPowerRoom);
+                
+
+            }
+            rooms = rooms.OrderBy(a => Guid.NewGuid()).ToList();
 
             List<Rectangle> bossObstacles = new List<Rectangle>();
             Room bossRoom = new Room(850, 650, "boss", bossObstacles, Resources.big_room);
             rooms.Add(bossRoom);
 
         }
+        #endregion
+
+        //initialize the gamescreen objects and player variables
         public GameScreen()
         {
             //Initialize
@@ -309,6 +338,7 @@ namespace Rogue_Runner
             enemiesKilled = 0;
         }
 
+        //recieve player input
         #region Input
         private void keyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -361,11 +391,16 @@ namespace Rogue_Runner
         }
         #endregion
 
+
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-
+            //Runs custom hero method for all hero actions and input
             HERO();
 
+            //check for collisions with powers and the player
+            POWER();
+
+            //run each of the individual enemy methods
             #region enemies
             RU();
             SO();
@@ -374,20 +409,45 @@ namespace Rogue_Runner
             BB();
             BOSS();
             #endregion
+
+            //check if player is touching exit then move to next room
             nextRoom();
+
+            //increasse counter
             counter++;
+
+            //redraw gamescreen
             Refresh();
         }
 
         #region Custom Methods
+        public void POWER()
+        {
+            //check collisions with player 
+            Rectangle heroRec = new Rectangle(player.x, player.y, player.w, player.h);
+            foreach (Powerups p in rooms[levelIndex].powers)
+            {
+                Rectangle powerRec = new Rectangle(p.x, p.y, p.w, p.h);
+
+                //when colliding, give a power and delete the powerup
+                if (powerRec.IntersectsWith(heroRec))
+                {
+                    p.powerGoBrrr();
+                    rooms[levelIndex].powers.Remove(p);
+                    break;
+                }
+            }
+        }
         public void RU()
         {
 
             foreach (Runner r in rooms[levelIndex].run)
             {
-                //r.movement = true;
+                //create rectangles required for collisions
                 Rectangle runRec = new Rectangle(r.x, r.y, r.w, r.h);
                 Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
+
+                //check if colliding with obstacles
                 foreach (Rectangle c in rooms[levelIndex].obstacles)
                 {
                     if (c.IntersectsWith(runRec))
@@ -399,14 +459,20 @@ namespace Rogue_Runner
 
                     }
                 }
+
+                //check if stunned and decreasse stun
                 if (runStun > 0)
                 {
                     runStun--;
                 }
+
+                //if not stunned allow movement
                 else if (runStun <= 0)
                 {
                     r.movement = true;
                 }
+
+                //if movement is allowed move runner
                 if (r.movement == true)
                 {
                     if (knockCounter == 0 && !runRec.IntersectsWith(playerRec))
@@ -479,6 +545,7 @@ namespace Rogue_Runner
                     }
                 }
 
+                //if the runner hits sword take damage
                 if (runRec.IntersectsWith(player.sword))
                 {
 
@@ -490,7 +557,8 @@ namespace Rogue_Runner
                     }
 
                 }
-
+                
+                //if the runner hits player deal damage
                 if (runRec.IntersectsWith(playerRec))
                 {
                     if (iframes <= 0)
@@ -501,18 +569,24 @@ namespace Rogue_Runner
                     }
 
                 }
+
+                //when health is 0 remove the runner
                 if (r.health <= 0)
                 {
                     enemiesKilled++;
                     rooms[levelIndex].run.Remove(r);
                     break;
                 }
+
+                //while there are iframes make them go down
                 if (r.iframes > 0)
                 {
                     r.iframes--;
                 }
 
             }
+
+            //while the runner has knockback decrease knockback timer
             if (knockCounter > 0)
             {
                 knockCounter--;
@@ -520,11 +594,13 @@ namespace Rogue_Runner
         }
         public void SO()
         {
+            //run movement method for souls
             foreach (Soul s in rooms[levelIndex].souls)
             {
                 s.move();
             }
 
+            //if the soul hits an obstacle change direction
             foreach (Soul s in rooms[levelIndex].souls)
             {
 
@@ -552,6 +628,7 @@ namespace Rogue_Runner
                     }
                 }
 
+                //if the soul hits a wall change direction
                 if (s.x <= this.Width / 2 - rooms[levelIndex].width / 2)
                 {
                     s.right = !s.right;
@@ -577,7 +654,10 @@ namespace Rogue_Runner
                     s.y = s.preY;
                 }
 
+                //create a rectangle for the player
                 Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+
+                //if the soul hits a player deal damage
                 if (spook.IntersectsWith(plr))
                 {
                     if (iframes <= 0)
@@ -586,6 +666,8 @@ namespace Rogue_Runner
                         iframes = 30;
                     }
                 }
+
+                //if the soul hits a sword take damage and change direction
                 if (spook.IntersectsWith(player.sword))
                 {
 
@@ -611,31 +693,36 @@ namespace Rogue_Runner
                         s.iframes = 30;
                     }
                 }
+
+                //if the soul health is 0 remove the soul
                 if (s.health <= 0)
                 {
                     enemiesKilled++;
                     rooms[levelIndex].souls.Remove(s);
                     break;
                 }
+
+                //while the soul has iframes decreasse them
                 if (s.iframes > 0)
                 {
                     s.iframes--;
                 }
-
-
             }
 
+            //prevent clipping into the obstacles
             foreach (Soul s in rooms[levelIndex].souls)
             {
                 s.preX = s.x;
                 s.preY = s.y;
             }
         }
+
         public void RA()
         {
             foreach (Ranger r in rooms[levelIndex].rangers)
             {
                 Random location = new Random();
+                //
                 if (counter % 45 == 0)
                 {
                     if (Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
@@ -749,6 +836,23 @@ namespace Rogue_Runner
                 }
             }
         }
+
+        private void playButton_Click(object sender, EventArgs e)
+        {
+            escDown = false;
+            gameTimer.Start();
+            pauseLabel.Hide();
+            pauseMenu.Hide();
+            playButton.Hide();
+            exitButton.Hide();
+            this.Focus();
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
         public void SU()
         {
             foreach (Summoner r in rooms[levelIndex].summoners)
@@ -829,7 +933,7 @@ namespace Rogue_Runner
         public void BOSS()
         {
 
-            if (rooms[levelIndex].type == "boss" && bossType == 0)
+            if (rooms[levelIndex].type == "boss" && bossType == 0 && bossDead == false)
             {
                 bossType = randgen.Next(1, 4);
                 
@@ -1154,10 +1258,19 @@ namespace Rogue_Runner
                     }
                 }
             }
-            if (bosses[0].health <= 0)
+            if (bosses.Count > 0)
             {
-                bosses.RemoveAt(0);
+                if (bosses[0].health <= 0)
+                {
+                    bosses.RemoveAt(0);
+                    bossDead = true;
+                    bossType = 0;
+                    tentacles.Clear();
+                    Powerups newPowerUp = new Powerups(randgen.Next(1, 5), this.Width / 2, this.Height / 2, 50, 50);
+                    rooms[levelIndex].powers.Add(newPowerUp);
+                }
             }
+            
         }
         public void BB()
         {
@@ -1281,6 +1394,15 @@ namespace Rogue_Runner
             {
                 player.move("Down");
             }
+            if (escDown)
+            {
+                pauseLabel.Show();
+                pauseMenu.Show();
+                playButton.Show();
+                exitButton.Show();
+                playButton.Focus();
+                gameTimer.Stop();
+            }
             #endregion
 
             #region attack
@@ -1371,6 +1493,7 @@ namespace Rogue_Runner
         #endregion
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
 
             TimeSpan addTime = new TimeSpan((counter * 15) * 10000);
@@ -1426,7 +1549,22 @@ namespace Rogue_Runner
             }
             foreach (Ranger r in rooms[levelIndex].rangers)
             {
-                e.Graphics.FillRectangle(enemyBrush, r.x, r.y, r.w, r.h);
+                if (r.direc == "Left")
+                {
+                    e.Graphics.DrawImage(rangerLeft, r.x, r.y, r.w, r.h);
+                }
+                else if (r.direc == "Right")
+                {
+                    e.Graphics.DrawImage(rangerRight, r.x, r.y, r.w, r.h);
+                }
+                else if (r.direc == "Up")
+                {
+                    e.Graphics.DrawImage(rangerUp, r.x, r.y, r.w, r.h);
+                }
+                else if (r.direc == "Down")
+                {
+                    e.Graphics.DrawImage(rangerDown, r.x, r.y, r.w, r.h);
+                }
             }
             foreach (Boss b in bosses)
             {
@@ -1466,6 +1604,26 @@ namespace Rogue_Runner
             foreach (Soul r in rooms[levelIndex].souls)
             {
                 e.Graphics.DrawImage(soulImage, r.x, r.y, r.w, r.h);
+            }
+            foreach (Powerups p in rooms[levelIndex].powers)
+            {
+                if (p.type == 1)
+                {
+                    e.Graphics.DrawImage(atkPower, p.x, p.y, p.w, p.h);
+                }
+                if (p.type == 2)
+                {
+                    e.Graphics.DrawImage(rangePower, p.x, p.y, p.w, p.h);
+                }
+                if (p.type == 3)
+                {
+                    e.Graphics.DrawImage(speedPower, p.x, p.y, p.w, p.h);
+                }
+                if (p.type == 4)
+                {
+                    e.Graphics.DrawImage(hpPower, p.x, p.y, p.w, p.h);
+                }
+
             }
             if (swordCounter >= 30)
             {
@@ -1536,7 +1694,7 @@ namespace Rogue_Runner
 
         private void nextRoom()
         {
-            if (rooms[levelIndex].type != "boss" && rooms[levelIndex].souls.Count() == 0 && rooms[levelIndex].run.Count() == 0 && rooms[levelIndex].summoners.Count() == 0 && rooms[levelIndex].rangers.Count() == 0)
+            if (bosses.Count == 0 && rooms[levelIndex].souls.Count() == 0 && rooms[levelIndex].run.Count() == 0 && rooms[levelIndex].summoners.Count() == 0 && rooms[levelIndex].rangers.Count() == 0)
             {
                 exitDoorRec.X = this.Width / 2 - (rooms[levelIndex].width / 2 - 50);
                 exitDoorRec.Y = this.Height / 2 - (rooms[levelIndex].height / 2 + 10);
@@ -1555,6 +1713,14 @@ namespace Rogue_Runner
             Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
             if (playerRec.IntersectsWith(exitDoorRec))
             {
+                if (rooms[levelIndex].type == "boss")
+                {
+                    rooms.Clear();
+                    assembleFloor();
+                    levelIndex = -1;
+                    bossDead = false;
+                    
+                }
                 levelIndex++;
                 player.x = this.Width / 2;
                 player.y = this.Height / 2 + (rooms[levelIndex].height / 2 - 50);

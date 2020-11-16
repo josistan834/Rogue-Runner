@@ -135,8 +135,8 @@ namespace Rogue_Runner
             }
             if (skill == "Grab")
             {
-                x = randGen.Next(0, 900);
-                y = randGen.Next(0, 700);
+                x = randGen.Next((900 / 2 - GameScreen.rooms[GameScreen.levelIndex].width / 2), (900 / 2 + GameScreen.rooms[GameScreen.levelIndex].width / 2 - w));
+                y = randGen.Next((700 / 2 - GameScreen.rooms[GameScreen.levelIndex].height / 2), (700 / 2 + GameScreen.rooms[GameScreen.levelIndex].height / 2 - w));
                 if (GameScreen.swordCounter == 30)
                 {
                     GameScreen.player.x = x;
