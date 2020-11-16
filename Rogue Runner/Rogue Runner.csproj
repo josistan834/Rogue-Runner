@@ -232,6 +232,27 @@
     <None Include="Resources\rangerLeft.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\tentacleFromLeft.png" />
+    <None Include="Resources\Tornado.png" />
+    <None Include="Resources\Tornado2.png" />
+    <None Include="Resources\wallFacingRIGHT%28dithering%29.png" />
+    <None Include="Resources\wallFacingLeft%28dithering%29.png" />
+    <None Include="Resources\WarriorDown.png" />
+    <None Include="Resources\controlsScreen.png" />
+    <None Include="Resources\boosSwordRight.png" />
+    <None Include="Resources\boosSwordLeft.png" />
+    <None Include="Resources\dragonWingFlap.png" />
+    <None Include="Resources\fire.png" />
+    <None Include="Resources\dragonDown.png" />
+    <None Include="Resources\dragonRight%28closed%29.png" />
+    <None Include="Resources\dragonLeft%28closed%29.png" />
+    <None Include="Resources\dragonRight%28Open%29.png" />
+    <None Include="Resources\dragonLeft%28Open%29.png" />
+    <None Include="Resources\blade saw.png" />
+    <None Include="Resources\arrowRight.png" />
+    <None Include="Resources\arrowLeft.png" />
+    <None Include="Resources\arrowDown.png" />
+    <None Include="Resources\arrowUp.png" />
     <Content Include="Resources\LeaderboardXML.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
