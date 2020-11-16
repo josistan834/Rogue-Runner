@@ -1731,7 +1731,7 @@ namespace Rogue_Runner
                 }
                 levelIndex++;
                 player.x = this.Width / 2;
-                player.y = this.Height / 2 + (rooms[levelIndex].height / 2 - 50);
+                player.y = this.Height / 2 + (rooms[levelIndex].height / 2 - 70);
             }
         }
     }
