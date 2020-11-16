@@ -227,5 +227,10 @@
   <ItemGroup>
     <None Include="Resources\rangerLeft.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\LeaderboardXML.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
