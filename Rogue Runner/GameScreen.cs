@@ -42,7 +42,7 @@ namespace Rogue_Runner
         int iframes = 30;
         int runStun = 0;
         int prevX, prevY;
-        int counter = 0;
+        Int64 counter = 0;
         int bossType = 0;
 
         bool bossDead = false;
@@ -300,7 +300,7 @@ namespace Rogue_Runner
 
         private void assembleFloor()
         {
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 8; i++)
             {
                 generateFloor();
             }
@@ -1446,7 +1446,15 @@ namespace Rogue_Runner
             }
             if (player.health <= 0)
             {
-                Application.Exit();
+                gameTimer.Stop();
+                Form form1 = this.FindForm();
+                form1.Controls.Remove(this);
+
+                ScoreInputScreen si = new ScoreInputScreen();
+                form1.Controls.Add(si);
+
+                si.Focus();
+                si.Location = new Point(form1.Width / 2 - si.Width / 2, form1.Height / 2 - si.Height / 2);
             }
 
             foreach (Rectangle r in rooms[levelIndex].obstacles)
@@ -1723,7 +1731,7 @@ namespace Rogue_Runner
                 }
                 levelIndex++;
                 player.x = this.Width / 2;
-                player.y = this.Height / 2 + (rooms[levelIndex].height / 2 - 50);
+                player.y = this.Height / 2 + (rooms[levelIndex].height / 2 - 70);
             }
         }
     }
