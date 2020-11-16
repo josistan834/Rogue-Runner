@@ -722,7 +722,7 @@ namespace Rogue_Runner
             foreach (Ranger r in rooms[levelIndex].rangers)
             {
                 Random location = new Random();
-                //
+                //look towards player
                 if (counter % 45 == 0)
                 {
                     if (Math.Abs(player.x - r.x) > Math.Abs(player.y - r.y))
@@ -750,13 +750,18 @@ namespace Rogue_Runner
 
                     r.attack();
                 }
+
+                //if iframes decreasse
                 if (r.iframes > 0)
                 {
                     r.iframes--;
                 }
 
+                //create rectangle for ranger and player
                 Rectangle rng = new Rectangle(r.x, r.y, r.w, r.h);
                 Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
+
+                //if ranger touching sword teleport and take damage
                 if (rng.IntersectsWith(player.sword))
                 {
                     r.x = location.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - r.w));
@@ -776,6 +781,8 @@ namespace Rogue_Runner
                     }
                     break;
                 }
+
+                //if no health remove
                 if (r.health <= 0)
                 {
                     enemiesKilled++;
@@ -795,11 +802,14 @@ namespace Rogue_Runner
             }
             foreach (Projectile b in Ranger.bullets)
             {
+                //move bullet
                 b.move();
+
+                //create rectangles for collisions
                 Rectangle pew = new Rectangle(b.x, b.y, b.w, b.h);
                 Rectangle plr = new Rectangle(player.x, player.y, player.w, player.h);
 
-                
+                //when the bullet hits anything remove it
                 if (b.x < 0 || b.x > this.Width || b.y < 0 || b.y > this.Height)
                 {
                     Ranger.bullets.Remove(b);
@@ -810,6 +820,8 @@ namespace Rogue_Runner
                     Ranger.bullets.Remove(b);
                     break;
                 }
+
+                //if bullet hits player deal damage
                 if (pew.IntersectsWith(plr))
                 {
                     if (iframes <= 0)
@@ -818,6 +830,8 @@ namespace Rogue_Runner
                         iframes = 30;
                     }
                 }
+
+                //if bullet hits obstacle remove it
                 bool intersect = false;
                 foreach (Rectangle c in rooms[levelIndex].obstacles)
                 {
@@ -839,6 +853,7 @@ namespace Rogue_Runner
 
         private void playButton_Click(object sender, EventArgs e)
         {
+            //continue the game and hide pause menu
             escDown = false;
             gameTimer.Start();
             pauseLabel.Hide();
@@ -850,6 +865,7 @@ namespace Rogue_Runner
 
         private void exitButton_Click(object sender, EventArgs e)
         {
+            //end program on exit clck
             Application.Exit();
         }
 
@@ -858,19 +874,24 @@ namespace Rogue_Runner
             foreach (Summoner r in rooms[levelIndex].summoners)
             {
 
-
+                //summon a soul once every 6 seconds
                 if (counter % 360 == 0)
                 {
                     Soul soul = new Soul(r.x, r.y + 10, 20, 20, 3, 100, 10);
                     rooms[levelIndex].souls.Add(soul);
                     r.attacking = true;
                 }
+
+                //if there are ifrmaes decreasse them
                 if (r.iframes > 0)
                 {
                     r.iframes--;
                 }
 
+                //create rectangle for summoner
                 Rectangle sum = new Rectangle(r.x, r.y, r.w, r.h);
+
+                //if touch sword get damaged
                 if (sum.IntersectsWith(player.sword))
                 {
 
@@ -884,12 +905,16 @@ namespace Rogue_Runner
                     r.sumRun = true;
                     break;
                 }
+
+                //if no health remove
                 if (r.health <= 0)
                 {
                     enemiesKilled++;
                     rooms[levelIndex].summoners.Remove(r);
                     break;
                 }
+
+                //run away when hit until hitting a wall
                 if (r.sumRun)
                 {
                     foreach (Rectangle c in rooms[levelIndex].obstacles)
@@ -932,12 +957,14 @@ namespace Rogue_Runner
         }
         public void BOSS()
         {
+            //if no boss in boss room make boss
 
             if (rooms[levelIndex].type == "boss" && bossType == 0 && bossDead == false)
             {
                 bossType = randgen.Next(1, 4);
                 
             }
+            //if boss type is 1 make boss and do random attacks
             if (bossType == 1)
             {
                 if (bosses.Count < 1)
@@ -1064,6 +1091,7 @@ namespace Rogue_Runner
                     }
                 }
             }
+            //if boss type is 2 make boss and do random attacks
             else if (bossType == 2)
             {
                 if (bosses.Count < 1)
@@ -1161,6 +1189,7 @@ namespace Rogue_Runner
                     }
                 }
             }
+            //if boss type is 3 make boss and do random attacks
             else if (bossType == 3)
             {
                 if (bosses.Count < 1)
@@ -1258,6 +1287,8 @@ namespace Rogue_Runner
                     }
                 }
             }
+
+            //if boss dies remove it and reset boss variables
             if (bosses.Count > 0)
             {
                 if (bosses[0].health <= 0)
@@ -1274,6 +1305,7 @@ namespace Rogue_Runner
         }
         public void BB()
         {
+            //move ball
             foreach (BiteBall r in bballs)
             {
                 if (!r.reflected)
@@ -1302,6 +1334,7 @@ namespace Rogue_Runner
 
             }
 
+            //make rectangles and check collisions
             foreach (BiteBall s in bballs)
             {
                 Rectangle spook = new Rectangle(s.x, s.y, s.w, s.h);
@@ -1311,7 +1344,8 @@ namespace Rogue_Runner
                 {
                     bosRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
                 }
-
+                
+                //if touching player or boss deal damage
                 if (spook.IntersectsWith(plr))
                 {
                     if (iframes <= 0)
@@ -1328,6 +1362,8 @@ namespace Rogue_Runner
                     bballs.Remove(s);
                     break;
                 }
+
+                //if touching sword take damage
                 if (spook.IntersectsWith(player.sword))
                 {
                     s.direc = player.direc;
@@ -1339,6 +1375,8 @@ namespace Rogue_Runner
                         s.iframes = 30;
                     }
                 }
+
+                //if no health remove
                 if (s.health <= 0)
                 {
                     bballs.Remove(s);
@@ -1352,6 +1390,7 @@ namespace Rogue_Runner
 
             }
 
+            //prevent clipping
             foreach (BiteBall s in bballs)
             {
                 s.preX = s.x;
@@ -1360,6 +1399,7 @@ namespace Rogue_Runner
         }
         public void HERO()
         {
+            //movement and input for player
             #region movement
             if (player.x <= this.Width / 2 - rooms[levelIndex].width / 2)
             {
@@ -1394,6 +1434,8 @@ namespace Rogue_Runner
             {
                 player.move("Down");
             }
+
+            //pause game
             if (escDown)
             {
                 pauseLabel.Show();
@@ -1406,10 +1448,7 @@ namespace Rogue_Runner
             #endregion
 
             #region attack
-            if (escDown)
-            {
-
-            }
+            //attack with sword
             if (spaDown)
             {
                 if (cooldown <= 0)
@@ -1422,12 +1461,14 @@ namespace Rogue_Runner
 
 
             }
+            //if sword counter is over remove the sword
             if (swordCounter > 30)
             {
                 player.deleteSword();
                 attacked = false;
                 swordCounter--;
             }
+            //while attacking increase the sword counter
             if (attacked == true)
             {
                 player.attack();
@@ -1440,15 +1481,18 @@ namespace Rogue_Runner
             #endregion
 
             #region collisions
+            //playercollisions
             if (iframes > 0)
             {
                 iframes--;
             }
+            //if player dies end 
             if (player.health <= 0)
             {
                 Application.Exit();
             }
 
+            //if touching obstacles dont
             foreach (Rectangle r in rooms[levelIndex].obstacles)
             {
                 Rectangle playerRec = new Rectangle(player.x, player.y, player.w, player.h);
@@ -1493,6 +1537,7 @@ namespace Rogue_Runner
         #endregion
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            //draw everything on the gamescreen (enemies, players, obstacles, rooms )
             
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
 
