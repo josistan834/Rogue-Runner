@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Http.Headers;
 using Rogue_Runner.Properties;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Rogue_Runner
 {
@@ -17,13 +18,20 @@ namespace Rogue_Runner
     {
         //Global Variables
         #region Variables
+        public static TimeSpan playerTime = new TimeSpan();
+        public static int enemiesKilled = 0;
+
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.Black);
         SolidBrush obsBrush = new SolidBrush(Color.White);
         SolidBrush swordBrush = new SolidBrush(Color.Green);
         SolidBrush enemyBrush = new SolidBrush(Color.Red);
+
         Pen activeTent = new Pen(Color.Orange);
         Pen inactiveTent = new Pen(Color.LightBlue);
+
+        Font drawFont = new Font("Century Gothic", 13); 
+
         Rectangle exitDoorRec = new Rectangle(0, 0, 1, 1);
         int levelIndex = 0;
 
@@ -229,15 +237,15 @@ namespace Rogue_Runner
             for (int i = 0; i < enemyCount; i++)
             {
                 int enemyType = randgen.Next(1, 5);
-                int enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
-                int enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                int enmX = randgen.Next((this.Width / 2 - newRoom.width / 2), (this.Width / 2 + newRoom.width / 2 - 30));
+                int enmY = randgen.Next((this.Height / 2 -newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                 Rectangle tempEnemy = new Rectangle(enmX, enmY, 30, 30);
-                foreach (Rectangle c in rooms[levelIndex].obstacles)
-                {
+                foreach (Rectangle c in newRoom.obstacles)
+                {  
                     if (c.IntersectsWith(tempEnemy))
                     {
-                        enmX = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - 30));
-                        enmY = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - 30));
+                        enmX = randgen.Next((this.Width / 2 - newRoom.width / 2), (this.Width / 2 + newRoom.width / 2 - 30));
+                        enmY = randgen.Next((this.Height / 2 - newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                     }
                 }
                 if (enemyType == 1)
@@ -297,6 +305,8 @@ namespace Rogue_Runner
             player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values
             aDown = dDown = wDown = sDown = escDown = spaDown = attacked = false;
+            counter = 0;
+            enemiesKilled = 0;
         }
 
         #region Input
@@ -493,6 +503,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].run.Remove(r);
                     break;
                 }
@@ -602,6 +613,7 @@ namespace Rogue_Runner
                 }
                 if (s.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].souls.Remove(s);
                     break;
                 }
@@ -679,6 +691,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].rangers.Remove(r);
                     if (rooms[levelIndex].rangers.Count == 0)
                     {
@@ -769,6 +782,7 @@ namespace Rogue_Runner
                 }
                 if (r.health <= 0)
                 {
+                    enemiesKilled++;
                     rooms[levelIndex].summoners.Remove(r);
                     break;
                 }
@@ -1357,6 +1371,11 @@ namespace Rogue_Runner
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
+
+            TimeSpan addTime = new TimeSpan((counter * 15) * 10000);
+            playerTime = addTime;
+            
+            e.Graphics.DrawString(playerTime.ToString(@"mm\:ss\.ff"), drawFont, obsBrush, (this.Width / 4) * 3, 0);
 
             if (exitDoorRec.X != 0)
             {
