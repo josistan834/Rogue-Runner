@@ -118,11 +118,56 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="arrowDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="arrowUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrowUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ATKPower" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ATKPower.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="big_room" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\big room.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="blade_saw" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\blade saw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="boosSwordLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boosSwordLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="boosSwordRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\boosSwordRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="controlsScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\controlsScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dragonDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dragonDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dragonLeft_closed_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dragonLeft(closed).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dragonLeft_Open_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dragonLeft(Open).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dragonRight_closed_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dragonRight(closed).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dragonRight_Open_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dragonRight(Open).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="dragonWingFlap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dragonWingFlap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fire" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fire.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="heart_overlay" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\heart overlay.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -217,7 +262,25 @@
   <data name="summonerAttack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\summonerAttack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tentacleFromLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tentacleFromLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="titleScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\titleScreen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tornado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tornado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tornado2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Tornado2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wallFacingLeft_dithering_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wallFacingLeft(dithering).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="wallFacingRIGHT_dithering_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\wallFacingRIGHT(dithering).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WarriorDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WarriorDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
