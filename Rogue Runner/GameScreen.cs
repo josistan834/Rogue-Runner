@@ -20,6 +20,7 @@ namespace Rogue_Runner
         #region Variables
         public static TimeSpan playerTime = new TimeSpan();
         public static int enemiesKilled = 0;
+      
 
         bool aDown, dDown, wDown, sDown, escDown, spaDown;
         SolidBrush roomBrush = new SolidBrush(Color.Black);
@@ -307,10 +308,13 @@ namespace Rogue_Runner
 
         private void assembleFloor()
         {
-            //for (int i = 0; i < 8; i++)
-            //{
-            //    generateFloor();
-            //}
+            if (!Form1.rushMode)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    generateFloor();
+                }
+            }
             for (int i = 0; i < 3; i++)
             {
                 List<Rectangle> obstacles = new List<Rectangle>();

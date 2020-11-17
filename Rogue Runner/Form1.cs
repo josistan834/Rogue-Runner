@@ -13,7 +13,7 @@ namespace Rogue_Runner
 {
     public partial class Form1 : Form
     {
-        
+        public static bool rushMode = false;
         public Form1()
         {
             InitializeComponent();
