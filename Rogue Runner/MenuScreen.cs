@@ -13,6 +13,7 @@ namespace Rogue_Runner
 {
     public partial class MenuScreen : UserControl
     {
+        SoundPlayer music = new SoundPlayer(Properties.Resources.The_Island_of_Dr_Sinister);
         public MenuScreen()
         {
             InitializeComponent();
@@ -22,6 +23,7 @@ namespace Rogue_Runner
         //chanegs screen when play button is clicked
         private void playButton_Click(object sender, EventArgs e)
         {
+            music.Stop();
             Form form1 = this.FindForm();
             form1.Controls.Remove(this);
 
@@ -128,7 +130,7 @@ namespace Rogue_Runner
         private void MenuScreen_Load(object sender, EventArgs e)
         {
             Form1.rushMode = false;
-            SoundPlayer music = new SoundPlayer( Properties.Resources.The_Island_of_Dr_Sinister);
+            
             music.Play();
         }
         ////changes focuses when the back button is focused
@@ -148,6 +150,7 @@ namespace Rogue_Runner
         //goes to game screen and changes game mode
         private void bossButton_Click(object sender, EventArgs e)
         {
+            music.Stop();
             Form1.rushMode = true;
             Form form1 = this.FindForm();
             form1.Controls.Remove(this);
