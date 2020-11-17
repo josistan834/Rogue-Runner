@@ -46,10 +46,9 @@
             // pauseMenu
             // 
             this.pauseMenu.Image = global::Rogue_Runner.Properties.Resources.small_room;
-            this.pauseMenu.Location = new System.Drawing.Point(220, 182);
-            this.pauseMenu.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pauseMenu.Location = new System.Drawing.Point(176, 146);
             this.pauseMenu.Name = "pauseMenu";
-            this.pauseMenu.Size = new System.Drawing.Size(464, 306);
+            this.pauseMenu.Size = new System.Drawing.Size(371, 245);
             this.pauseMenu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pauseMenu.TabIndex = 0;
             this.pauseMenu.TabStop = false;
@@ -62,10 +61,10 @@
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playButton.ForeColor = System.Drawing.Color.White;
-            this.playButton.Location = new System.Drawing.Point(380, 315);
+            this.playButton.Location = new System.Drawing.Point(304, 252);
             this.playButton.Margin = new System.Windows.Forms.Padding(2);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(125, 56);
+            this.playButton.Size = new System.Drawing.Size(100, 45);
             this.playButton.TabIndex = 2;
             this.playButton.Text = "Play";
             this.playButton.UseVisualStyleBackColor = false;
@@ -79,10 +78,10 @@
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitButton.ForeColor = System.Drawing.Color.White;
-            this.exitButton.Location = new System.Drawing.Point(380, 394);
+            this.exitButton.Location = new System.Drawing.Point(304, 315);
             this.exitButton.Margin = new System.Windows.Forms.Padding(2);
             this.exitButton.Name = "exitButton";
-            this.exitButton.Size = new System.Drawing.Size(125, 56);
+            this.exitButton.Size = new System.Drawing.Size(100, 45);
             this.exitButton.TabIndex = 3;
             this.exitButton.Text = "Exit";
             this.exitButton.UseVisualStyleBackColor = false;
@@ -94,10 +93,10 @@
             this.pauseLabel.BackColor = System.Drawing.Color.Black;
             this.pauseLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pauseLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.pauseLabel.Location = new System.Drawing.Point(268, 206);
+            this.pauseLabel.Location = new System.Drawing.Point(214, 165);
             this.pauseLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.pauseLabel.Name = "pauseLabel";
-            this.pauseLabel.Size = new System.Drawing.Size(389, 69);
+            this.pauseLabel.Size = new System.Drawing.Size(311, 55);
             this.pauseLabel.TabIndex = 4;
             this.pauseLabel.Text = "Paused...";
             this.pauseLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -105,7 +104,7 @@
             // 
             // GameScreen
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
             this.Controls.Add(this.pauseLabel);

@@ -87,6 +87,13 @@ namespace Rogue_Runner
         Image hpPower = Properties.Resources.HpPower;
         Image speedPower = Properties.Resources.SpeedPower;
         Image rangePower = Properties.Resources.rangePower;
+        Image fire = Properties.Resources.fire;
+        Image tentImage = Properties.Resources.tentacleFromLeft;
+        Image razor = Properties.Resources.blade_saw;
+        Image bossSwordL = Properties.Resources.boosSwordLeft;
+        Image bossSwordR = Properties.Resources.boosSwordRight;
+        Image tornado1 = Properties.Resources.Tornado;
+        Image tornado2 = Properties.Resources.Tornado2;
         #endregion
 
         //generate the levels and enemies
@@ -300,10 +307,10 @@ namespace Rogue_Runner
 
         private void assembleFloor()
         {
-            for (int i = 0; i < 8; i++)
-            {
-                generateFloor();
-            }
+            //for (int i = 0; i < 8; i++)
+            //{
+            //    generateFloor();
+            //}
             for (int i = 0; i < 3; i++)
             {
                 List<Rectangle> obstacles = new List<Rectangle>();
@@ -329,7 +336,12 @@ namespace Rogue_Runner
         {
             //Initialize
             InitializeComponent();
+            player = new Player(0, 0, 40, 40, 4, 500, 50, "Up");
+            player.swordSize = 30;
+            rooms.Clear();
+            levelIndex = 0;
             assembleFloor();
+            
             player.x = this.Width / 2;
             player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values
@@ -541,7 +553,6 @@ namespace Rogue_Runner
                         {
                             r.move(player.direc);
                         }
-
                     }
                 }
 
@@ -961,7 +972,7 @@ namespace Rogue_Runner
 
             if (rooms[levelIndex].type == "boss" && bossType == 0 && bossDead == false)
             {
-                bossType = randgen.Next(1, 4);
+                bossType = randgen.Next(2, 3);
                 
             }
             //if boss type is 1 make boss and do random attacks
@@ -969,7 +980,8 @@ namespace Rogue_Runner
             {
                 if (bosses.Count < 1)
                 {
-                    Boss boss = new Boss(0, rooms[levelIndex].height / 9, 60, rooms[levelIndex].height - rooms[levelIndex].height / 6, 5, 500, 20, 30);
+                    Boss boss = new Boss(60, rooms[levelIndex].height / 9, 60, rooms[levelIndex].height - rooms[levelIndex].height / 6, 5, 500, 20, 30);
+                    boss.image = Properties.Resources.wallFacingRIGHT_dithering_;
                     bosses.Add(boss);
                 }
                 else
@@ -1004,11 +1016,13 @@ namespace Rogue_Runner
                         if (bosses[0].x <= this.Width / 2 + rooms[levelIndex].width / 2 - bosses[0].w && bosses[0].right)
                         {
                             bosses[0].attack1("goRight");
+                            bosses[0].image = Properties.Resources.wallFacingRIGHT_dithering_;
 
                         }
                         else if (bosses[0].x >= this.Width / 2 - rooms[levelIndex].width / 2 && !bosses[0].right)
                         {
                             bosses[0].attack1("goLeft");
+                            bosses[0].image = Properties.Resources.wallFacingLeft_dithering_;
                         }
                         else
                         {
@@ -1019,7 +1033,7 @@ namespace Rogue_Runner
                     if (bosses[0].attack == 2)
                     {
                         bool allChanged = false;
-                        if (counter % 30 == 0 && tentacles.Count <= 8)
+                        if (counter % 30 == 0 && tentacles.Count <= 5)
                         {
                             bosses[0].attack1("tentacle");
                         }
@@ -1046,7 +1060,7 @@ namespace Rogue_Runner
                                 allChanged = false;
                             }
                         }
-                        if (tentacles.Count > 7 && allChanged)
+                        if (tentacles.Count > 5 && allChanged)
                         {
 
                             bosses[0].attack = 0;
@@ -1097,6 +1111,7 @@ namespace Rogue_Runner
                 if (bosses.Count < 1)
                 {
                     Boss boss = new Boss(this.Width / 2 - 45, this.Height / 2, 90, 90, 5, 500, 5, 30);
+                    boss.image = Properties.Resources.dragonDown;
                     bosses.Add(boss);
                 }
                 else
@@ -1126,6 +1141,7 @@ namespace Rogue_Runner
                     }
                     if (bosses[0].attack == 1)
                     {
+                        bosses[0].image = Properties.Resources.dragonRight_Open_;
                         bosses[0].attack2("Fire");
 
                         if (bosses[0].toNum > 4)
@@ -1148,17 +1164,24 @@ namespace Rogue_Runner
                     }
                     if (bosses[0].attack == 2)
                     {
+                        if (counter %20 == 0)
+                        {
+                            bosses[0].image = Properties.Resources.dragonDown;
+                        }
+                        
                         bosses[0].x = this.Width / 2 - 45;
                         bosses[0].y = this.Height / 2;
                         bosses[0].attack2("Flap");
                         if (counter % 120 == 0 && bosses[0].toNum < 4)
                         {
+                            bosses[0].image = Properties.Resources.dragonWingFlap;
                             bosses[0].toNum++;
                             bosses[0].tX = 0;
                             bosses[0].tX2 = 900;
                         }
                         else if (bosses[0].toNum >= 4)
                         {
+                            bosses[0].image = Properties.Resources.dragonDown;
                             bosses[0].toNum = 0;
                             bosses[0].attack = 0;
                             bosses[0].tornadoRec = new Rectangle(0, 0, 0, 0);
@@ -1195,6 +1218,7 @@ namespace Rogue_Runner
                 if (bosses.Count < 1)
                 {
                     Boss boss = new Boss(this.Width / 2 - 45, this.Height / 2, 30, 50, 5, 500, 20, 30);
+                    boss.image = Properties.Resources.WarriorDown;
                     bosses.Add(boss);
                 }
                 else
@@ -1570,7 +1594,7 @@ namespace Rogue_Runner
                 {
                     if (t.active)
                     {
-                        e.Graphics.DrawLine(activeTent, t.x, t.y, t.x2, t.y2);
+                        e.Graphics.DrawImage(tentImage, t.x, t.y, t.x2- t.x, 50);
                     }
                     else
                     {
@@ -1621,18 +1645,32 @@ namespace Rogue_Runner
             }
             foreach (Boss b in bosses)
             {
-                e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
+                e.Graphics.DrawImage(b.image, b.x, b.y, b.w, b.h);
                 e.Graphics.FillRectangle(enemyBrush, 150, 22, b.health, 20);
                 foreach (Rectangle f in b.fires)
                 {
-                    e.Graphics.FillRectangle(swordBrush, f.X, f.Y, f.Width, f.Height);
+                    if (bossType == 2)
+                    {
+                        e.Graphics.DrawImage(fire, f.X, f.Y, f.Width, f.Height);
+                    }
+                    else
+                    {
+                        if (b.direc == 1)
+                        {
+                            e.Graphics.DrawImage(bossSwordL, f.X, f.Y, f.Width, f.Height);
+                        }
+                        if (b.direc == 2)
+                        {
+                            e.Graphics.DrawImage(bossSwordR, f.X, f.Y, f.Width, f.Height);
+                        }
+                    }
                 }
-                e.Graphics.FillRectangle(swordBrush, b.tornadoRec);
-                e.Graphics.FillRectangle(swordBrush, b.tornadoRec2);
+                e.Graphics.DrawImage(tornado1, b.tornadoRec);
+                e.Graphics.DrawImage(tornado2, b.tornadoRec2);
             }
             foreach (BiteBall b in bballs)
             {
-                e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
+                e.Graphics.DrawImage(razor, b.x, b.y, b.w, b.h);
             }
             foreach (Summoner r in rooms[levelIndex].summoners)
             {
@@ -1652,7 +1690,14 @@ namespace Rogue_Runner
             }
             foreach (Projectile b in Ranger.bullets)
             {
-                e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
+                if (b.image == null)
+                {
+                    e.Graphics.FillRectangle(enemyBrush, b.x, b.y, b.w, b.h);
+                }
+                else
+                {
+                    e.Graphics.DrawImage(b.image, b.x, b.y, b.w, b.h);
+                }
             }
             foreach (Soul r in rooms[levelIndex].souls)
             {
