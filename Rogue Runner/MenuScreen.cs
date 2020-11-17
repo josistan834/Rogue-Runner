@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Rogue_Runner
 {
@@ -124,6 +125,8 @@ namespace Rogue_Runner
         private void MenuScreen_Load(object sender, EventArgs e)
         {
             Form1.rushMode = false;
+            SoundPlayer music = new SoundPlayer( Properties.Resources.The_Island_of_Dr_Sinister);
+            music.Play();
         }
 
         private void backButton_Click(object sender, EventArgs e)

@@ -232,6 +232,7 @@
     <None Include="Resources\rangerLeft.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\The-Island-of-Dr-Sinister.wav" />
     <None Include="Resources\tentacleAttack.png" />
     <None Include="Resources\warriorRight.png" />
     <None Include="Resources\warriorLeft.png" />
