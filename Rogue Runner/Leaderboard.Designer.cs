@@ -43,10 +43,10 @@
             this.nameHeader.BackColor = System.Drawing.Color.Transparent;
             this.nameHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameHeader.ForeColor = System.Drawing.SystemColors.Control;
-            this.nameHeader.Location = new System.Drawing.Point(41, 130);
+            this.nameHeader.Location = new System.Drawing.Point(33, 104);
             this.nameHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nameHeader.Name = "nameHeader";
-            this.nameHeader.Size = new System.Drawing.Size(122, 50);
+            this.nameHeader.Size = new System.Drawing.Size(98, 40);
             this.nameHeader.TabIndex = 0;
             this.nameHeader.Text = "Name";
             // 
@@ -55,10 +55,10 @@
             this.timeHeader.BackColor = System.Drawing.Color.Transparent;
             this.timeHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timeHeader.ForeColor = System.Drawing.SystemColors.Control;
-            this.timeHeader.Location = new System.Drawing.Point(198, 130);
+            this.timeHeader.Location = new System.Drawing.Point(158, 104);
             this.timeHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.timeHeader.Name = "timeHeader";
-            this.timeHeader.Size = new System.Drawing.Size(419, 50);
+            this.timeHeader.Size = new System.Drawing.Size(335, 40);
             this.timeHeader.TabIndex = 1;
             this.timeHeader.Text = "Time";
             this.timeHeader.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -68,10 +68,10 @@
             this.enemyHeader.BackColor = System.Drawing.Color.Transparent;
             this.enemyHeader.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enemyHeader.ForeColor = System.Drawing.SystemColors.Control;
-            this.enemyHeader.Location = new System.Drawing.Point(612, 130);
+            this.enemyHeader.Location = new System.Drawing.Point(490, 104);
             this.enemyHeader.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.enemyHeader.Name = "enemyHeader";
-            this.enemyHeader.Size = new System.Drawing.Size(254, 50);
+            this.enemyHeader.Size = new System.Drawing.Size(203, 40);
             this.enemyHeader.TabIndex = 2;
             this.enemyHeader.Text = "Enemies Killed";
             // 
@@ -80,10 +80,10 @@
             this.headerLabel.BackColor = System.Drawing.Color.Transparent;
             this.headerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.headerLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.headerLabel.Location = new System.Drawing.Point(36, 38);
+            this.headerLabel.Location = new System.Drawing.Point(29, 30);
             this.headerLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.headerLabel.Name = "headerLabel";
-            this.headerLabel.Size = new System.Drawing.Size(830, 92);
+            this.headerLabel.Size = new System.Drawing.Size(664, 74);
             this.headerLabel.TabIndex = 3;
             this.headerLabel.Text = "Longest Run Leaderboard";
             this.headerLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -93,10 +93,10 @@
             this.nameOutput.BackColor = System.Drawing.Color.Transparent;
             this.nameOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameOutput.ForeColor = System.Drawing.SystemColors.Control;
-            this.nameOutput.Location = new System.Drawing.Point(41, 180);
+            this.nameOutput.Location = new System.Drawing.Point(33, 144);
             this.nameOutput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nameOutput.Name = "nameOutput";
-            this.nameOutput.Size = new System.Drawing.Size(184, 456);
+            this.nameOutput.Size = new System.Drawing.Size(147, 365);
             this.nameOutput.TabIndex = 4;
             this.nameOutput.Text = "AAA";
             // 
@@ -105,10 +105,10 @@
             this.timeOutput.BackColor = System.Drawing.Color.Transparent;
             this.timeOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.timeOutput.ForeColor = System.Drawing.SystemColors.Control;
-            this.timeOutput.Location = new System.Drawing.Point(338, 180);
+            this.timeOutput.Location = new System.Drawing.Point(270, 144);
             this.timeOutput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.timeOutput.Name = "timeOutput";
-            this.timeOutput.Size = new System.Drawing.Size(242, 456);
+            this.timeOutput.Size = new System.Drawing.Size(194, 365);
             this.timeOutput.TabIndex = 0;
             this.timeOutput.Text = "00:00.00";
             // 
@@ -117,10 +117,10 @@
             this.enemiesOutput.BackColor = System.Drawing.Color.Transparent;
             this.enemiesOutput.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.enemiesOutput.ForeColor = System.Drawing.SystemColors.Control;
-            this.enemiesOutput.Location = new System.Drawing.Point(612, 180);
+            this.enemiesOutput.Location = new System.Drawing.Point(490, 144);
             this.enemiesOutput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.enemiesOutput.Name = "enemiesOutput";
-            this.enemiesOutput.Size = new System.Drawing.Size(238, 456);
+            this.enemiesOutput.Size = new System.Drawing.Size(190, 365);
             this.enemiesOutput.TabIndex = 6;
             this.enemiesOutput.Text = "0";
             // 
@@ -131,10 +131,10 @@
             this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.backButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.backButton.ForeColor = System.Drawing.Color.White;
-            this.backButton.Location = new System.Drawing.Point(679, 591);
+            this.backButton.Location = new System.Drawing.Point(543, 473);
             this.backButton.Margin = new System.Windows.Forms.Padding(2);
             this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(185, 72);
+            this.backButton.Size = new System.Drawing.Size(148, 58);
             this.backButton.TabIndex = 7;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = false;
@@ -142,7 +142,7 @@
             // 
             // Leaderboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackgroundImage = global::Rogue_Runner.Properties.Resources.big_room;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;

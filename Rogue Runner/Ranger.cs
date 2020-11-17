@@ -25,7 +25,7 @@ namespace Rogue_Runner
         }
         public void attack()
         {
-            Projectile bullet = new Projectile(x, y, 10, 10, 10, 15, direc);
+            Projectile bullet = new Projectile(x, y, 10, 10, 10, 15, direc, null);
             bullets.Add(bullet);
             
         }

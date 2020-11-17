@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Rogue_Runner
 {
@@ -12,7 +13,9 @@ namespace Rogue_Runner
     {
         public int speed, x, y, w, h, damage;
         public string dir;
-        public Projectile(int _x, int _y, int _w, int _h, int _speed, int _damage, string _dir)
+        public Image image;
+
+        public Projectile(int _x, int _y, int _w, int _h, int _speed, int _damage, string _dir, Image _image)
         {
             x = _x;
             y = _y;
@@ -21,6 +24,7 @@ namespace Rogue_Runner
             speed = _speed;
             damage = _damage;
             dir = _dir;
+            image = _image;
         }
         public void move()
         {

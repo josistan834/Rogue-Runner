@@ -10,12 +10,13 @@ namespace Rogue_Runner
 {
     public class Boss
     {
-        public int x, y, w, h, speed, health, damage, iframes, attack, bounces, tX, tY, tW, tH, tX2, tY2, tW2, tH2, toNum, timer;
+        public int x, y, w, h, speed, health, damage, iframes, attack, bounces, tX, tY, tH, tX2, tY2, tH2, toNum, timer, direc;
         public bool right = true;
         public List<Rectangle> fires = new List<Rectangle>();
         Random randGen = new Random();
         public Rectangle tornadoRec = new Rectangle();
         public Rectangle tornadoRec2 = new Rectangle();
+        public Image image = Properties.Resources.blade_saw;
 
         public Boss(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage, int _iframes)
         {
@@ -30,10 +31,8 @@ namespace Rogue_Runner
             attack = 0;
             bounces = 0;
             tX = 0;
-            tW = 30;
             tH = 90;
             tX2 = 900;
-            tW2 = 30;
             tH2 = 90;
             toNum = 0;
             timer = 0;
@@ -56,12 +55,13 @@ namespace Rogue_Runner
                 {
                     attack = 0;
                     bounces = 0;
+                    image = Properties.Resources.wallFacingLeft_dithering_;
                 }
                 x -= speed;
             }
             if (skill == "tentacle")
             {
-                x = 0;
+                x = 60;
                 Tentacle tent = new Tentacle(0,0,0,0, false);
                 if (GameScreen.player.y >= y + h)
                 {
@@ -81,7 +81,7 @@ namespace Rogue_Runner
             }
             if (skill == "bite")
             {
-                x = 0;
+                x = 60;
             }
         }
         public void attack2(string skill)
@@ -112,18 +112,18 @@ namespace Rogue_Runner
             {
                 if(tX == 0)
                 {
-                    tX = x  + w / 2;
+                    tX = x + w/2;
                 }
                 else
                 {
                     tX += 5;
                 } 
-                tH = 900 - tX + 200;
+                tH = 900 - tX;
                 tY = y-tH/2;
-                tornadoRec = new Rectangle(tX, tY, tW, tH);
+                tornadoRec = new Rectangle(tX, tY, Convert.ToInt32(Math.Round(tH * 0.8)), tH);
                 if (tX2 == 900)
                 {
-                    tX2 = x + w/2;
+                    tX2 = x + w/2 - 200;
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Rogue_Runner
                 }
                 tH2 = tX2 + 200;
                 tY2 = y - tH2 / 2;
-                tornadoRec2 = new Rectangle(tX2, tY2, tW2, tH2);
+                tornadoRec2 = new Rectangle(tX2, tY2, Convert.ToInt32(Math.Round(tH2 * 0.8)), tH2);
             }
             if (skill == "Grab")
             {
@@ -149,21 +149,21 @@ namespace Rogue_Runner
         {
             if (skill == "regenerate")
             {
-                Projectile arrow = new Projectile(30, 0, 30, 50, 3, 30, "Down");
+                Projectile arrow = new Projectile(30, 0, 30, 50, 3, 30, "Down", Properties.Resources.arrowDown);
                 Ranger.bullets.Add(arrow);
-                Projectile arrow1 = new Projectile(300, 0, 30, 50, 3, 30, "Down");
+                Projectile arrow1 = new Projectile(300, 0, 30, 50, 3, 30, "Down", Properties.Resources.arrowDown);
                 Ranger.bullets.Add(arrow1);
-                Projectile arrow2 = new Projectile(600, 0, 30, 50, 3, 30, "Down");
+                Projectile arrow2 = new Projectile(600, 0, 30, 50, 3, 30, "Down", Properties.Resources.arrowDown);
                 Ranger.bullets.Add(arrow2);
-                Projectile arrow3 = new Projectile(850, 0, 30, 50, 3, 30, "Down");
+                Projectile arrow3 = new Projectile(850, 0, 30, 50, 3, 30, "Down", Properties.Resources.arrowDown);
                 Ranger.bullets.Add(arrow3);
-                Projectile arrow4 = new Projectile(30, 30, 50, 30, 3, 30, "Right");
+                Projectile arrow4 = new Projectile(30, 30, 50, 30, 3, 30, "Right", Properties.Resources.arrowRight);
                 Ranger.bullets.Add(arrow4);
-                Projectile arrow5 = new Projectile(30, 200, 50, 30, 3, 30, "Right");
+                Projectile arrow5 = new Projectile(30, 200, 50, 30, 3, 30, "Right", Properties.Resources.arrowRight);
                 Ranger.bullets.Add(arrow5);
-                Projectile arrow6 = new Projectile(850, 400, 50, 30, 3, 30, "Left");
+                Projectile arrow6 = new Projectile(850, 400, 50, 30, 3, 30, "Left", Properties.Resources.arrowLeft);
                 Ranger.bullets.Add(arrow6);
-                Projectile arrow7 = new Projectile(850, 650, 50, 30, 3, 30, "Left");
+                Projectile arrow7 = new Projectile(850, 650, 50, 30, 3, 30, "Left", Properties.Resources.arrowLeft);
                 Ranger.bullets.Add(arrow7);
                 if (health < 500)
                 {
@@ -177,30 +177,42 @@ namespace Rogue_Runner
                     fires.Clear();
                     if (GameScreen.player.direc == "Up")
                     {
+                        direc = 1;
                         x = GameScreen.player.x;
                         y = GameScreen.player.y + h;
                     }
                     else if (GameScreen.player.direc == "Down")
                     {
+                        direc = 2;
                         x = GameScreen.player.x;
                         y = GameScreen.player.y - h;
                     }
                     else if (GameScreen.player.direc == "Left")
                     {
+                        direc = 1;
                         x = GameScreen.player.x + w;
                         y = GameScreen.player.y;
                     }
                     else if (GameScreen.player.direc == "Right")
                     {
+                        direc = 2;
                         x = GameScreen.player.x - w;
                         y = GameScreen.player.y;
                     }
                 }
                 else if (timer == 20)
                 {
-                    Rectangle knife = new Rectangle(x-120/2, y+h/2, 120, 10);
-                    fires.Add(knife);
-                    
+                    if (direc == 1)
+                    {
+                        Rectangle knife = new Rectangle(x - 200 / 2, y + h / 2, 120, 10);
+                        fires.Add(knife);
+                    }
+                    if (direc == 2)
+                    {
+                        Rectangle knife = new Rectangle(x + 60 / 2, y + h / 2, 120, 10);
+                        fires.Add(knife);
+                    }
+
                 }
                 timer++;
 
@@ -212,17 +224,24 @@ namespace Rogue_Runner
                 if (GameScreen.player.x < x)
                 {
                     tempDir = "Left";
+                    Projectile arrow = new Projectile(x, y, 10, 10, 10, 30, tempDir, Properties.Resources.arrowLeft);
+                    Ranger.bullets.Add(arrow);
+                    Projectile arrow1 = new Projectile(x, y + 20, 10, 10, 10, 30, tempDir, Properties.Resources.arrowLeft);
+                    Ranger.bullets.Add(arrow1);
+                    Projectile arrow2 = new Projectile(x, y + 40, 10, 10, 10, 30, tempDir, Properties.Resources.arrowLeft);
+                    Ranger.bullets.Add(arrow2);
                 }
                 else
                 {
                     tempDir = "Right";
+                    Projectile arrow = new Projectile(x, y, 10, 10, 10, 30, tempDir, Properties.Resources.arrowRight);
+                    Ranger.bullets.Add(arrow);
+                    Projectile arrow1 = new Projectile(x, y + 20, 10, 10, 10, 30, tempDir, Properties.Resources.arrowRight);
+                    Ranger.bullets.Add(arrow1);
+                    Projectile arrow2 = new Projectile(x, y + 40, 10, 10, 10, 30, tempDir, Properties.Resources.arrowRight);
+                    Ranger.bullets.Add(arrow2);
                 }
-                Projectile arrow = new Projectile(x, y, 10, 10, 10, 30, tempDir);
-                Ranger.bullets.Add(arrow);
-                Projectile arrow1 = new Projectile(x, y + 20, 10, 10, 10, 30, tempDir);
-                Ranger.bullets.Add(arrow1);
-                Projectile arrow2 = new Projectile(x, y + 40, 10, 10, 10, 30, tempDir);
-                Ranger.bullets.Add(arrow2);
+               
             }
         }
         public void damaged(int damage)
