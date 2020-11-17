@@ -262,6 +262,9 @@
   <data name="summonerAttack" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\summonerAttack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tentacleAttack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tentacleAttack.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="tentacleFromLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\tentacleFromLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
