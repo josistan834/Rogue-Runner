@@ -45,7 +45,7 @@
             this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.playButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playButton.ForeColor = System.Drawing.Color.White;
-            this.playButton.Location = new System.Drawing.Point(70, 231);
+            this.playButton.Location = new System.Drawing.Point(69, 307);
             this.playButton.Margin = new System.Windows.Forms.Padding(2);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(278, 58);
@@ -62,7 +62,7 @@
             this.controlsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.controlsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.controlsButton.ForeColor = System.Drawing.Color.Transparent;
-            this.controlsButton.Location = new System.Drawing.Point(70, 353);
+            this.controlsButton.Location = new System.Drawing.Point(69, 429);
             this.controlsButton.Margin = new System.Windows.Forms.Padding(2);
             this.controlsButton.Name = "controlsButton";
             this.controlsButton.Size = new System.Drawing.Size(278, 58);
@@ -79,7 +79,7 @@
             this.exitButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.exitButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitButton.ForeColor = System.Drawing.Color.White;
-            this.exitButton.Location = new System.Drawing.Point(70, 474);
+            this.exitButton.Location = new System.Drawing.Point(69, 550);
             this.exitButton.Margin = new System.Windows.Forms.Padding(2);
             this.exitButton.Name = "exitButton";
             this.exitButton.Size = new System.Drawing.Size(278, 58);
@@ -96,7 +96,7 @@
             this.leaderboardButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.leaderboardButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.leaderboardButton.ForeColor = System.Drawing.Color.White;
-            this.leaderboardButton.Location = new System.Drawing.Point(70, 414);
+            this.leaderboardButton.Location = new System.Drawing.Point(69, 490);
             this.leaderboardButton.Margin = new System.Windows.Forms.Padding(2);
             this.leaderboardButton.Name = "leaderboardButton";
             this.leaderboardButton.Size = new System.Drawing.Size(278, 58);
@@ -127,7 +127,7 @@
             // 
             this.controlsBox.BackgroundImage = global::Rogue_Runner.Properties.Resources.controlsScreen;
             this.controlsBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.controlsBox.Location = new System.Drawing.Point(2, 0);
+            this.controlsBox.Location = new System.Drawing.Point(2, 2);
             this.controlsBox.Margin = new System.Windows.Forms.Padding(2);
             this.controlsBox.Name = "controlsBox";
             this.controlsBox.Size = new System.Drawing.Size(898, 698);
@@ -142,7 +142,7 @@
             this.bossButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bossButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 28.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bossButton.ForeColor = System.Drawing.Color.Transparent;
-            this.bossButton.Location = new System.Drawing.Point(70, 292);
+            this.bossButton.Location = new System.Drawing.Point(69, 368);
             this.bossButton.Margin = new System.Windows.Forms.Padding(2);
             this.bossButton.Name = "bossButton";
             this.bossButton.Size = new System.Drawing.Size(278, 58);
