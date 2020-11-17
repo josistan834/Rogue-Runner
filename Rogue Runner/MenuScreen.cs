@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Rogue_Runner
 {
@@ -15,6 +16,7 @@ namespace Rogue_Runner
         public MenuScreen()
         {
             InitializeComponent();
+            
         }
 
         private void playButton_Click(object sender, EventArgs e)
