@@ -33,7 +33,8 @@ namespace Rogue_Runner
         {
             backButton.Show();
             controlsBox.Show();
-           
+
+            bossButton.Hide();
             playButton.Hide();
             leaderboardButton.Hide();
             controlsButton.Hide();
@@ -63,7 +64,9 @@ namespace Rogue_Runner
         {
             playButton.ForeColor = Color.Black;
             playButton.BackColor = Color.White;
-
+            
+            bossButton.ForeColor = Color.White;
+            bossButton.BackColor = Color.Black;
             leaderboardButton.BackColor = Color.Black;
             leaderboardButton.ForeColor = Color.White;
             exitButton.BackColor = Color.Black;
@@ -78,6 +81,8 @@ namespace Rogue_Runner
             controlsButton.ForeColor = Color.Black;
             controlsButton.BackColor = Color.White;
 
+            bossButton.ForeColor = Color.White;
+            bossButton.BackColor = Color.Black;
             leaderboardButton.BackColor = Color.Black;
             leaderboardButton.ForeColor = Color.White;
             exitButton.BackColor = Color.Black;
@@ -91,6 +96,8 @@ namespace Rogue_Runner
             leaderboardButton.ForeColor = Color.Black;
             leaderboardButton.BackColor = Color.White;
 
+            bossButton.ForeColor = Color.White;
+            bossButton.BackColor = Color.Black;
             playButton.BackColor = Color.Black;
             playButton.ForeColor = Color.White;
             exitButton.BackColor = Color.Black;
@@ -104,6 +111,8 @@ namespace Rogue_Runner
             exitButton.ForeColor = Color.Black;
             exitButton.BackColor = Color.White;
 
+            bossButton.ForeColor = Color.White;
+            bossButton.BackColor = Color.Black;
             playButton.BackColor = Color.Black;
             playButton.ForeColor = Color.White;
             leaderboardButton.BackColor = Color.Black;
@@ -114,7 +123,7 @@ namespace Rogue_Runner
 
         private void MenuScreen_Load(object sender, EventArgs e)
         {
-
+            Form1.rushMode = false;
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -124,9 +133,39 @@ namespace Rogue_Runner
             playButton.Show();
             leaderboardButton.Show();
             controlsButton.Show();
+            bossButton.Show();
             exitButton.Show();
             playButton.Focus();
 
+
+        }
+
+        private void bossButton_Click(object sender, EventArgs e)
+        {
+            Form1.rushMode = true;
+            Form form1 = this.FindForm();
+            form1.Controls.Remove(this);
+
+            GameScreen gs = new GameScreen();
+            form1.Controls.Add(gs);
+
+            gs.Focus();
+            gs.Location = new Point(form1.Width / 2 - gs.Width / 2, form1.Height / 2 - gs.Height / 2);
+        }
+
+        private void bossButton_Enter(object sender, EventArgs e)
+        {
+            bossButton.ForeColor = Color.Black;
+            bossButton.BackColor = Color.White;
+
+            leaderboardButton.ForeColor = Color.White;
+            leaderboardButton.BackColor = Color.Black;
+            playButton.BackColor = Color.Black;
+            playButton.ForeColor = Color.White;
+            exitButton.BackColor = Color.Black;
+            exitButton.ForeColor = Color.White;
+            controlsButton.BackColor = Color.Black;
+            controlsButton.ForeColor = Color.White;
         }
     }
 }
