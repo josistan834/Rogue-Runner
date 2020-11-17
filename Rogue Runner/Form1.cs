@@ -13,6 +13,7 @@ namespace Rogue_Runner
 {
     public partial class Form1 : Form
     {
+        //game mode variable
         public static bool rushMode = false;
         public Form1()
         {
@@ -26,7 +27,7 @@ namespace Rogue_Runner
 
             while (reader.Read())
             {
-
+                //fetches all scores from the xml file
                 if (reader.NodeType == XmlNodeType.Text)
                 {
                     string name = reader.ReadString();
@@ -43,6 +44,7 @@ namespace Rogue_Runner
             }
             reader.Close();
 
+            //goes to menu screen
             Form form1 = this.FindForm();
             form1.Controls.Remove(this);
 
@@ -56,6 +58,7 @@ namespace Rogue_Runner
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            //saves score to Xml when form is closed
             XmlWriter writer = XmlWriter.Create("Resources/LeaderboardXML.xml", null);
 
             writer.WriteStartElement("HighScores");

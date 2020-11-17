@@ -371,8 +371,35 @@ namespace Rogue_Runner.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt; 
-        ///.
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; ?&gt;
+        ///&lt;HighScores&gt;
+        ///  &lt;Player&gt;
+        ///    &lt;name&gt;AAA&lt;/name&gt;
+        ///    &lt;time&gt;00:00.00&lt;/time&gt;
+        ///    &lt;kills /&gt;
+        ///  &lt;/Player&gt;
+        ///  &lt;Player&gt;
+        ///    &lt;name&gt;AAA&lt;/name&gt;
+        ///    &lt;time&gt;00:00.01&lt;/time&gt;
+        ///    &lt;kills /&gt;
+        ///  &lt;/Player&gt;
+        ///  &lt;Player&gt;
+        ///    &lt;name&gt;AAA&lt;/name&gt;
+        ///    &lt;time&gt;00:00.02&lt;/time&gt;
+        ///    &lt;kills /&gt;
+        ///  &lt;/Player&gt;
+        ///  &lt;Player&gt;
+        ///    &lt;name&gt;AAA&lt;/name&gt;
+        ///    &lt;time&gt;00:00.03&lt;/time&gt;
+        ///    &lt;kills /&gt;
+        ///  &lt;/Player&gt;
+        ///  &lt;Player&gt;
+        ///    &lt;name&gt;AAA&lt;/name&gt;
+        ///    &lt;time&gt;00:00.04&lt;/time&gt;
+        ///    &lt;kills /&gt;
+        ///  &lt;/Player&gt;
+        ///  &lt;Player&gt;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string LeaderboardXML {
             get {
@@ -557,6 +584,15 @@ namespace Rogue_Runner.Properties {
             get {
                 object obj = ResourceManager.GetObject("tentacleFromLeft", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream The_Island_of_Dr_Sinister {
+            get {
+                return ResourceManager.GetStream("The_Island_of_Dr_Sinister", resourceCulture);
             }
         }
         

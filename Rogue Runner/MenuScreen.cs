@@ -19,6 +19,7 @@ namespace Rogue_Runner
             
         }
 
+        //chanegs screen when play button is clicked
         private void playButton_Click(object sender, EventArgs e)
         {
             Form form1 = this.FindForm();
@@ -30,7 +31,7 @@ namespace Rogue_Runner
             gs.Focus();
             gs.Location = new Point(form1.Width / 2 - gs.Width / 2, form1.Height / 2 - gs.Height / 2);
         }
-
+        //shows controls screen
         private void controlsButton_Click(object sender, EventArgs e)
         {
             backButton.Show();
@@ -44,12 +45,12 @@ namespace Rogue_Runner
             backButton.Focus();
 
         }
-
+        //closes the app
         private void exitButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
+        //changes to the leaderboard screen
         private void leaderboardButton_Click(object sender, EventArgs e)
         {
             Form form1 = this.FindForm();
@@ -62,6 +63,7 @@ namespace Rogue_Runner
             lb.Location = new Point(form1.Width / 2 - lb.Width / 2, form1.Height / 2 - lb.Height / 2);
         }
 
+        //changes colours when the play button is focused
         private void playButton_Enter(object sender, EventArgs e)
         {
             playButton.ForeColor = Color.Black;
@@ -77,7 +79,7 @@ namespace Rogue_Runner
             controlsButton.ForeColor = Color.White;
 
         }
-
+        //changes colours when the controls button is focused
         private void controlsButton_Enter(object sender, EventArgs e)
         {
             controlsButton.ForeColor = Color.Black;
@@ -92,7 +94,7 @@ namespace Rogue_Runner
             playButton.BackColor = Color.Black;
             playButton.ForeColor = Color.White;
         }
-
+        //changes colours when the leaderboard button is focused
         private void leaderboardButton_Enter(object sender, EventArgs e)
         {
             leaderboardButton.ForeColor = Color.Black;
@@ -107,7 +109,7 @@ namespace Rogue_Runner
             controlsButton.BackColor = Color.Black;
             controlsButton.ForeColor = Color.White;
         }
-
+        //changes colours when the exit button is focused
         private void exitButton_Enter(object sender, EventArgs e)
         {
             exitButton.ForeColor = Color.Black;
@@ -122,12 +124,14 @@ namespace Rogue_Runner
             controlsButton.BackColor = Color.Black;
             controlsButton.ForeColor = Color.White;
         }
-
+        //plays music and resets the gamemode
         private void MenuScreen_Load(object sender, EventArgs e)
         {
             Form1.rushMode = false;
+            SoundPlayer music = new SoundPlayer( Properties.Resources.The_Island_of_Dr_Sinister);
+            music.Play();
         }
-
+        ////changes focuses when the back button is focused
         private void backButton_Click(object sender, EventArgs e)
         {
             controlsBox.Hide();
@@ -141,7 +145,7 @@ namespace Rogue_Runner
 
 
         }
-
+        //goes to game screen and changes game mode
         private void bossButton_Click(object sender, EventArgs e)
         {
             Form1.rushMode = true;
@@ -154,7 +158,7 @@ namespace Rogue_Runner
             gs.Focus();
             gs.Location = new Point(form1.Width / 2 - gs.Width / 2, form1.Height / 2 - gs.Height / 2);
         }
-
+        //changes colours when the boss button is focused
         private void bossButton_Enter(object sender, EventArgs e)
         {
             bossButton.ForeColor = Color.Black;

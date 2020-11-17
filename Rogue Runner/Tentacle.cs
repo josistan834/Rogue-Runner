@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Rogue_Runner
 {
     public class Tentacle
+        //creates a tentacle object for the wall boss to use
     {
         public int x, y, x2, y2;
         public bool active;

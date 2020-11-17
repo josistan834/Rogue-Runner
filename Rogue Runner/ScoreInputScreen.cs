@@ -12,18 +12,19 @@ namespace Rogue_Runner
 {
     public partial class ScoreInputScreen : UserControl
     {
+        //indexes for each letter box
         int index1, index2, index3 = 0;
-
+        //variables for scores
         int enemies = GameScreen.enemiesKilled;
         string time = GameScreen.playerTime.ToString(@"mm\:ss\.ff");
-
+        //list of letters
         string[] alphabet = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
         public ScoreInputScreen()
         {
             InitializeComponent();
         }
-
+        //goes back to gamescreen
         private void playAgainButton_Click(object sender, EventArgs e)
         {
             storeScore();
@@ -40,7 +41,7 @@ namespace Rogue_Runner
             gs.Focus();
             #endregion
         }
-
+        //returns to menu
         private void exitButton_Click(object sender, EventArgs e)
         {
             storeScore();
@@ -56,7 +57,7 @@ namespace Rogue_Runner
             ms.Focus();
             #endregion
         }
-
+        //stores the score in the list
         public void storeScore()
         {
             
@@ -67,13 +68,14 @@ namespace Rogue_Runner
 
             Score.scores.Add(newScores);
         }
-
+        
         private void playAgainButton_Enter(object sender, EventArgs e)
         {
             //plays again and adds high score
             playAgainButton.BackColor = Color.Firebrick;
             exitButton.BackColor = Color.White;
         }
+        
         private void exitButton_Enter(object sender, EventArgs e)
         {
             exitButton.BackColor = Color.Firebrick;

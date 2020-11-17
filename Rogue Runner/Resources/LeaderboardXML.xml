@@ -1,1 +1,58 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HighScores>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.00</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.01</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.02</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.03</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.04</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.05</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.06</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.07</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.08</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>AAA</name>
+    <time>00:00.09</time>
+    <kills />
+  </Player>
+  <Player>
+    <name>SAD</name>
+    <time>00:24.37</time>
+    <kills>0</kills>
+  </Player>
+</HighScores>

@@ -8,6 +8,7 @@ namespace Rogue_Runner
 {
     public class Powerups
     {
+        //all powerup assembly and properties
         public int x, y, w, h, type;
         public Powerups (int _type, int _x, int _y, int _w, int _h)
         {
@@ -17,6 +18,7 @@ namespace Rogue_Runner
             w = _w;
             h = _h;
         }
+        //assigns types to each power up, thanks for name Josiah
         public void powerGoBrrr()
         {
             if (type == 1)

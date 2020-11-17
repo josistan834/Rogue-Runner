@@ -8,6 +8,7 @@ namespace Rogue_Runner
 {
     class Score
     {
+        //all score proprties
         public string name, time, enemiesDefeated;
         public static List<Score> scores = new List<Score>();
 

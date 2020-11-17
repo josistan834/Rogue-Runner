@@ -232,8 +232,7 @@
     <None Include="Resources\rangerLeft.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Sword Swing-SoundBible.com-639083727.wav" />
-    <None Include="Resources\Ninja Samurai Sword-SoundBible.com-1359598877 %28online-audio-converter.com%29.wav" />
+    <None Include="Resources\The-Island-of-Dr-Sinister.wav" />
     <None Include="Resources\tentacleAttack.png" />
     <None Include="Resources\warriorRight.png" />
     <None Include="Resources\warriorLeft.png" />
