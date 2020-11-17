@@ -232,6 +232,8 @@
     <None Include="Resources\rangerLeft.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\warriorRight.png" />
+    <None Include="Resources\warriorLeft.png" />
     <None Include="Resources\tentacleFromLeft.png" />
     <None Include="Resources\Tornado.png" />
     <None Include="Resources\Tornado2.png" />
