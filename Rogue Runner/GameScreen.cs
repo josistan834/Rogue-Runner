@@ -89,7 +89,7 @@ namespace Rogue_Runner
         Image speedPower = Properties.Resources.SpeedPower;
         Image rangePower = Properties.Resources.rangePower;
         Image fire = Properties.Resources.fire;
-        Image tentImage = Properties.Resources.tentacleFromLeft;
+        Image tentImage = Properties.Resources.tentacleAttack;
         Image razor = Properties.Resources.blade_saw;
         Image bossSwordL = Properties.Resources.boosSwordLeft;
         Image bossSwordR = Properties.Resources.boosSwordRight;
@@ -983,7 +983,7 @@ namespace Rogue_Runner
             {
                 if (bosses.Count < 1)
                 {
-                    Boss boss = new Boss(60, rooms[levelIndex].height / 9, 60, rooms[levelIndex].height - rooms[levelIndex].height / 6, 5, 500, 20, 30);
+                    Boss boss = new Boss(60, rooms[levelIndex].height / 9, 60, rooms[levelIndex].height - rooms[levelIndex].height / 6, 5, 1200, 20, 30);
                     boss.image = Properties.Resources.wallFacingRIGHT_dithering_;
                     bosses.Add(boss);
                 }
@@ -1113,7 +1113,7 @@ namespace Rogue_Runner
             {
                 if (bosses.Count < 1)
                 {
-                    Boss boss = new Boss(this.Width / 2 - 45, this.Height / 2, 90, 90, 5, 500, 5, 30);
+                    Boss boss = new Boss(this.Width / 2 - 45, this.Height / 2, 90, 90, 5, 1200, 5, 30);
                     boss.image = Properties.Resources.dragonDown;
                     bosses.Add(boss);
                 }
@@ -1221,7 +1221,7 @@ namespace Rogue_Runner
             {
                 if (bosses.Count < 1)
                 {
-                    Boss boss = new Boss(this.Width / 2 - 45, this.Height / 2, 30, 50, 5, 500, 20, 30);
+                    Boss boss = new Boss(this.Width / 2 - 45, this.Height / 2, 30, 50, 5, 1200, 20, 30);
                     boss.image = Properties.Resources.WarriorDown;
                     bosses.Add(boss);
                 }
@@ -1651,7 +1651,7 @@ namespace Rogue_Runner
             foreach (Boss b in bosses)
             {
                 e.Graphics.DrawImage(b.image, b.x, b.y, b.w, b.h);
-                e.Graphics.FillRectangle(enemyBrush, 150, 22, b.health, 20);
+                e.Graphics.FillRectangle(enemyBrush, 50, 22, b.health/2, 20);
                 foreach (Rectangle f in b.fires)
                 {
                     if (bossType == 2)
@@ -1789,9 +1789,9 @@ namespace Rogue_Runner
             }
 
 
-            e.Graphics.FillRectangle(enemyBrush, 150, this.Height - 22, player.health, 20);
+            e.Graphics.FillRectangle(enemyBrush, 50, this.Height - 22, player.health, 20);
 
-            e.Graphics.DrawImage(Resources.heart_overlay, 150, this.Height - 22, 750, 20);
+            e.Graphics.DrawImage(Resources.heart_overlay, 50, this.Height - 22, 750, 20);
 
         }
 

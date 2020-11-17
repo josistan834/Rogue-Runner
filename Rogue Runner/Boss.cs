@@ -84,6 +84,7 @@ namespace Rogue_Runner
             if (skill == "bite")
             {
                 x = 30;
+                image = Properties.Resources.wallFacingRIGHT_dithering_;
             }
         }
         public void attack2(string skill)
@@ -93,6 +94,7 @@ namespace Rogue_Runner
             {
                 if (dir == 1)
                 {
+                    image = Properties.Resources.dragonRight_Open_;
                     x += 2 * speed;
                     if (x > 1000)
                     {
@@ -115,6 +117,7 @@ namespace Rogue_Runner
                 }
                 else
                 {
+                    image = Properties.Resources.dragonLeft_Open_;
                     x -= 2 * speed;
                     if (x < 0)
                     {
