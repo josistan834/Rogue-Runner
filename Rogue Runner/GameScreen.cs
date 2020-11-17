@@ -31,7 +31,7 @@ namespace Rogue_Runner
         Pen activeTent = new Pen(Color.Orange);
         Pen inactiveTent = new Pen(Color.LightBlue);
 
-        Font drawFont = new Font("Century Gothic", 13); 
+        Font drawFont = new Font("Century Gothic", 13);
 
         Rectangle exitDoorRec = new Rectangle(0, 0, 1, 1);
         public static int levelIndex = 0;
@@ -264,19 +264,19 @@ namespace Rogue_Runner
             {
                 int enemyType = randgen.Next(1, 5);
                 int enmX = randgen.Next((this.Width / 2 - newRoom.width / 2), (this.Width / 2 + newRoom.width / 2 - 30));
-                int enmY = randgen.Next((this.Height / 2 -newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
+                int enmY = randgen.Next((this.Height / 2 - newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                 Rectangle tempEnemy = new Rectangle(enmX, enmY, 30, 30);
 
                 //do not allow enemies to spawn in an obstacle
                 foreach (Rectangle c in newRoom.obstacles)
-                {  
+                {
                     if (c.IntersectsWith(tempEnemy))
                     {
                         enmX = randgen.Next((this.Width / 2 - newRoom.width / 2), (this.Width / 2 + newRoom.width / 2 - 30));
                         enmY = randgen.Next((this.Height / 2 - newRoom.height / 2), (this.Height / 2 + newRoom.height / 2 - 30));
                     }
                 }
-                
+
                 //adding enemies to their respective lists
                 if (enemyType == 1)
                 {
@@ -286,7 +286,7 @@ namespace Rogue_Runner
                 }
                 else if (enemyType == 2)
                 {
-                    Summoner summoner = new Summoner(enmX, enmY, 30, 30, 100    , 30, 2);
+                    Summoner summoner = new Summoner(enmX, enmY, 30, 30, 100, 30, 2);
                     newRoom.summoners.Add(summoner);
 
                 }
@@ -323,7 +323,7 @@ namespace Rogue_Runner
                 Powerups newPowerUp = new Powerups(randgen.Next(1, 5), this.Width / 2, this.Height / 2, 50, 50);
                 newPowerRoom.powers.Add(newPowerUp);
                 rooms.Add(newPowerRoom);
-                
+
 
             }
             rooms = rooms.OrderBy(a => Guid.NewGuid()).ToList();
@@ -345,7 +345,7 @@ namespace Rogue_Runner
             rooms.Clear();
             levelIndex = 0;
             assembleFloor();
-            
+
             player.x = this.Width / 2;
             player.y = this.Height / 2 + rooms[levelIndex].height / 2 - 30;
             //Set starting values
@@ -572,7 +572,7 @@ namespace Rogue_Runner
                     }
 
                 }
-                
+
                 //if the runner hits player deal damage
                 if (runRec.IntersectsWith(playerRec))
                 {
@@ -813,7 +813,7 @@ namespace Rogue_Runner
                     break;
                 }
 
-                
+
             }
             foreach (Projectile b in Ranger.bullets)
             {
@@ -977,7 +977,6 @@ namespace Rogue_Runner
             if (rooms[levelIndex].type == "boss" && bossType == 0 && bossDead == false)
             {
                 bossType = randgen.Next(1, 4);
-                
             }
             //if boss type is 1 make boss and do random attacks
             if (bossType == 1)
@@ -1146,8 +1145,9 @@ namespace Rogue_Runner
                     if (bosses[0].attack == 1)
                     {
                         bosses[0].image = Properties.Resources.dragonRight_Open_;
-                        bosses[0].attack2("Fire");
 
+                        bosses[0].attack2("Fire");
+                        
                         if (bosses[0].toNum > 4)
                         {
                             bosses[0].toNum = 0;
@@ -1168,11 +1168,11 @@ namespace Rogue_Runner
                     }
                     if (bosses[0].attack == 2)
                     {
-                        if (counter %20 == 0)
+                        if (counter % 20 == 0)
                         {
                             bosses[0].image = Properties.Resources.dragonDown;
                         }
-                        
+
                         bosses[0].x = this.Width / 2 - 45;
                         bosses[0].y = this.Height / 2;
                         bosses[0].attack2("Flap");
@@ -1254,6 +1254,7 @@ namespace Rogue_Runner
                     {
                         if (counter % 30 == 0)
                         {
+                            bosses[0].image = Properties.Resources.WarriorDown;
                             bosses[0].attack3("regenerate");
                         }
                         if (bossRec.IntersectsWith(player.sword))
@@ -1272,7 +1273,7 @@ namespace Rogue_Runner
                             bosses[0].timer = 0;
                             bosses[0].toNum++;
                         }
-                        
+
                         if (bossRec.IntersectsWith(player.sword))
                         {
                             bosses[0].fires.Clear();
@@ -1280,7 +1281,7 @@ namespace Rogue_Runner
                             bosses[0].iframes = 30;
                             bosses[0].x = randgen.Next((this.Width / 2 - rooms[levelIndex].width / 2), (this.Width / 2 + rooms[levelIndex].width / 2 - bosses[0].w));
                             bosses[0].y = randgen.Next((this.Height / 2 - rooms[levelIndex].height / 2), (this.Height / 2 + rooms[levelIndex].height / 2 - bosses[0].h));
-                            
+
                         }
                         if (bosses[0].toNum == 5)
                         {
@@ -1311,7 +1312,7 @@ namespace Rogue_Runner
                             bosses[0].attack = 0;
                             bosses[0].toNum = 0;
                         }
-                            
+
                     }
                 }
             }
@@ -1329,7 +1330,7 @@ namespace Rogue_Runner
                     rooms[levelIndex].powers.Add(newPowerUp);
                 }
             }
-            
+
         }
         public void BB()
         {
@@ -1372,7 +1373,7 @@ namespace Rogue_Runner
                 {
                     bosRec = new Rectangle(bosses[0].x, bosses[0].y, bosses[0].w, bosses[0].h);
                 }
-                
+
                 //if touching player or boss deal damage
                 if (spook.IntersectsWith(plr))
                 {
@@ -1574,12 +1575,12 @@ namespace Rogue_Runner
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             //draw everything on the gamescreen (enemies, players, obstacles, rooms )
-            
+
             e.Graphics.DrawImage(rooms[levelIndex].image, this.Width / 2 - rooms[levelIndex].width / 2, this.Height / 2 - rooms[levelIndex].height / 2, rooms[levelIndex].width, rooms[levelIndex].height);
 
             TimeSpan addTime = new TimeSpan((counter * 15) * 10000);
             playerTime = addTime;
-            
+
             e.Graphics.DrawString(playerTime.ToString(@"mm\:ss\.ff"), drawFont, obsBrush, (this.Width / 4) * 3, 0);
 
             if (exitDoorRec.X != 0)
@@ -1598,7 +1599,7 @@ namespace Rogue_Runner
                 {
                     if (t.active)
                     {
-                        e.Graphics.DrawImage(tentImage, t.x, t.y, t.x2- t.x, 50);
+                        e.Graphics.DrawImage(tentImage, t.x, t.y, t.x2 - t.x, 50);
                     }
                     else
                     {
@@ -1821,7 +1822,7 @@ namespace Rogue_Runner
                     assembleFloor();
                     levelIndex = -1;
                     bossDead = false;
-                    
+
                 }
                 levelIndex++;
                 player.x = this.Width / 2;
