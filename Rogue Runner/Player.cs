@@ -22,7 +22,7 @@ namespace Rogue_Runner
             health = _health;
             damage = _damage;
             swordSize = 30;
-            
+
         }
         public void move(string dir)
         {
@@ -52,21 +52,21 @@ namespace Rogue_Runner
 
             if (direc == "Left")
             {
-                sword = new Rectangle(x-w, y, swordSize, swordSize);
+                sword = new Rectangle(x - w - (swordSize/2) + 15, y - (swordSize/2) + 30, swordSize, swordSize);
             }
             else if (direc == "Right")
             {
-                sword = new Rectangle(x+w, y, swordSize, swordSize);
+                sword = new Rectangle(x + w, y - (swordSize/2)+ 30, swordSize, swordSize);
             }
             else if (direc == "Up")
             {
-                sword = new Rectangle(x, y-h, swordSize, swordSize);
+                sword = new Rectangle(x -( swordSize/2) + 15, y - h - swordSize + 30, swordSize, swordSize);
             }
             else if (direc == "Down")
             {
-                sword = new Rectangle(x, y+h, swordSize, swordSize);
+                sword = new Rectangle(x - (swordSize/2) + 15, y + h , swordSize, swordSize);
             }
-            
+
         }
         public void deleteSword()
         {
