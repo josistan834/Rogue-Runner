@@ -976,7 +976,7 @@ namespace Rogue_Runner
 
             if (rooms[levelIndex].type == "boss" && bossType == 0 && bossDead == false)
             {
-                bossType = randgen.Next(2, 3);
+                bossType = randgen.Next(1, 4);
                 
             }
             //if boss type is 1 make boss and do random attacks
