@@ -9,6 +9,7 @@ namespace Rogue_Runner
 {
     public class Room
     {
+        //all properties of a room
         public int width, height;
         public string type;
         public List<Rectangle> obstacles = new List<Rectangle>();
@@ -18,7 +19,7 @@ namespace Rogue_Runner
         public List<Ranger> rangers = new List<Ranger>();
         public List<Summoner> summoners = new List<Summoner>();
         public List<Powerups> powers = new List<Powerups>();
-        //List <> enemy = new List <>();
+        
 
         public Room(int _width, int _height, string _type, List<Rectangle> _obstacles, Image _image)
         {

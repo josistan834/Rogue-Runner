@@ -11,6 +11,7 @@ namespace Rogue_Runner
 {
     public class Projectile
     {
+        //all projectile properties
         public int speed, x, y, w, h, damage;
         public string dir;
         public Image image;
@@ -26,6 +27,7 @@ namespace Rogue_Runner
             dir = _dir;
             image = _image;
         }
+        //moves the projective in the specified direction
         public void move()
         {
             if (dir == "Left")

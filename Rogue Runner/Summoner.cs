@@ -9,7 +9,7 @@ namespace Rogue_Runner
 {
     public class Summoner
     {
-
+        //all summoner properties
         public int x, y, w, h, health, iframes, speed;
         public bool sumRun, attacking;
         public string sumdir;
@@ -28,6 +28,7 @@ namespace Rogue_Runner
             sumdir = null;
         }
         
+        //damages summoner when hit
         public void damaged(int damage)
         {
             if (iframes <= 0)
@@ -37,6 +38,7 @@ namespace Rogue_Runner
             }
 
         }
+        //moves the summoner when hit based on direction
         public void move(string dir)
         {
             if (dir == "Left")

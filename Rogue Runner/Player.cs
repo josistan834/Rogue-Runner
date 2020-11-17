@@ -9,6 +9,7 @@ namespace Rogue_Runner
 {
     public class Player
     {
+        //player assembly and properties
         public int x, y, w, h, speed, health, damage, swordSize;
         public string direc;
         public Rectangle sword = new Rectangle();
@@ -24,6 +25,7 @@ namespace Rogue_Runner
             swordSize = 30;
 
         }
+        //moves the player in the correct direction
         public void move(string dir)
         {
             if (dir == "Left")
@@ -47,6 +49,7 @@ namespace Rogue_Runner
                 direc = "Down";
             }
         }
+        //attacks in teh correct direction
         public void attack()
         {
 
@@ -68,14 +71,12 @@ namespace Rogue_Runner
             }
 
         }
+        //removes sword sprite when attack is over
         public void deleteSword()
         {
             sword = new Rectangle(0, 0, 0, 0);
         }
-        public void block()
-        {
-
-        }
+        //damages the player when hit
         public void damaged(int damage)
         {
             health -= damage;

@@ -8,6 +8,7 @@ namespace Rogue_Runner
 {
     public class Ranger
     {
+        //all properties of a ranger
         public int x, y, w, h, health, iframes;
         public string direc;
         public static List<Projectile> bullets = new List<Projectile>();
@@ -23,12 +24,14 @@ namespace Rogue_Runner
             iframes = _iframes;
             direc = _direc;
         }
+        //adds a bullet to the bullet list 
         public void attack()
         {
             Projectile bullet = new Projectile(x, y, 10, 10, 10, 15, direc, null);
             bullets.Add(bullet);
             
         }
+        //damages the ranger when hit
         public void damaged(int damage)
         {
             if (iframes <= 0)

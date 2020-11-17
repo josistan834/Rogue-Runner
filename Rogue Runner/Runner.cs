@@ -8,6 +8,7 @@ namespace Rogue_Runner
 {
     public class Runner
     {
+        //all runner properties
         public int x, y, w, h, speed, health, damage, iframes;
         public bool movement;
         public string direc;
@@ -24,7 +25,7 @@ namespace Rogue_Runner
             iframes = _iframes;
             direc = "Up";
         }
-
+        //moves the runner based on direction
         public void move(string dir)
         {
             direc = dir;
@@ -45,6 +46,7 @@ namespace Rogue_Runner
                 y += speed;
             }
         }
+        //damages the runner when hit
         public void damaged(int damage)
         {
             

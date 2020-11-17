@@ -8,6 +8,7 @@ namespace Rogue_Runner
 {
     public class Soul
     {
+        //creates a soul object and its properties
         public int x, y, w, h, speed, health, damage, preY, preX, iframes;
         public bool up, right;
         
@@ -21,6 +22,7 @@ namespace Rogue_Runner
             health = _health;
             damage = _damage;
         }
+        //moves the soul based on direction
         public void move()
         {
             if (right == false)
@@ -40,6 +42,7 @@ namespace Rogue_Runner
                 y += speed;
             }
         }
+        //lowers soul health when damaged
         public void damaged(int damage)
         {
             if (iframes <= 0)

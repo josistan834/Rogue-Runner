@@ -8,6 +8,7 @@ namespace Rogue_Runner
 {
     public class BiteBall
     {
+        //all ball properties
         public int x, y, w, h, speed, health, damage, preY, preX, iframes;
         public bool reflected;
         public string direc;
@@ -22,6 +23,7 @@ namespace Rogue_Runner
             damage = _damage;
             reflected = false;
         }
+        //moves the ball based on direction
         public void move(string dir)
         {
             
@@ -42,6 +44,7 @@ namespace Rogue_Runner
                 y += speed;
             }
         }
+        //damages ball when hit
         public void damaged(int damage)
         {
             if (iframes <= 0)
