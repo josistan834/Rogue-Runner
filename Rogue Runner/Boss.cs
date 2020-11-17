@@ -8,8 +8,10 @@ using System.Windows.Forms;
 
 namespace Rogue_Runner
 {
+    //The behaviours and properties of boss
     public class Boss
     {
+        //public values per boss
         public int x, y, w, h, speed, health, damage, iframes, attack, bounces, tX, tY, tH, tX2, tY2, tH2, toNum, timer, direc, dir;
         public bool right = true;
         public List<Rectangle> fires = new List<Rectangle>();
@@ -18,6 +20,7 @@ namespace Rogue_Runner
         public Rectangle tornadoRec2 = new Rectangle();
         public Image image = Properties.Resources.blade_saw;
 
+        //boss object and properties used on creation
         public Boss(int _x, int _y, int _w, int _h, int _speed, int _health, int _damage, int _iframes)
         {
             x = _x;
@@ -39,8 +42,10 @@ namespace Rogue_Runner
             dir = 1;
         }
 
+        //called when boss 1 attacks
         public void attack1(string skill)
         {
+            //moves right
             if (skill == "goRight")
             {
                 if (bounces == 3)
@@ -50,6 +55,7 @@ namespace Rogue_Runner
                 }
                 x += speed;
             }
+            //moves left
             if (skill == "goLeft")
             {
                 if (bounces == 3)
@@ -60,6 +66,7 @@ namespace Rogue_Runner
                 }
                 x -= speed;
             }
+            //spawns tentacles near the player
             if (skill == "tentacle")
             {
                 image = Properties.Resources.wallFacingRIGHT_dithering_;
@@ -81,18 +88,25 @@ namespace Rogue_Runner
                 GameScreen.tentacles.Add(tent);
 
             }
+            //moves to the spawn position
             if (skill == "bite")
             {
                 x = 30;
+                image = Properties.Resources.wallFacingRIGHT_dithering_;
             }
         }
+
+        //called when boss 2 does an attack
         public void attack2(string skill)
         {
+            //initiallization of fire rectangle
             Rectangle fire = new Rectangle(0, 0, 0, 0);
+            //goes from right of left breathing fire
             if (skill == "Fire")
             {
                 if (dir == 1)
                 {
+                    image = Properties.Resources.dragonRight_Open_;
                     x += 2 * speed;
                     if (x > 1000)
                     {
@@ -115,6 +129,7 @@ namespace Rogue_Runner
                 }
                 else
                 {
+                    image = Properties.Resources.dragonLeft_Open_;
                     x -= 2 * speed;
                     if (x < 0)
                     {
@@ -136,6 +151,7 @@ namespace Rogue_Runner
                     fires.Add(fire);
                 }
             }
+            //flaps wings to create tornado
             if (skill == "Flap")
             {
                 if(tX == 0)
@@ -161,6 +177,7 @@ namespace Rogue_Runner
                 tY2 = y - tH2 / 2;
                 tornadoRec2 = new Rectangle(tX2, tY2, Convert.ToInt32(Math.Round(tH2 * 0.8)), tH2);
             }
+            //moves to the player location and brings them with the dragon
             if (skill == "Grab")
             {
                 image = Properties.Resources.dragonDown;
@@ -174,8 +191,10 @@ namespace Rogue_Runner
                 toNum++;
             }
         }
+        //if the third boss uses and attack
         public void attack3(string skill)
         {
+            //creates walls around itself and regenerates slowly
             if (skill == "regenerate")
             {
                 fires.Clear();
@@ -201,6 +220,7 @@ namespace Rogue_Runner
                     health++;
                 }   
             }
+            //teleports to the player and attempts to stab them
             if (skill == "teleport")
             {
                 if (timer == 0)
@@ -250,6 +270,7 @@ namespace Rogue_Runner
                 timer++;
 
             }
+            //shoots three arrows towards the player
             if (skill == "shoot")
             {
                 fires.Clear();
@@ -280,6 +301,7 @@ namespace Rogue_Runner
                
             }
         }
+        //when damaged take damage if not invicible
         public void damaged(int damage)
         {
 

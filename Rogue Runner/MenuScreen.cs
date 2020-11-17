@@ -16,6 +16,7 @@ namespace Rogue_Runner
         public MenuScreen()
         {
             InitializeComponent();
+            
         }
 
         //chanegs screen when play button is clicked
