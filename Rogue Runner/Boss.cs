@@ -10,7 +10,7 @@ namespace Rogue_Runner
 {
     public class Boss
     {
-        public int x, y, w, h, speed, health, damage, iframes, attack, bounces, tX, tY, tH, tX2, tY2, tH2, toNum, timer, direc;
+        public int x, y, w, h, speed, health, damage, iframes, attack, bounces, tX, tY, tH, tX2, tY2, tH2, toNum, timer, direc, dir;
         public bool right = true;
         public List<Rectangle> fires = new List<Rectangle>();
         Random randGen = new Random();
@@ -36,6 +36,7 @@ namespace Rogue_Runner
             tH2 = 90;
             toNum = 0;
             timer = 0;
+            dir = 1;
         }
 
         public void attack1(string skill)
@@ -61,19 +62,20 @@ namespace Rogue_Runner
             }
             if (skill == "tentacle")
             {
-                x = 60;
+                image = Properties.Resources.wallFacingRIGHT_dithering_;
+                x = 30;
                 Tentacle tent = new Tentacle(0,0,0,0, false);
                 if (GameScreen.player.y >= y + h)
                 {
-                     tent = new Tentacle(x, y + h, 1000, y + h, false);
+                     tent = new Tentacle(x+10, y + h, 1000, y + h, false);
                 }
                 else if (GameScreen.player.y <= y)
                 {
-                     tent = new Tentacle(x, y, 1000, y, false);
+                     tent = new Tentacle(x+10, y, 1000, y, false);
                 }
                 else
                 {
-                     tent = new Tentacle(x, GameScreen.player.y + 30, 1000, GameScreen.player.y +30, false);
+                     tent = new Tentacle(x+10, GameScreen.player.y + 30, 1000, GameScreen.player.y +30, false);
                 }
                 
                 GameScreen.tentacles.Add(tent);
@@ -81,7 +83,7 @@ namespace Rogue_Runner
             }
             if (skill == "bite")
             {
-                x = 60;
+                x = 30;
             }
         }
         public void attack2(string skill)
@@ -89,24 +91,50 @@ namespace Rogue_Runner
             Rectangle fire = new Rectangle(0, 0, 0, 0);
             if (skill == "Fire")
             {
-                x += 2*speed;
-                if (x > 1000)
+                if (dir == 1)
                 {
-                    x = -50;
-                    y = randGen.Next(0, 300);
-                    toNum++;
-                    fires.Clear();
-                }
-                if (x > 500)
-                {
-                    y -= speed;
+                    x += 2 * speed;
+                    if (x > 1000)
+                    {
+                        dir = randGen.Next(1, 3);
+                        x = -50;
+                        y = randGen.Next(0, 300);
+                        toNum++;
+                        fires.Clear();
+                    }
+                    if (x > 500)
+                    {
+                        y -= speed;
+                    }
+                    else
+                    {
+                        y += speed;
+                    }
+                    fire = new Rectangle(x + w, y + h + 40, 60, 60);
+                    fires.Add(fire);
                 }
                 else
                 {
-                    y += speed;
+                    x -= 2 * speed;
+                    if (x < 0)
+                    {
+                        dir = randGen.Next(1, 3);
+                        x = 1000;
+                        y = randGen.Next(0, 300);
+                        toNum++;
+                        fires.Clear();
+                    }
+                    if (x < 500)
+                    {
+                        y -= speed;
+                    }
+                    else
+                    {
+                        y += speed;
+                    }
+                    fire = new Rectangle(x - w, y + h + 40, 60, 60);
+                    fires.Add(fire);
                 }
-                fire = new Rectangle(x+w, y+h+40, 60, 60);
-                fires.Add(fire);
             }
             if (skill == "Flap")
             {
@@ -135,12 +163,13 @@ namespace Rogue_Runner
             }
             if (skill == "Grab")
             {
+                image = Properties.Resources.dragonDown;
                 x = randGen.Next((900 / 2 - GameScreen.rooms[GameScreen.levelIndex].width / 2), (900 / 2 + GameScreen.rooms[GameScreen.levelIndex].width / 2 - w));
                 y = randGen.Next((700 / 2 - GameScreen.rooms[GameScreen.levelIndex].height / 2), (700 / 2 + GameScreen.rooms[GameScreen.levelIndex].height / 2 - w));
                 if (GameScreen.swordCounter == 30)
                 {
-                    GameScreen.player.x = x;
-                    GameScreen.player.y = y;
+                    GameScreen.player.x = x+w/2;
+                    GameScreen.player.y = y+h/2;
                 }
                 toNum++;
             }
@@ -149,6 +178,8 @@ namespace Rogue_Runner
         {
             if (skill == "regenerate")
             {
+                fires.Clear();
+                image = Properties.Resources.WarriorDown;
                 Projectile arrow = new Projectile(30, 0, 30, 50, 3, 30, "Down", Properties.Resources.arrowDown);
                 Ranger.bullets.Add(arrow);
                 Projectile arrow1 = new Projectile(300, 0, 30, 50, 3, 30, "Down", Properties.Resources.arrowDown);
@@ -204,12 +235,14 @@ namespace Rogue_Runner
                 {
                     if (direc == 1)
                     {
-                        Rectangle knife = new Rectangle(x - 200 / 2, y + h / 2, 120, 10);
+                        image = Properties.Resources.warriorLeft;
+                        Rectangle knife = new Rectangle(x - 140 / 2, y + h / 2, 120, 10);
                         fires.Add(knife);
                     }
                     if (direc == 2)
                     {
-                        Rectangle knife = new Rectangle(x + 60 / 2, y + h / 2, 120, 10);
+                        image = Properties.Resources.warriorRight;
+                        Rectangle knife = new Rectangle(x + 20 / 2, y + h / 2, 120, 10);
                         fires.Add(knife);
                     }
 
@@ -219,11 +252,13 @@ namespace Rogue_Runner
             }
             if (skill == "shoot")
             {
+                fires.Clear();
                 y = GameScreen.player.y;
                 string tempDir;
                 if (GameScreen.player.x < x)
                 {
                     tempDir = "Left";
+                    image = Properties.Resources.warriorLeft;
                     Projectile arrow = new Projectile(x, y, 10, 10, 10, 30, tempDir, Properties.Resources.arrowLeft);
                     Ranger.bullets.Add(arrow);
                     Projectile arrow1 = new Projectile(x, y + 20, 10, 10, 10, 30, tempDir, Properties.Resources.arrowLeft);
@@ -234,6 +269,7 @@ namespace Rogue_Runner
                 else
                 {
                     tempDir = "Right";
+                    image = Properties.Resources.warriorRight;
                     Projectile arrow = new Projectile(x, y, 10, 10, 10, 30, tempDir, Properties.Resources.arrowRight);
                     Ranger.bullets.Add(arrow);
                     Projectile arrow1 = new Projectile(x, y + 20, 10, 10, 10, 30, tempDir, Properties.Resources.arrowRight);
